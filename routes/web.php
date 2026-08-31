@@ -57,8 +57,57 @@ Route::get('/booking', function () {
     return redirect('/#booking');
 })->name('public.booking');
 
+// Phase 17: SEO Sitemap XML
+Route::get('/sitemap.xml', function () {
+    $services = \App\Models\Service::where('is_active', true)->get();
+    $baseUrl = config('app.url', url('/'));
+
+    $xml = '<?xml version="1.0" encoding="UTF-8"?>';
+    $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+    $staticRoutes = [
+        ['loc' => url('/'), 'priority' => '1.0', 'changefreq' => 'weekly'],
+        ['loc' => route('public.services'), 'priority' => '0.9', 'changefreq' => 'weekly'],
+        ['loc' => route('public.how-it-works'), 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['loc' => route('public.storage-security'), 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['loc' => route('public.coverage'), 'priority' => '0.8', 'changefreq' => 'monthly'],
+        ['loc' => route('public.faq'), 'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => route('public.about'), 'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => route('public.contact'), 'priority' => '0.7', 'changefreq' => 'monthly'],
+        ['loc' => route('public.track'), 'priority' => '0.6', 'changefreq' => 'daily'],
+    ];
+
+    foreach ($staticRoutes as $route) {
+        $xml .= '<url>';
+        $xml .= '<loc>' . htmlspecialchars($route['loc']) . '</loc>';
+        $xml .= '<lastmod>' . date('Y-m-d') . '</lastmod>';
+        $xml .= '<changefreq>' . $route['changefreq'] . '</changefreq>';
+        $xml .= '<priority>' . $route['priority'] . '</priority>';
+        $xml .= '</url>';
+    }
+
+    foreach ($services as $service) {
+        $xml .= '<url>';
+        $xml .= '<loc>' . htmlspecialchars(route('public.services.show', $service)) . '</loc>';
+        $xml .= '<lastmod>' . ($service->updated_at ? $service->updated_at->format('Y-m-d') : date('Y-m-d')) . '</lastmod>';
+        $xml .= '<changefreq>weekly</changefreq>';
+        $xml .= '<priority>0.8</priority>';
+        $xml .= '</url>';
+    }
+
+    $xml .= '</urlset>';
+
+    return response($xml, 200)->header('Content-Type', 'text/xml');
+})->name('sitemap.xml');
+
+Route::get('/robots.txt', function () {
+    $content = "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /admin/*\nDisallow: /livewire/\n\nSitemap: " . url('/sitemap.xml') . "\n";
+    return response($content, 200)->header('Content-Type', 'text/plain');
+});
+
 // Phase 15: Public Order Tracking
 Route::get('/track', \App\Livewire\Public\OrderTracking::class)->name('public.track');
+
 Route::get('/track/{order_code}', \App\Livewire\Public\OrderTracking::class)->name('public.track.order');
 
 // Phase 13: Public / Field Staff QR Scanner Landing

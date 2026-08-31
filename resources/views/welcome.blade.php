@@ -1,6 +1,38 @@
 @extends('layouts.public')
 
+@push('schema')
+@php
+    $faqSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => [
+            [
+                '@type' => 'Question',
+                'name' => 'Apakah perlu membuat akun untuk booking?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => 'Tidak perlu. Anda cukup memasukkan nomor WhatsApp untuk menerima penawaran dan memantau status pesanan.',
+                ],
+            ],
+            [
+                '@type' => 'Question',
+                'name' => 'Berapa tarif penitipan barang storage?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => 'Tarif dihitung per item atau paket kardus/motor dengan durasi harian, mingguan, maupun bulanan yang sangat fleksibel.',
+                ],
+            ],
+        ],
+    ];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($faqSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
+
 @section('content')
+
+
 <div class="relative overflow-hidden">
     <!-- Hero Section -->
     <div class="relative py-16 sm:py-24 bg-gradient-to-b from-amber-500/10 via-slate-50 to-slate-50">

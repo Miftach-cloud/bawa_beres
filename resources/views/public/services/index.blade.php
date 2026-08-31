@@ -1,4 +1,7 @@
-@extends('layouts.public', ['title' => 'Layanan Pindahan & Storage Kota Malang'])
+@php
+    $title = 'Layanan Pindahan & Storage Kota Malang';
+@endphp
+@extends('layouts.public')
 
 @section('content')
 <div class="py-16 sm:py-24 bg-slate-50">

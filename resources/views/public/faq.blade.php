@@ -1,9 +1,72 @@
-@extends('layouts.public', ['title' => 'Tanya Jawab (FAQ) — BawaBeres'])
+@php
+    $title = 'Tanya Jawab FAQ — BawaBeres';
+@endphp
+@extends('layouts.public')
+
+@push('schema')
+@php
+    $faqSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'FAQPage',
+        'mainEntity' => [
+            [
+                '@type' => 'Question',
+                'name' => 'Apakah saya wajib membuat akun untuk memesan?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => 'Tidak. Sistem BawaBeres dirancang tanpa hambatan. Anda cukup mengisi nama dan nomor WhatsApp aktif.',
+                ],
+            ],
+            [
+                '@type' => 'Question',
+                'name' => 'Bagaimana cara menghitung biaya pindahan?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => 'Biaya dihitung transparan berdasarkan jenis layanan, perkiraan volume muatan armada, jarak tempuh rute, dan bantuan tenaga angkut.',
+                ],
+            ],
+            [
+                '@type' => 'Question',
+                'name' => 'Bagaimana keamanan barang yang dititipkan di storage?',
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => 'Gudang kami diawasi CCTV 24 jam nonstop, bebas banjir, bersih dan kering. Setiap kardus atau unit barang diberi label token QR Code unik.',
+                ],
+            ],
+        ],
+    ];
+
+    $breadcrumbSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Beranda',
+                'item' => url('/'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'FAQ',
+                'item' => route('public.faq'),
+            ],
+        ],
+    ];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($faqSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+<script type="application/ld+json">
+{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
 
 @section('content')
+
 <div class="py-16 sm:py-24 bg-slate-50">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-12">
-        <!-- Header -->
         <div class="text-center space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
                 <span>❓</span>
@@ -17,7 +80,6 @@
             </p>
         </div>
 
-        <!-- FAQ List -->
         <div class="space-y-4">
             <div class="rounded-3xl bg-white p-6 sm:p-8 border border-slate-200 shadow-sm space-y-2">
                 <h3 class="text-base font-extrabold text-slate-900">Apakah saya wajib membuat akun untuk memesan?</h3>
@@ -50,12 +112,11 @@
             <div class="rounded-3xl bg-white p-6 sm:p-8 border border-slate-200 shadow-sm space-y-2">
                 <h3 class="text-base font-extrabold text-slate-900">Bagaimana cara melacak barang saya?</h3>
                 <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Anda dapat mengakses halaman <a href="{{ route('public.track') }}" class="text-amber-600 font-bold underline">Lacak Status Pesanan</a> dengan memasukkan Nomor Order (contoh: <code>ORD-2026-000051</code>) dan nomor HP Anda.
+                    Anda dapat mengakses halaman <a href="{{ route('public.track') }}" class="text-amber-600 font-bold underline">Lacak Status Pesanan</a> dengan memasukkan Nomor Order (contoh: ORD-2026-000051) dan nomor HP Anda.
                 </p>
             </div>
         </div>
 
-        <!-- Help Banner -->
         <div class="rounded-3xl bg-amber-50 border border-amber-200 p-8 text-center space-y-4">
             <h3 class="text-lg font-black text-slate-900">Punya Pertanyaan Lain yang Belum Terjawab?</h3>
             <a 

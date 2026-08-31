@@ -1,6 +1,63 @@
-@extends('layouts.public', ['title' => $service->name . ' — BawaBeres'])
+@php
+    $title = $service->name . ' — BawaBeres';
+@endphp
+@extends('layouts.public')
+
+@push('schema')
+@php
+    $serviceSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Service',
+        'name' => $service->name,
+        'provider' => [
+            '@type' => 'MovingCompany',
+            'name' => 'Bawa Beres',
+        ],
+        'description' => $service->description ?? 'Layanan pindahan dan penyimpanan di Kota Malang.',
+        'offers' => [
+            '@type' => 'Offer',
+            'price' => (string) $service->base_price,
+            'priceCurrency' => 'IDR',
+        ],
+        'areaServed' => 'Kota Malang',
+    ];
+
+    $breadcrumbSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Beranda',
+                'item' => url('/'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Layanan',
+                'item' => route('public.services'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $service->name,
+                'item' => url()->current(),
+            ],
+        ],
+    ];
+@endphp
+<script type="application/ld+json">
+{!! json_encode($serviceSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+<script type="application/ld+json">
+{!! json_encode($breadcrumbSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+</script>
+@endpush
 
 @section('content')
+
+
 <div class="py-16 sm:py-24 bg-slate-50">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-12">
         <!-- Breadcrumbs -->

@@ -5,7 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ isset($title) ? $title . ' — ' . config('app.name', 'Bawa Beres') : config('app.name', 'Bawa Beres') . ' | Moving, Storage & Delivery Kota Malang' }}</title>
+    <title>{{ isset($title) ? $title . ' — ' . config('app.name', 'Bawa Beres') : config('app.name', 'Bawa Beres') . ' | Jasa Pindahan & Penitipan Barang Storage Kota Malang' }}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{{ $metaDescription ?? 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code, dan pengiriman barang se-Malang Raya. Transparan, aman, dan tanpa biaya siluman.' }}">
+    <meta name="keywords" content="{{ $metaKeywords ?? 'jasa pindahan malang, titip barang malang, storage mahasiswa malang, sewa pick up malang, logistik kota malang' }}">
+    <link rel="canonical" href="{{ $canonicalUrl ?? url()->current() }}">
+    <meta name="robots" content="index, follow">
+
+    <!-- OpenGraph Metadata -->
+    <meta property="og:site_name" content="Bawa Beres">
+    <meta property="og:type" content="{{ $ogType ?? 'website' }}">
+    <meta property="og:title" content="{{ isset($title) ? $title . ' — ' . config('app.name', 'Bawa Beres') : 'Bawa Beres | Jasa Pindahan & Storage Kota Malang' }}">
+    <meta property="og:description" content="{{ $metaDescription ?? 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code, dan pengiriman barang se-Malang Raya.' }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:locale" content="id_ID">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ isset($title) ? $title . ' — ' . config('app.name', 'Bawa Beres') : 'Bawa Beres | Jasa Pindahan & Storage Kota Malang' }}">
+    <meta name="twitter:description" content="{{ $metaDescription ?? 'Platform jasa pindahan dan penitipan barang terpercaya se-Malang Raya.' }}">
+
+    <!-- Schema.org LocalBusiness / MovingCompany JSON-LD -->
+    @php
+        $localBusinessSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'MovingCompany',
+            'name' => 'Bawa Beres',
+            'url' => url('/'),
+            'telephone' => '+6281234567890',
+            'description' => 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code di Kota Malang.',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'streetAddress' => 'Jl. Soekarno Hatta No. 88, Lowokwaru',
+                'addressLocality' => 'Kota Malang',
+                'addressRegion' => 'Jawa Timur',
+                'postalCode' => '65141',
+                'addressCountry' => 'ID',
+            ],
+            'geo' => [
+                '@type' => 'GeoCoordinates',
+                'latitude' => -7.9467,
+                'longitude' => 112.6157,
+            ],
+            'areaServed' => [
+                'Kota Malang',
+                'Kota Batu',
+                'Kabupaten Malang',
+            ],
+            'openingHoursSpecification' => [
+                '@type' => 'OpeningHoursSpecification',
+                'dayOfWeek' => [
+                    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
+                ],
+                'opens' => '07:00',
+                'closes' => '21:00',
+            ],
+            'priceRange' => 'Rp',
+        ];
+    @endphp
+    <script type="application/ld+json">
+    {!! json_encode($localBusinessSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
+    </script>
+    @stack('schema')
+
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -14,6 +77,7 @@
     <!-- Scripts & Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+
 </head>
 <body class="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased flex flex-col selection:bg-amber-500 selection:text-white">
     <!-- Navigation Header -->
