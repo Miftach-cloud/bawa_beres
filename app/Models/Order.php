@@ -120,4 +120,20 @@ class Order extends Model
     {
         return $this->hasMany(OrderStatusHistory::class);
     }
+
+    public function quotations(): HasMany
+    {
+        return $this->hasMany(Quotation::class)->orderByDesc('version');
+    }
+
+    public function acceptedQuotation(): HasOne
+    {
+        return $this->hasOne(Quotation::class)->where('status', \App\Enums\QuotationStatus::ACCEPTED->value);
+    }
+
+    public function latestQuotation(): HasOne
+    {
+        return $this->hasOne(Quotation::class)->latestOfMany('version');
+    }
 }
+

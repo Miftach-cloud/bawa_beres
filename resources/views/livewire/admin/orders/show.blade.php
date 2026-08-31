@@ -319,17 +319,11 @@
                 </div>
             </div>
 
-            <!-- 2. Modular Placeholders for Upcoming Phases (Section 5.2) -->
-            <!-- Quotation Module Scaffolding (Phase 6) -->
-            <div class="rounded-2xl bg-white p-5 border border-dashed border-slate-300 shadow-xs space-y-2">
-                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
-                    <span>📑 Quotation & Penawaran</span>
-                    <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">Fase 6</span>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    Modul pembuatan rincian kalkulasi biaya, biaya armada, dan approval penawaran harga pelanggan.
-                </p>
+            <!-- 2. Quotation Management Module (Phase 6) -->
+            <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs">
+                <livewire:admin.quotations.manager :order="$order" :key="'quotations-'.$order->id" />
             </div>
+
 
             <!-- Payment Module Scaffolding (Phase 7) -->
             <div class="rounded-2xl bg-white p-5 border border-dashed border-slate-300 shadow-xs space-y-2">
