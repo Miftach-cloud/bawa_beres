@@ -18,7 +18,7 @@ class OrderFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_code' => Order::generateCode(),
+            'order_code' => null, // Let Order model booted hook generate sequential unique code
             'customer_id' => Customer::factory(),
             'service_id' => Service::factory(),
             'status' => OrderStatus::PENDING_REVIEW,

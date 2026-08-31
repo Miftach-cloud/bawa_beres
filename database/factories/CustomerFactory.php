@@ -16,7 +16,7 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'customer_code' => Customer::generateCode(),
+            'customer_code' => null, // Let Customer model booted hook generate sequential unique code
             'user_id' => null,
             'name' => fake()->name(),
             'phone' => fake()->phoneNumber(),
