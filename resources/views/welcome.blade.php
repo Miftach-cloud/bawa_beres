@@ -70,6 +70,12 @@
                 </p>
             </div>
         </div>
+
+        <!-- Interactive Public Booking Section -->
+        <div class="mt-24">
+            <livewire:public.booking-form />
+        </div>
     </div>
 </div>
 @endsection
+

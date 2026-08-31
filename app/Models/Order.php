@@ -20,6 +20,7 @@ class Order extends Model
         'customer_id',
         'service_id',
         'status',
+        'preferred_date',
         'customer_notes',
         'admin_notes',
         'total_amount',
@@ -29,9 +30,11 @@ class Order extends Model
     {
         return [
             'status' => OrderStatus::class,
+            'preferred_date' => 'date',
             'total_amount' => 'decimal:2',
         ];
     }
+
 
     /**
      * Generate sequential/formatted order code: ORD-YYYY-XXXXXX

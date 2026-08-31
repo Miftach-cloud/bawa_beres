@@ -16,9 +16,25 @@ class CreateOrder
     public function execute(array $data): Order
     {
         return DB::transaction(function () use ($data) {
-            // 1. Resolve or create customer
+            // 1. Resolve or create customer (Lookup by phone to avoid duplicates)
             if (!empty($data['customer_id'])) {
                 $customer = Customer::findOrFail($data['customer_id']);
+            } elseif (!empty($data['customer_phone'])) {
+                $customer = Customer::firstOrCreate(
+                    ['phone' => $data['customer_phone']],
+                    [
+                        'name' => $data['customer_name'] ?? 'Pelanggan',
+                        'email' => $data['customer_email'] ?? null,
+                        'notes' => $data['customer_notes'] ?? null,
+                    ]
+                );
+
+                if (!empty($data['customer_name']) && $customer->name === 'Pelanggan') {
+                    $customer->update([
+                        'name' => $data['customer_name'],
+                        'email' => $data['customer_email'] ?? $customer->email,
+                    ]);
+                }
             } else {
                 $customer = Customer::create([
                     'name' => $data['customer_name'] ?? 'Pelanggan',
@@ -33,10 +49,12 @@ class CreateOrder
                 'customer_id' => $customer->id,
                 'service_id' => $data['service_id'],
                 'status' => $data['status'] ?? OrderStatus::PENDING_REVIEW,
+                'preferred_date' => $data['preferred_date'] ?? null,
                 'customer_notes' => $data['customer_notes'] ?? null,
                 'admin_notes' => $data['admin_notes'] ?? null,
                 'total_amount' => $data['total_amount'] ?? 0,
             ]);
+
 
             // 3. Create items
             if (!empty($data['items']) && is_array($data['items'])) {

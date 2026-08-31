@@ -3,11 +3,14 @@
 namespace Tests\Feature;
 
 use App\Livewire\Public\SystemStatus;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class FoundationTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_homepage_loads_successfully_with_public_layout(): void
     {
         $response = $this->get('/');

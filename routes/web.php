@@ -20,8 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::get('/booking', function () {
+    return redirect('/#booking');
+})->name('public.booking');
+
 // Phase 13: Public / Field Staff QR Scanner Landing
 Route::get('/i/{code}', \App\Livewire\Public\InventoryScan::class)->name('inventory.scan');
+
 
 // Admin Guest Routes
 Route::middleware('guest')->prefix('admin')->group(function () {
