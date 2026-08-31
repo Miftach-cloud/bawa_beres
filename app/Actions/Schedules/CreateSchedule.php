@@ -54,7 +54,14 @@ class CreateSchedule
                 }
             }
 
-            return $schedule->fresh(['order', 'creator']);
+            $freshSchedule = $schedule->fresh(['order.customer', 'creator']);
+
+            if ($type === ScheduleType::PICKUP) {
+                \App\Events\PickupScheduled::dispatch($order->fresh(['customer', 'service']), $freshSchedule);
+            }
+
+            return $freshSchedule;
         });
     }
 }
+

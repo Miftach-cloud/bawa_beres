@@ -4,9 +4,11 @@ namespace App\Actions\Orders;
 
 use App\Enums\AddressType;
 use App\Enums\OrderStatus;
+use App\Events\OrderCreated;
 use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
+
 
 class CreateOrder
 {
@@ -99,7 +101,11 @@ class CreateOrder
                 ]);
             }
 
-            return $order->fresh(['customer', 'service', 'items', 'addresses', 'statusHistories']);
+            $freshOrder = $order->fresh(['customer', 'service', 'items', 'addresses', 'statusHistories']);
+            OrderCreated::dispatch($freshOrder);
+
+            return $freshOrder;
         });
     }
 }
+

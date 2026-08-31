@@ -70,8 +70,12 @@ class AssignInventoryToLocation
                 }
             }
 
-            return $item->fresh(['storageLocation', 'order', 'movements']);
+            $freshItem = $item->fresh(['storageLocation', 'order.customer', 'movements']);
+            \App\Events\InventoryStored::dispatch($freshItem, $location);
+
+            return $freshItem;
         });
     }
 }
+
 

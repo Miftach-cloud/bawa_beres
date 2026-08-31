@@ -35,7 +35,18 @@ class ChangeOrderStatus
                 'notes' => $notes,
             ]);
 
-            return $order->fresh(['statusHistories', 'customer', 'service']);
+            $freshOrder = $order->fresh(['statusHistories', 'customer', 'service']);
+
+            if (in_array($newStatus, [OrderStatus::CONFIRMED, OrderStatus::PAID], true) && !in_array($fromStatus, [OrderStatus::CONFIRMED, OrderStatus::PAID], true)) {
+                \App\Events\OrderConfirmed::dispatch($freshOrder);
+            }
+
+            if ($newStatus === OrderStatus::COMPLETED && $fromStatus !== OrderStatus::COMPLETED) {
+                \App\Events\OrderCompleted::dispatch($freshOrder);
+            }
+
+            return $freshOrder;
         });
     }
 }
+

@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Enums\UserRole;
+use App\Listeners\SendOrderNotifications;
 use App\Models\User;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,7 +24,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Register Event Subscribers
+        Event::subscribe(SendOrderNotifications::class);
+
         // Superadmin bypass for Owner
+
         Gate::before(function (User $user, string $ability) {
             if ($user->isOwner()) {
                 return true;

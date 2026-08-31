@@ -60,7 +60,11 @@ class CreateQuotation
                 }
             }
 
-            return $quotation->fresh(['items', 'order']);
+            $freshQuotation = $quotation->fresh(['items', 'order.customer']);
+            \App\Events\QuotationCreated::dispatch($freshQuotation);
+
+            return $freshQuotation;
         });
     }
 }
+

@@ -19,6 +19,10 @@ class ReceiveInventoryItem
             'received_by' => $receiver?->id,
         ]);
 
-        return $item->fresh(['order', 'receiver']);
+        $freshItem = $item->fresh(['order.customer', 'receiver']);
+        \App\Events\InventoryReceived::dispatch($freshItem->order, $freshItem);
+
+        return $freshItem;
     }
 }
+
