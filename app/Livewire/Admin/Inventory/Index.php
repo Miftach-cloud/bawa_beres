@@ -29,6 +29,7 @@ class Index extends Component
     // Quick Store Modal
     public bool $showStoreModal = false;
     public ?int $selectedItemId = null;
+    public ?int $selectedLocationId = null;
     public string $storageLocation = 'Rak A-01 (Gudang Dinoyo)';
 
     // Quick QC Modal
@@ -100,6 +101,7 @@ class Index extends Component
 
         $item = InventoryItem::findOrFail($itemId);
         $this->selectedItemId = $item->id;
+        $this->selectedLocationId = $item->storage_location_id;
         $this->storageLocation = $item->storage_location ?: 'Rak A-01 (Gudang Dinoyo)';
         $this->showStoreModal = true;
     }
@@ -108,18 +110,26 @@ class Index extends Component
     {
         $this->showStoreModal = false;
         $this->selectedItemId = null;
+        $this->selectedLocationId = null;
     }
 
-    public function confirmStore(StoreInventoryItem $action): void
+    public function confirmStore(StoreInventoryItem $action, \App\Actions\Storage\AssignInventoryToLocation $assignAction): void
     {
         Gate::authorize('manage-inventory');
 
         $item = InventoryItem::findOrFail($this->selectedItemId);
-        $action->execute($item, $this->storageLocation, Auth::user());
+
+        if ($this->selectedLocationId) {
+            $location = \App\Models\StorageLocation::findOrFail($this->selectedLocationId);
+            $assignAction->execute($item, $location, Auth::user());
+        } else {
+            $action->execute($item, $this->storageLocation ?: 'Rak A-01 (Gudang Dinoyo)', Auth::user());
+        }
 
         $this->showStoreModal = false;
-        session()->flash('message', "Barang #{$item->inventory_code} berhasil disimpan di {$this->storageLocation}.");
+        session()->flash('message', "Barang #{$item->inventory_code} berhasil disimpan di rak gudang.");
     }
+
 
     public function release(int $itemId, ReleaseInventoryItem $action): void
     {
@@ -166,11 +176,14 @@ class Index extends Component
         }
 
         $items = $query->latest('id')->paginate(15);
+        $availableLocations = \App\Models\StorageLocation::available()->get();
 
         return view('livewire.admin.inventory.index', [
             'items' => $items,
+            'availableLocations' => $availableLocations,
             'statuses' => InventoryStatus::cases(),
             'conditions' => ItemCondition::cases(),
         ]);
     }
 }
+

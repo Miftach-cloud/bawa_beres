@@ -16,6 +16,7 @@ class InventoryItem extends Model
         'inventory_code',
         'order_id',
         'order_item_id',
+        'storage_location_id',
         'name',
         'description',
         'category',
@@ -29,6 +30,7 @@ class InventoryItem extends Model
         'received_by',
         'notes',
     ];
+
 
     protected function casts(): array
     {
@@ -94,7 +96,13 @@ class InventoryItem extends Model
         return $this->belongsTo(User::class, 'received_by');
     }
 
+    public function storageLocation(): BelongsTo
+    {
+        return $this->belongsTo(StorageLocation::class, 'storage_location_id');
+    }
+
     public function photos(): \Illuminate\Database\Eloquent\Relations\HasMany
+
     {
         return $this->hasMany(InventoryPhoto::class)->latest('id');
     }

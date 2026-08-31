@@ -245,9 +245,23 @@
                 </div>
 
                 <div class="space-y-3 text-xs">
+                    @if ($availableLocations->isNotEmpty())
+                        <div>
+                            <label class="block font-semibold text-slate-700 mb-1">Pilih Slot Rak Master *</label>
+                            <select wire:model="selectedLocationId" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900 font-mono">
+                                <option value="">-- Pilih dari Master Slot Rak --</option>
+                                @foreach ($availableLocations as $loc)
+                                    <option value="{{ $loc->id }}">
+                                        {{ $loc->code }} ({{ $loc->warehouse }} - {{ $loc->type->label() }}) [Sisa: {{ $loc->remainingCapacity() }}]
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    @endif
+
                     <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Lokasi Rak / Gudang *</label>
-                        <input type="text" wire:model="storageLocation" placeholder="Contoh: Rak A-02 / Gudang Dinoyo Lt. 1" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 font-mono">
+                        <label class="block font-semibold text-slate-700 mb-1">Label Lokasi Manual (Opsional / Custom)</label>
+                        <input type="text" wire:model="storageLocation" placeholder="Contoh: MLG01-A-R02-L03" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 font-mono">
                     </div>
                 </div>
 
@@ -262,6 +276,7 @@
             </div>
         </div>
     @endif
+
 
     <!-- Embedded Photos Gallery Modal -->
     <livewire:admin.inventory.photos-modal />

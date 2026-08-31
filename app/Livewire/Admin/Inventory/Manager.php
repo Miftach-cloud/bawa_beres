@@ -27,6 +27,7 @@ class Manager extends Component
 
     // Store Modal
     public bool $showStoreModal = false;
+    public ?int $selectedLocationId = null;
     public string $storageLocation = 'Rak A-01 (Gudang Dinoyo)';
 
     // Add Item Modal
@@ -97,6 +98,7 @@ class Manager extends Component
 
         $item = InventoryItem::findOrFail($itemId);
         $this->selectedItemId = $item->id;
+        $this->selectedLocationId = $item->storage_location_id;
         $this->storageLocation = $item->storage_location ?: 'Rak A-01 (Gudang Dinoyo)';
         $this->showStoreModal = true;
     }
@@ -105,18 +107,25 @@ class Manager extends Component
     {
         $this->showStoreModal = false;
         $this->selectedItemId = null;
+        $this->selectedLocationId = null;
     }
 
-    public function confirmStore(StoreInventoryItem $action): void
+    public function confirmStore(StoreInventoryItem $action, \App\Actions\Storage\AssignInventoryToLocation $assignAction): void
     {
         Gate::authorize('manage-inventory');
 
         $item = InventoryItem::findOrFail($this->selectedItemId);
-        $action->execute($item, $this->storageLocation, Auth::user());
+
+        if ($this->selectedLocationId) {
+            $location = \App\Models\StorageLocation::findOrFail($this->selectedLocationId);
+            $assignAction->execute($item, $location, Auth::user());
+        } else {
+            $action->execute($item, $this->storageLocation ?: 'Rak A-01 (Gudang Dinoyo)', Auth::user());
+        }
 
         $this->showStoreModal = false;
         $this->order->refresh();
-        session()->flash('inventory_message', "Barang #{$item->inventory_code} telah tersimpan di {$this->storageLocation}.");
+        session()->flash('inventory_message', "Barang #{$item->inventory_code} telah tersimpan di rak gudang.");
     }
 
     public function release(int $itemId, ReleaseInventoryItem $action): void
@@ -129,6 +138,7 @@ class Manager extends Component
         $this->order->refresh();
         session()->flash('inventory_message', "Barang #{$item->inventory_code} telah diserahterimakan (RELEASED).");
     }
+
 
     public function openAddModal(): void
     {
@@ -172,11 +182,14 @@ class Manager extends Component
 
     public function render()
     {
-        $items = $this->order->inventoryItems()->with(['orderItem', 'receiver'])->get();
+        $items = $this->order->inventoryItems()->with(['orderItem', 'receiver', 'storageLocation', 'photos'])->get();
+        $availableLocations = \App\Models\StorageLocation::available()->get();
 
         return view('livewire.admin.inventory.manager', [
             'items' => $items,
+            'availableLocations' => $availableLocations,
             'conditions' => ItemCondition::cases(),
         ]);
     }
 }
+
