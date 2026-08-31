@@ -29,10 +29,11 @@
 
                 <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                     <a href="{{ url('/') }}" class="hover:text-slate-900 transition-colors">Beranda</a>
-                    <a href="#services" class="hover:text-slate-900 transition-colors">Layanan</a>
-                    <a href="#tracking" class="hover:text-slate-900 transition-colors">Cek Status Order</a>
-                    <a href="#faq" class="hover:text-slate-900 transition-colors">FAQ</a>
+                    <a href="{{ url('/#services') }}" class="hover:text-slate-900 transition-colors">Layanan</a>
+                    <a href="{{ route('public.track') }}" class="hover:text-slate-900 transition-colors">Cek Status Order</a>
+                    <a href="{{ url('/#faq') }}" class="hover:text-slate-900 transition-colors">FAQ</a>
                 </nav>
+
             </div>
 
             <div class="flex items-center gap-3">

@@ -24,8 +24,13 @@ Route::get('/booking', function () {
     return redirect('/#booking');
 })->name('public.booking');
 
+// Phase 15: Public Order Tracking
+Route::get('/track', \App\Livewire\Public\OrderTracking::class)->name('public.track');
+Route::get('/track/{order_code}', \App\Livewire\Public\OrderTracking::class)->name('public.track.order');
+
 // Phase 13: Public / Field Staff QR Scanner Landing
 Route::get('/i/{code}', \App\Livewire\Public\InventoryScan::class)->name('inventory.scan');
+
 
 
 // Admin Guest Routes
