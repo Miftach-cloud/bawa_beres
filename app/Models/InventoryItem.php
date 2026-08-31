@@ -14,6 +14,7 @@ class InventoryItem extends Model
 
     protected $fillable = [
         'inventory_code',
+        'qr_code',
         'order_id',
         'order_item_id',
         'storage_location_id',
@@ -30,7 +31,6 @@ class InventoryItem extends Model
         'received_by',
         'notes',
     ];
-
 
     protected function casts(): array
     {
@@ -65,21 +65,48 @@ class InventoryItem extends Model
         return $prefix . str_pad((string) $number, 6, '0', STR_PAD_LEFT);
     }
 
+    /**
+     * Generate secure unique QR token (e.g. A8J29X or 8-character uppercase alphanumeric)
+     */
+    public static function generateQrCode(): string
+    {
+        do {
+            $token = strtoupper(\Illuminate\Support\Str::random(8));
+        } while (static::where('qr_code', $token)->exists());
+
+        return $token;
+    }
+
+    public function getScanUrlAttribute(): string
+    {
+        return route('inventory.scan', ['code' => $this->qr_code ?: $this->inventory_code]);
+    }
+
+    public function getQrSvg(int $size = 180): string
+    {
+        return \SimpleSoftwareIO\QrCode\Facades\QrCode::size($size)->margin(1)->generate($this->scan_url);
+    }
+
     protected static function booted(): void
     {
         static::creating(function (InventoryItem $item) {
             if (empty($item->inventory_code)) {
                 $item->inventory_code = static::generateCode();
             }
+            if (empty($item->qr_code)) {
+                $item->qr_code = static::generateQrCode();
+            }
             if (empty($item->qr_code_payload)) {
                 $item->qr_code_payload = json_encode([
                     'code' => $item->inventory_code,
+                    'qr' => $item->qr_code,
                     'order' => $item->order_id,
                     'name' => $item->name,
                 ]);
             }
         });
     }
+
 
     public function order(): BelongsTo
     {

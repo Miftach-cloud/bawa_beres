@@ -122,6 +122,16 @@
                                 <div class="inline-flex items-center gap-1.5">
                                     <button 
                                         type="button" 
+                                        wire:click="$dispatch('openQrLabel', { itemId: {{ $item->id }} })"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                                        title="QR Code & Cetak Label"
+                                    >
+                                        <span>🏷️</span>
+                                        <span>QR</span>
+                                    </button>
+
+                                    <button 
+                                        type="button" 
                                         wire:click="$dispatch('openPhotoGallery', { itemId: {{ $item->id }} })"
                                         class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
                                         title="Dokumentasi Foto"
@@ -129,6 +139,7 @@
                                         <span>📷</span>
                                         <span>{{ $item->photos->count() }}</span>
                                     </button>
+
 
                                     <button 
                                         type="button" 
@@ -355,6 +366,10 @@
 
     <!-- Embedded Movement Timeline Modal -->
     <livewire:admin.inventory.movement-timeline-modal />
+
+    <!-- Embedded QR Label Modal -->
+    <livewire:admin.inventory.qr-label-modal />
 </div>
+
 
 

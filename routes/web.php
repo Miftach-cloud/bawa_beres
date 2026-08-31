@@ -15,10 +15,13 @@ use App\Livewire\Admin\Storage\Index as StorageIndex;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
-// Public Website
+// Public Website & Inventory Scan
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+// Phase 13: Public / Field Staff QR Scanner Landing
+Route::get('/i/{code}', \App\Livewire\Public\InventoryScan::class)->name('inventory.scan');
 
 // Admin Guest Routes
 Route::middleware('guest')->prefix('admin')->group(function () {
@@ -42,9 +45,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     // Phase 9: Inventory Management
     Route::get('/inventory', InventoryIndex::class)->name('admin.inventory');
+    Route::get('/inventory/{inventoryItem}/label', function (\App\Models\InventoryItem $inventoryItem) {
+        Gate::authorize('manage-inventory');
+        return view('admin.inventory.label', ['item' => $inventoryItem]);
+    })->name('admin.inventory.label');
 
     // Phase 11: Storage Location Management
     Route::get('/storage', StorageIndex::class)->name('admin.storage');
+
 
     // Phase 4: Service Management
     Route::get('/services', ServiceIndex::class)->name('admin.services');
