@@ -160,6 +160,30 @@ class Order extends Model
     {
         return (float) $this->total_amount > 0 && $this->totalPaid() >= (float) $this->total_amount;
     }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class)->orderBy('scheduled_date')->orderBy('start_time');
+    }
+
+    public function latestSchedule(): HasOne
+    {
+        return $this->hasOne(Schedule::class)->latestOfMany();
+    }
+
+    public function pickupSchedule(): HasOne
+    {
+        return $this->hasOne(Schedule::class)->where('type', \App\Enums\ScheduleType::PICKUP->value);
+    }
+
+    public function deliverySchedule(): HasOne
+    {
+        return $this->hasOne(Schedule::class)->whereIn('type', [
+            \App\Enums\ScheduleType::DELIVERY->value,
+            \App\Enums\ScheduleType::REDELIVERY->value,
+        ]);
+    }
 }
+
 
 

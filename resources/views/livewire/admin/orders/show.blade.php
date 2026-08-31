@@ -331,16 +331,11 @@
             </div>
 
 
-            <!-- Schedule Module Scaffolding (Phase 8) -->
-            <div class="rounded-2xl bg-white p-5 border border-dashed border-slate-300 shadow-xs space-y-2">
-                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
-                    <span>🚚 Jadwal & Alokasi Driver</span>
-                    <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">Fase 8</span>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    Modul penentuan tanggal/jam penjemputan dan penugasan armada driver di Kota Malang.
-                </p>
+            <!-- 4. Schedule & Fleet Management Module (Phase 8) -->
+            <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs">
+                <livewire:admin.schedules.manager :order="$order" :key="'schedules-'.$order->id" />
             </div>
+
 
             <!-- Inventory Module Scaffolding (Phase 9 & 10) -->
             <div class="rounded-2xl bg-white p-5 border border-dashed border-slate-300 shadow-xs space-y-2">
