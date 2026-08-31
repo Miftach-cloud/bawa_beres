@@ -5,6 +5,8 @@ use App\Livewire\Admin\Auth\Login;
 use App\Livewire\Admin\Customers\Index as CustomerIndex;
 use App\Livewire\Admin\Customers\Show as CustomerShow;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Orders\Index as OrderIndex;
+use App\Livewire\Admin\Orders\Show as OrderShow;
 use App\Livewire\Admin\Services\Index as ServiceIndex;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +26,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
+    // Phase 5: Order Management
+    Route::get('/orders', OrderIndex::class)->name('admin.orders');
+    Route::get('/orders/{order}', OrderShow::class)->name('admin.orders.show');
+
     // Phase 4: Service Management
     Route::get('/services', ServiceIndex::class)->name('admin.services');
 
@@ -31,12 +37,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/customers', CustomerIndex::class)->name('admin.customers');
     Route::get('/customers/{customer}', CustomerShow::class)->name('admin.customers.show');
 
-    // Phase 5+: Other Modules
-    Route::get('/orders', function () {
-        abort_if(Gate::denies('manage-orders'), 403, 'Akses ditolak.');
-        return view('admin.placeholder', ['title' => 'Manajemen Order']);
-    })->name('admin.orders');
-
+    // Phase 6+: Other Modules
     Route::get('/schedule', function () {
         abort_if(Gate::denies('manage-schedule'), 403, 'Akses ditolak.');
         return view('admin.placeholder', ['title' => 'Jadwal & Armada']);

@@ -77,27 +77,14 @@ class Order extends Model
     }
 
     /**
-     * Transition order status with history audit trail
+     * Transition order status with state machine guard & history audit trail
      */
     public function transitionTo(OrderStatus $newStatus, ?string $notes = null, ?User $changedBy = null): bool
     {
-        return DB::transaction(function () use ($newStatus, $notes, $changedBy) {
-            $oldStatus = $this->status;
-
-            $this->update([
-                'status' => $newStatus,
-            ]);
-
-            $this->statusHistories()->create([
-                'from_status' => $oldStatus instanceof OrderStatus ? $oldStatus->value : $oldStatus,
-                'to_status' => $newStatus->value,
-                'changed_by' => $changedBy?->id,
-                'notes' => $notes,
-            ]);
-
-            return true;
-        });
+        app(\App\Actions\Orders\ChangeOrderStatus::class)->execute($this, $newStatus, $notes, $changedBy);
+        return true;
     }
+
 
     public function customer(): BelongsTo
     {
