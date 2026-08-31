@@ -5,6 +5,7 @@ use App\Livewire\Admin\Auth\Login;
 use App\Livewire\Admin\Customers\Index as CustomerIndex;
 use App\Livewire\Admin\Customers\Show as CustomerShow;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Inventory\Index as InventoryIndex;
 use App\Livewire\Admin\Orders\Index as OrderIndex;
 use App\Livewire\Admin\Orders\Show as OrderShow;
 use App\Livewire\Admin\Payments\Index as PaymentIndex;
@@ -38,6 +39,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     // Phase 8: Schedule Management
     Route::get('/schedule', ScheduleIndex::class)->name('admin.schedule');
 
+    // Phase 9: Inventory Management
+    Route::get('/inventory', InventoryIndex::class)->name('admin.inventory');
+
     // Phase 4: Service Management
     Route::get('/services', ServiceIndex::class)->name('admin.services');
 
@@ -45,12 +49,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/customers', CustomerIndex::class)->name('admin.customers');
     Route::get('/customers/{customer}', CustomerShow::class)->name('admin.customers.show');
 
-    // Phase 9+: Other Modules
-    Route::get('/inventory', function () {
-        abort_if(Gate::denies('manage-inventory'), 403, 'Akses ditolak.');
-        return view('admin.placeholder', ['title' => 'Item & QR Label']);
-    })->name('admin.inventory');
-
+    // Phase 10+: Other Modules
     Route::get('/storage', function () {
         abort_if(Gate::denies('manage-storage'), 403, 'Akses ditolak.');
         return view('admin.placeholder', ['title' => 'Gudang Storage']);

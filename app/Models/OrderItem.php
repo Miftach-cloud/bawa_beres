@@ -30,4 +30,10 @@ class OrderItem extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    public function inventoryItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InventoryItem::class);
+    }
 }
+

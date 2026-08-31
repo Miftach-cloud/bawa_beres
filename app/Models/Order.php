@@ -183,7 +183,18 @@ class Order extends Model
             \App\Enums\ScheduleType::REDELIVERY->value,
         ]);
     }
+
+    public function inventoryItems(): HasMany
+    {
+        return $this->hasMany(InventoryItem::class);
+    }
+
+    public function storedInventoryItems(): HasMany
+    {
+        return $this->hasMany(InventoryItem::class)->where('status', \App\Enums\InventoryStatus::STORED->value);
+    }
 }
+
 
 
 

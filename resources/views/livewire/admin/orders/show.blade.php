@@ -337,16 +337,11 @@
             </div>
 
 
-            <!-- Inventory Module Scaffolding (Phase 9 & 10) -->
-            <div class="rounded-2xl bg-white p-5 border border-dashed border-slate-300 shadow-xs space-y-2">
-                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
-                    <span>🏷️ Inventory, QR & Storage</span>
-                    <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">Fase 9-10</span>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    Modul verifikasi fisik barang, cetak label QR, dokumentasi foto, dan alokasi rak storage gudang.
-                </p>
+            <!-- 5. Inventory & QC Management Module (Phase 9) -->
+            <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs">
+                <livewire:admin.inventory.manager :order="$order" :key="'inventory-'.$order->id" />
             </div>
+
         </div>
     </div>
 
