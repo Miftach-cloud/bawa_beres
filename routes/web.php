@@ -15,10 +15,43 @@ use App\Livewire\Admin\Storage\Index as StorageIndex;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
-// Public Website & Inventory Scan
+// Public Website Marketing Pages & Booking
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/services', function () {
+    $services = \App\Models\Service::where('is_active', true)->get();
+    return view('public.services.index', ['services' => $services]);
+})->name('public.services');
+
+Route::get('/services/{service}', function (\App\Models\Service $service) {
+    return view('public.services.show', ['service' => $service]);
+})->name('public.services.show');
+
+Route::get('/how-it-works', function () {
+    return view('public.how-it-works');
+})->name('public.how-it-works');
+
+Route::get('/storage-security', function () {
+    return view('public.storage-security');
+})->name('public.storage-security');
+
+Route::get('/coverage', function () {
+    return view('public.coverage');
+})->name('public.coverage');
+
+Route::get('/faq', function () {
+    return view('public.faq');
+})->name('public.faq');
+
+Route::get('/about', function () {
+    return view('public.about');
+})->name('public.about');
+
+Route::get('/contact', function () {
+    return view('public.contact');
+})->name('public.contact');
 
 Route::get('/booking', function () {
     return redirect('/#booking');
@@ -30,6 +63,7 @@ Route::get('/track/{order_code}', \App\Livewire\Public\OrderTracking::class)->na
 
 // Phase 13: Public / Field Staff QR Scanner Landing
 Route::get('/i/{code}', \App\Livewire\Public\InventoryScan::class)->name('inventory.scan');
+
 
 
 
