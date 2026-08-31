@@ -2,8 +2,10 @@
 
 namespace App\Actions\Storage;
 
+use App\Actions\Movements\RecordMovement;
 use App\Actions\Orders\ChangeOrderStatus;
 use App\Enums\InventoryStatus;
+use App\Enums\MovementType;
 use App\Enums\OrderStatus;
 use App\Enums\StorageLocationStatus;
 use App\Models\InventoryItem;
@@ -14,7 +16,8 @@ use Illuminate\Support\Facades\DB;
 class AssignInventoryToLocation
 {
     public function __construct(
-        protected ChangeOrderStatus $changeOrderStatus
+        protected ChangeOrderStatus $changeOrderStatus,
+        protected RecordMovement $recordMovement
     ) {}
 
     /**
@@ -23,6 +26,9 @@ class AssignInventoryToLocation
     public function execute(InventoryItem $item, StorageLocation $location, ?User $actor = null): InventoryItem
     {
         return DB::transaction(function () use ($item, $location, $actor) {
+            $fromLocation = $item->storageLocation;
+            $fromCode = $fromLocation ? $fromLocation->code : ($item->storage_location ?: 'Area Penerimaan / Receiving');
+
             $item->update([
                 'storage_location_id' => $location->id,
                 'storage_location' => $location->code,
@@ -33,6 +39,18 @@ class AssignInventoryToLocation
             if ($location->fresh()->isFull()) {
                 $location->update(['status' => StorageLocationStatus::OCCUPIED]);
             }
+
+            // Record Inbound Movement
+            $this->recordMovement->execute(
+                item: $item,
+                type: MovementType::INBOUND,
+                fromLocation: $fromLocation,
+                toLocation: $location,
+                fromLocationCode: $fromCode,
+                toLocationCode: $location->code,
+                performer: $actor,
+                notes: "Penempatan barang fisik ke rak {$location->code} ({$location->warehouse})"
+            );
 
             $order = $item->order;
 
@@ -52,7 +70,8 @@ class AssignInventoryToLocation
                 }
             }
 
-            return $item->fresh(['storageLocation', 'order']);
+            return $item->fresh(['storageLocation', 'order', 'movements']);
         });
     }
 }
+

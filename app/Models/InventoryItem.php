@@ -101,7 +101,18 @@ class InventoryItem extends Model
         return $this->belongsTo(StorageLocation::class, 'storage_location_id');
     }
 
+    public function movements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InventoryMovement::class)->orderBy('moved_at', 'desc')->orderBy('id', 'desc');
+    }
+
+    public function latestMovement(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(InventoryMovement::class)->latestOfMany('moved_at');
+    }
+
     public function photos(): \Illuminate\Database\Eloquent\Relations\HasMany
+
 
     {
         return $this->hasMany(InventoryPhoto::class)->latest('id');

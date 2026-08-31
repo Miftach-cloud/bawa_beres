@@ -30,8 +30,14 @@ class Manager extends Component
     public ?int $selectedLocationId = null;
     public string $storageLocation = 'Rak A-01 (Gudang Dinoyo)';
 
+    // Relocate Modal
+    public bool $showRelocateModal = false;
+    public ?int $relocateLocationId = null;
+    public string $relocateNotes = '';
+
     // Add Item Modal
     public bool $showAddModal = false;
+
     public string $newItemName = '';
     public string $newItemCategory = 'Sedang';
     public string $newItemCondition = 'GOOD';
@@ -128,16 +134,54 @@ class Manager extends Component
         session()->flash('inventory_message', "Barang #{$item->inventory_code} telah tersimpan di rak gudang.");
     }
 
-    public function release(int $itemId, ReleaseInventoryItem $action): void
+    public function openRelocateModal(int $itemId): void
+    {
+        Gate::authorize('manage-storage');
+
+        $item = InventoryItem::findOrFail($itemId);
+        $this->selectedItemId = $item->id;
+        $this->relocateLocationId = null;
+        $this->relocateNotes = '';
+        $this->showRelocateModal = true;
+    }
+
+    public function closeRelocateModal(): void
+    {
+        $this->showRelocateModal = false;
+        $this->selectedItemId = null;
+        $this->relocateLocationId = null;
+    }
+
+    public function confirmRelocate(\App\Actions\Movements\RelocateInventoryItem $action): void
+    {
+        Gate::authorize('manage-storage');
+
+        $this->validate([
+            'relocateLocationId' => 'required|exists:storage_locations,id',
+        ]);
+
+        $item = InventoryItem::findOrFail($this->selectedItemId);
+        $targetLocation = \App\Models\StorageLocation::findOrFail($this->relocateLocationId);
+
+        $action->execute($item, $targetLocation, Auth::user(), $this->relocateNotes ?: null);
+
+        $this->showRelocateModal = false;
+        $this->order->refresh();
+        session()->flash('inventory_message', "Barang #{$item->inventory_code} berhasil dipindahkan ke rak {$targetLocation->code}.");
+    }
+
+    public function release(int $itemId, ReleaseInventoryItem $action, \App\Actions\Storage\VacateInventoryFromLocation $vacateAction): void
     {
         Gate::authorize('manage-inventory');
 
         $item = InventoryItem::findOrFail($itemId);
+        $vacateAction->execute($item, Auth::user());
         $action->execute($item);
 
         $this->order->refresh();
         session()->flash('inventory_message', "Barang #{$item->inventory_code} telah diserahterimakan (RELEASED).");
     }
+
 
 
     public function openAddModal(): void
