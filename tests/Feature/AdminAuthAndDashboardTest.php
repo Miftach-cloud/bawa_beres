@@ -8,6 +8,7 @@ use App\Livewire\Admin\Auth\Login;
 use App\Livewire\Admin\Dashboard;
 use App\Models\Order;
 use App\Models\User;
+use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
@@ -46,6 +47,49 @@ class AdminAuthAndDashboardTest extends TestCase
             ->assertRedirect(route('admin.dashboard'));
 
         $this->assertAuthenticatedAs($user);
+    }
+
+    public function test_user_can_login_with_seeded_credentials_and_username_format(): void
+    {
+        $this->seed(DatabaseSeeder::class);
+
+        // Test Admin with username handle
+        Livewire::test(Login::class)
+            ->set('email', 'adminbawaberes')
+            ->set('password', 'bawaberes123')
+            ->call('login')
+            ->assertRedirect(route('admin.dashboard'));
+
+        $this->assertAuthenticated();
+        $this->assertTrue(auth()->user()->isAdmin());
+    }
+
+    public function test_owner_can_login_with_username_handle(): void
+    {
+        $this->seed(DatabaseSeeder::class);
+
+        Livewire::test(Login::class)
+            ->set('email', 'ownerbawaberes')
+            ->set('password', 'bawaberes123')
+            ->call('login')
+            ->assertRedirect(route('admin.dashboard'));
+
+        $this->assertAuthenticated();
+        $this->assertTrue(auth()->user()->isOwner());
+    }
+
+    public function test_operation_can_login_with_username_handle(): void
+    {
+        $this->seed(DatabaseSeeder::class);
+
+        Livewire::test(Login::class)
+            ->set('email', 'operationbawaberes')
+            ->set('password', 'bawaberes123')
+            ->call('login')
+            ->assertRedirect(route('admin.dashboard'));
+
+        $this->assertAuthenticated();
+        $this->assertTrue(auth()->user()->isOperation());
     }
 
     public function test_user_cannot_login_with_invalid_credentials(): void

@@ -19,19 +19,19 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
         <div class="bg-slate-800/90 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-2xl border border-slate-700 sm:px-10">
             <form wire:submit="login" class="space-y-5">
-                <!-- Email Input -->
+                <!-- Email / Username Input -->
                 <div>
                     <label for="email" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-                        Email Address
+                        Email / Username
                     </label>
                     <div class="mt-1.5">
                         <input 
                             wire:model="email" 
                             id="email" 
-                            type="email" 
-                            autocomplete="email" 
+                            type="text" 
+                            autocomplete="username" 
                             required 
-                            placeholder="admin@bawaberes.id"
+                            placeholder="adminbawaberes atau admin@bawaberes.id"
                             class="block w-full rounded-xl border border-slate-600 bg-slate-900/80 px-4 py-2.5 text-sm text-white placeholder-slate-500 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                         >
                     </div>
@@ -39,6 +39,7 @@
                         <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                     @enderror
                 </div>
+
 
                 <!-- Password Input -->
                 <div>
