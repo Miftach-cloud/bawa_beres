@@ -135,5 +135,31 @@ class Order extends Model
     {
         return $this->hasOne(Quotation::class)->latestOfMany('version');
     }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class)->latest('id');
+    }
+
+    public function paidPayments(): HasMany
+    {
+        return $this->hasMany(Payment::class)->where('status', \App\Enums\PaymentStatus::PAID->value);
+    }
+
+    public function totalPaid(): float
+    {
+        return (float) $this->paidPayments()->sum('amount');
+    }
+
+    public function remainingBalance(): float
+    {
+        return max(0, (float) $this->total_amount - $this->totalPaid());
+    }
+
+    public function isFullyPaid(): bool
+    {
+        return (float) $this->total_amount > 0 && $this->totalPaid() >= (float) $this->total_amount;
+    }
 }
+
 

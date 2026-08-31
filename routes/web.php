@@ -7,6 +7,7 @@ use App\Livewire\Admin\Customers\Show as CustomerShow;
 use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\Orders\Index as OrderIndex;
 use App\Livewire\Admin\Orders\Show as OrderShow;
+use App\Livewire\Admin\Payments\Index as PaymentIndex;
 use App\Livewire\Admin\Services\Index as ServiceIndex;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/orders', OrderIndex::class)->name('admin.orders');
     Route::get('/orders/{order}', OrderShow::class)->name('admin.orders.show');
 
+    // Phase 7: Payment Management
+    Route::get('/payments', PaymentIndex::class)->name('admin.payments');
+
     // Phase 4: Service Management
     Route::get('/services', ServiceIndex::class)->name('admin.services');
 
@@ -37,7 +41,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/customers', CustomerIndex::class)->name('admin.customers');
     Route::get('/customers/{customer}', CustomerShow::class)->name('admin.customers.show');
 
-    // Phase 6+: Other Modules
+    // Phase 8+: Other Modules
     Route::get('/schedule', function () {
         abort_if(Gate::denies('manage-schedule'), 403, 'Akses ditolak.');
         return view('admin.placeholder', ['title' => 'Jadwal & Armada']);
@@ -52,11 +56,6 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         abort_if(Gate::denies('manage-storage'), 403, 'Akses ditolak.');
         return view('admin.placeholder', ['title' => 'Gudang Storage']);
     })->name('admin.storage');
-
-    Route::get('/payments', function () {
-        abort_if(Gate::denies('manage-payments'), 403, 'Akses ditolak.');
-        return view('admin.placeholder', ['title' => 'Pembayaran']);
-    })->name('admin.payments');
 
     Route::get('/settings', function () {
         abort_if(Gate::denies('manage-settings'), 403, 'Akses ditolak.');

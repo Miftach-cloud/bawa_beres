@@ -325,16 +325,11 @@
             </div>
 
 
-            <!-- Payment Module Scaffolding (Phase 7) -->
-            <div class="rounded-2xl bg-white p-5 border border-dashed border-slate-300 shadow-xs space-y-2">
-                <div class="flex items-center justify-between text-xs font-bold text-slate-700">
-                    <span>💳 Bukti Pembayaran & Invoice</span>
-                    <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] text-slate-500">Fase 7</span>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed">
-                    Modul verifikasi bukti transfer pembayaran, status DP/Lunas, dan generate invoice digital.
-                </p>
+            <!-- 3. Payment Management Module (Phase 7) -->
+            <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs">
+                <livewire:admin.payments.manager :order="$order" :key="'payments-'.$order->id" />
             </div>
+
 
             <!-- Schedule Module Scaffolding (Phase 8) -->
             <div class="rounded-2xl bg-white p-5 border border-dashed border-slate-300 shadow-xs space-y-2">
