@@ -94,10 +94,21 @@ class InventoryItem extends Model
         return $this->belongsTo(User::class, 'received_by');
     }
 
+    public function photos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InventoryPhoto::class)->latest('id');
+    }
+
+    public function damagePhotos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InventoryPhoto::class)->where('type', \App\Enums\PhotoType::DAMAGE->value);
+    }
+
     public function isStored(): bool
     {
         return $this->status === InventoryStatus::STORED;
     }
+
 
     public function isReceived(): bool
     {

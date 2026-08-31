@@ -120,6 +120,16 @@
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="inline-flex items-center gap-1.5">
+                                    <button 
+                                        type="button" 
+                                        wire:click="$dispatch('openPhotoGallery', { itemId: {{ $item->id }} })"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                                        title="Dokumentasi Foto"
+                                    >
+                                        <span>📷</span>
+                                        <span>{{ $item->photos->count() }}</span>
+                                    </button>
+
                                     @if ($item->status->value === 'EXPECTED')
                                         <button 
                                             type="button" 
@@ -159,6 +169,7 @@
                                     </a>
                                 </div>
                             </td>
+
                         </tr>
                     @empty
                         <tr>
@@ -251,4 +262,8 @@
             </div>
         </div>
     @endif
+
+    <!-- Embedded Photos Gallery Modal -->
+    <livewire:admin.inventory.photos-modal />
 </div>
+
