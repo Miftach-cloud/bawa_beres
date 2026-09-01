@@ -2,10 +2,8 @@
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <!-- Logo -->
         <div class="flex justify-center">
-            <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500 text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/30">
-                    <x-icon name="box" class="w-6 h-6 text-slate-950" />
-                </span>
+            <a href="{{ url('/') }}" class="inline-flex items-center">
+                <x-logo size="lg" theme="dark" :showTagline="false" />
             </a>
         </div>
         <h2 class="mt-4 text-center text-2xl font-bold tracking-tight text-white">

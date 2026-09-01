@@ -84,11 +84,8 @@
     <header class="sticky top-0 z-40 w-full border-b border-slate-200 bg-white/90 backdrop-blur-md">
         <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-8">
-                <a href="{{ url('/') }}" class="flex items-center gap-2 font-black text-xl tracking-tight text-slate-900">
-                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black shadow-sm shadow-amber-500/30">
-                        <x-icon name="box" class="w-5 h-5 text-slate-950" />
-                    </span>
-                    <span>Bawa<span class="text-amber-600">Beres</span></span>
+                <a href="{{ url('/') }}" class="flex items-center gap-2">
+                    <x-logo size="sm" theme="light" />
                 </a>
 
                 <nav class="hidden lg:flex items-center gap-6 text-xs font-bold text-slate-600">
@@ -126,12 +123,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-slate-100 text-xs">
                 <!-- Brand Info -->
                 <div class="space-y-3 md:col-span-1">
-                    <div class="flex items-center gap-2 font-black text-lg text-slate-900">
-                        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950">
-                            <x-icon name="box" class="w-4 h-4 text-slate-950" />
-                        </span>
-                        <span>Bawa<span class="text-amber-600">Beres</span></span>
-                    </div>
+                    <a href="{{ url('/') }}" class="inline-flex items-center gap-2">
+                        <x-logo size="sm" theme="light" />
+                    </a>
                     <p class="text-slate-500 leading-relaxed">
                         Platform logistik, jasa pindahan terpercaya, dan penitipan barang mahasiswa/umum ber-QR Code di Malang Raya.
                     </p>

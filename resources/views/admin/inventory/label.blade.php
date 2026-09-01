@@ -40,9 +40,7 @@
         <!-- Label Header -->
         <div class="flex items-center justify-between border-b-2 border-slate-900 pb-2">
             <div class="flex items-center gap-2">
-                <div class="h-6 w-6 rounded bg-slate-900 flex items-center justify-center text-amber-400 font-black text-xs">
-                    BB
-                </div>
+                <x-logo variant="mark" size="xs" />
                 <div>
                     <span class="font-black tracking-wider text-xs block leading-none">BAWABERES</span>
                     <span class="text-[8px] tracking-widest uppercase text-slate-500 block">PHYSICAL CUSTODY</span>

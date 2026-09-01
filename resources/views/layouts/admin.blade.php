@@ -32,13 +32,7 @@
         <!-- Logo / Brand -->
         <div class="h-16 flex items-center justify-between px-6 border-b border-slate-800">
             <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-bold text-base shadow-sm shadow-amber-500/30">
-                    <x-icon name="box" class="w-5 h-5 text-slate-950" />
-                </span>
-                <div class="flex flex-col">
-                    <span class="font-bold text-sm text-white leading-tight">Bawa<span class="text-amber-500">Beres</span></span>
-                    <span class="text-[10px] text-slate-400 uppercase tracking-wider font-semibold">Admin Panel</span>
-                </div>
+                <x-logo size="sm" theme="dark" />
             </a>
             <button @click="sidebarOpen = false" class="md:hidden text-slate-400 hover:text-white p-1">
                 <x-icon name="x" class="w-5 h-5" />
