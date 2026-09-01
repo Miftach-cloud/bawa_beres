@@ -25,7 +25,37 @@ class ServiceFactory extends Factory
             'pricing_type' => fake()->randomElement(PricingType::cases()),
             'base_price' => fake()->randomElement([50000, 100000, 250000, 500000]),
             'is_active' => true,
+            'requires_pickup' => true,
+            'requires_destination' => true,
+            'requires_storage' => false,
         ];
+    }
+
+    public function storage(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'requires_pickup' => true,
+            'requires_destination' => false,
+            'requires_storage' => true,
+        ]);
+    }
+
+    public function moving(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'requires_pickup' => true,
+            'requires_destination' => true,
+            'requires_storage' => false,
+        ]);
+    }
+
+    public function delivery(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'requires_pickup' => true,
+            'requires_destination' => true,
+            'requires_storage' => false,
+        ]);
     }
 
     public function inactive(): static

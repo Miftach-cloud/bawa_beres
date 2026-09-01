@@ -86,7 +86,7 @@ class BookingForm extends Component
     protected function rules(): array
     {
         $selectedService = Service::find($this->serviceId);
-        $requiresDestination = $selectedService && ! str_contains(strtolower($selectedService->name), 'storage') && ! str_contains(strtolower($selectedService->name), 'titip');
+        $requiresDestination = $selectedService ? (bool) $selectedService->requires_destination : true;
 
         return [
             'customerName' => 'required|string|min:3|max:100',
@@ -196,7 +196,7 @@ class BookingForm extends Component
     {
         $services = Service::where('is_active', true)->get();
         $selectedService = Service::find($this->serviceId);
-        $isStorageService = $selectedService && (str_contains(strtolower($selectedService->name), 'storage') || str_contains(strtolower($selectedService->name), 'titip'));
+        $isStorageService = $selectedService ? (bool) $selectedService->requires_storage : false;
 
         return view('livewire.public.booking-form', [
             'services' => $services,

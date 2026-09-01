@@ -84,6 +84,8 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
             'description' => 'Paket hemat pindahan kost dan titip barang liburan semester.',
             'base_price' => 200000,
             'is_active' => true,
+            'requires_destination' => false,
+            'requires_storage' => true,
         ]);
     }
 

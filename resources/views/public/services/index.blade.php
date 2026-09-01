@@ -26,12 +26,12 @@
                 <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg flex flex-col justify-between hover:border-amber-400 hover:shadow-xl transition-all duration-200">
                     <div class="space-y-4">
                         <div class="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center shadow-xs">
-                            @if (str_contains(strtolower($service->name), 'pindah'))
-                                <x-icon name="truck" class="w-7 h-7 text-amber-600" />
-                            @elseif (str_contains(strtolower($service->name), 'titip') || str_contains(strtolower($service->name), 'storage'))
+                            @if ($service->requires_storage)
                                 <x-icon name="warehouse" class="w-7 h-7 text-blue-600" />
+                            @elseif ($service->requires_destination)
+                                <x-icon name="truck" class="w-7 h-7 text-amber-600" />
                             @else
-                                <x-icon name="truck" class="w-7 h-7 text-emerald-600" />
+                                <x-icon name="box" class="w-7 h-7 text-emerald-600" />
                             @endif
                         </div>
 
