@@ -34,7 +34,7 @@ class RelocateInventoryItem
             ]);
 
             // Update status on former location if it now has free capacity
-            if ($fromLocation && $fromLocation->status === StorageLocationStatus::OCCUPIED && !$fromLocation->fresh()->isFull()) {
+            if ($fromLocation && $fromLocation->status === StorageLocationStatus::OCCUPIED && ! $fromLocation->fresh()->isFull()) {
                 $fromLocation->update(['status' => StorageLocationStatus::AVAILABLE]);
             }
 

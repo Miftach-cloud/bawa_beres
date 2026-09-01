@@ -9,6 +9,7 @@ use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class BookingActionTest extends TestCase
@@ -27,7 +28,7 @@ class BookingActionTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function create_order_action_creates_customer_and_order_atomically(): void
     {
         $action = app(CreateOrder::class);
@@ -73,7 +74,7 @@ class BookingActionTest extends TestCase
         $this->assertEquals(AddressType::DESTINATION, $order->destinationAddress->type);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function subsequent_booking_reuses_existing_customer_by_phone(): void
     {
         $action = app(CreateOrder::class);

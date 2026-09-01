@@ -9,7 +9,6 @@ use App\Models\Customer;
 use App\Models\Order;
 use Illuminate\Support\Facades\DB;
 
-
 class CreateOrder
 {
     /**
@@ -19,9 +18,9 @@ class CreateOrder
     {
         return DB::transaction(function () use ($data) {
             // 1. Resolve or create customer (Lookup by phone to avoid duplicates)
-            if (!empty($data['customer_id'])) {
+            if (! empty($data['customer_id'])) {
                 $customer = Customer::findOrFail($data['customer_id']);
-            } elseif (!empty($data['customer_phone'])) {
+            } elseif (! empty($data['customer_phone'])) {
                 $customer = Customer::firstOrCreate(
                     ['phone' => $data['customer_phone']],
                     [
@@ -31,7 +30,7 @@ class CreateOrder
                     ]
                 );
 
-                if (!empty($data['customer_name']) && $customer->name === 'Pelanggan') {
+                if (! empty($data['customer_name']) && $customer->name === 'Pelanggan') {
                     $customer->update([
                         'name' => $data['customer_name'],
                         'email' => $data['customer_email'] ?? $customer->email,
@@ -57,11 +56,10 @@ class CreateOrder
                 'total_amount' => $data['total_amount'] ?? 0,
             ]);
 
-
             // 3. Create items
-            if (!empty($data['items']) && is_array($data['items'])) {
+            if (! empty($data['items']) && is_array($data['items'])) {
                 foreach ($data['items'] as $item) {
-                    if (!empty($item['name'])) {
+                    if (! empty($item['name'])) {
                         $order->items()->create([
                             'name' => $item['name'],
                             'description' => $item['description'] ?? null,
@@ -74,7 +72,7 @@ class CreateOrder
             }
 
             // 4. Create Pickup Address
-            if (!empty($data['pickup_address'])) {
+            if (! empty($data['pickup_address'])) {
                 $pickup = is_array($data['pickup_address']) ? $data['pickup_address'] : ['address' => $data['pickup_address']];
                 $order->addresses()->create([
                     'type' => AddressType::PICKUP,
@@ -88,7 +86,7 @@ class CreateOrder
             }
 
             // 5. Create Destination Address (if provided)
-            if (!empty($data['destination_address'])) {
+            if (! empty($data['destination_address'])) {
                 $dest = is_array($data['destination_address']) ? $data['destination_address'] : ['address' => $data['destination_address']];
                 $order->addresses()->create([
                     'type' => AddressType::DESTINATION,
@@ -108,4 +106,3 @@ class CreateOrder
         });
     }
 }
-

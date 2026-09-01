@@ -19,7 +19,7 @@ class UpdateOrder
                 'customer_notes' => array_key_exists('customer_notes', $data) ? $data['customer_notes'] : $order->customer_notes,
                 'admin_notes' => array_key_exists('admin_notes', $data) ? $data['admin_notes'] : $order->admin_notes,
                 'total_amount' => array_key_exists('total_amount', $data) ? $data['total_amount'] : $order->total_amount,
-            ], fn ($val) => !is_null($val)));
+            ], fn ($val) => ! is_null($val)));
 
             // Update pickup address if provided
             if (isset($data['pickup_address'])) {

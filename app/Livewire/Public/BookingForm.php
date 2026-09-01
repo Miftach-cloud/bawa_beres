@@ -2,10 +2,8 @@
 
 namespace App\Livewire\Public;
 
-use App\Actions\Documentation\UploadInventoryPhoto;
 use App\Actions\Orders\CreateOrder;
 use App\Enums\OrderStatus;
-use App\Enums\PhotoType;
 use App\Models\Order;
 use App\Models\Service;
 use Livewire\Component;
@@ -17,7 +15,9 @@ class BookingForm extends Component
 
     // Customer info (No registration required - frictionless)
     public string $customerName = '';
+
     public string $customerPhone = '';
+
     public ?string $customerEmail = '';
 
     // Service selection
@@ -25,12 +25,16 @@ class BookingForm extends Component
 
     // Pickup address
     public string $pickupAddress = '';
+
     public string $pickupCity = 'Kota Malang';
+
     public string $pickupNotes = '';
 
     // Destination address
     public string $destinationAddress = '';
+
     public string $destinationCity = 'Kota Malang';
+
     public string $destinationNotes = '';
 
     // Item List
@@ -43,10 +47,12 @@ class BookingForm extends Component
 
     // Preferred Date & Notes
     public ?string $preferredDate = '';
+
     public string $customerNotes = '';
 
     // Submission outcome
     public bool $isSubmitted = false;
+
     public ?Order $createdOrder = null;
 
     public function mount(): void
@@ -79,7 +85,7 @@ class BookingForm extends Component
     protected function rules(): array
     {
         $selectedService = Service::find($this->serviceId);
-        $requiresDestination = $selectedService && !str_contains(strtolower($selectedService->name), 'storage') && !str_contains(strtolower($selectedService->name), 'titip');
+        $requiresDestination = $selectedService && ! str_contains(strtolower($selectedService->name), 'storage') && ! str_contains(strtolower($selectedService->name), 'titip');
 
         return [
             'customerName' => 'required|string|min:3|max:100',
@@ -98,7 +104,6 @@ class BookingForm extends Component
             'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ];
     }
-
 
     protected function messages(): array
     {
@@ -135,7 +140,7 @@ class BookingForm extends Component
             ],
         ];
 
-        if (!empty($this->destinationAddress)) {
+        if (! empty($this->destinationAddress)) {
             $payload['destination_address'] = [
                 'address' => $this->destinationAddress,
                 'city' => $this->destinationCity,
@@ -147,7 +152,7 @@ class BookingForm extends Component
         $order = $createOrderAction->execute($payload);
 
         // 3. Process uploaded photos if any
-        if (!empty($this->photos)) {
+        if (! empty($this->photos)) {
             foreach ($this->photos as $photo) {
                 $path = $photo->store("orders/{$order->id}/estimation", 'public');
                 // Store photo reference in inventory photos if inventory exists or order notes

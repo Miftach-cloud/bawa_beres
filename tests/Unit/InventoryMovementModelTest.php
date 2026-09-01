@@ -7,18 +7,18 @@ use App\Enums\MovementType;
 use App\Enums\StorageLocationStatus;
 use App\Enums\StorageLocationType;
 use App\Models\InventoryItem;
-use App\Models\InventoryMovement;
 use App\Models\Order;
 use App\Models\StorageLocation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryMovementModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function record_movement_action_creates_immutable_log(): void
     {
         $user = User::factory()->operation()->create();

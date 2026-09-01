@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Payments\RecordPayment;
-use App\Actions\Payments\VerifyPayment;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
@@ -16,6 +14,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PaymentSystemTest extends TestCase
@@ -23,7 +22,9 @@ class PaymentSystemTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $operation;
+
     protected Order $order;
 
     protected function setUp(): void
@@ -38,7 +39,7 @@ class PaymentSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_view_payments_index_and_filter(): void
     {
         $payment1 = Payment::create([
@@ -67,7 +68,7 @@ class PaymentSystemTest extends TestCase
             ->assertDontSee($payment2->payment_number);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_record_payment_with_proof_via_manager(): void
     {
         Storage::fake('public');
@@ -94,7 +95,7 @@ class PaymentSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function verifying_final_payment_advances_order_to_paid(): void
     {
         $this->actingAs($this->admin);
@@ -119,7 +120,7 @@ class PaymentSystemTest extends TestCase
         $this->assertEquals(OrderStatus::PAID, $this->order->status);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_reject_payment_with_reason(): void
     {
         $this->actingAs($this->admin);
@@ -142,7 +143,7 @@ class PaymentSystemTest extends TestCase
         $this->assertEquals('Nominal transfer tidak sesuai invoice', $payment->rejection_reason);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operation_role_cannot_manage_payments(): void
     {
         $this->actingAs($this->operation);

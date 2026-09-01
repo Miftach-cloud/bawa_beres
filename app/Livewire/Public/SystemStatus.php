@@ -8,7 +8,9 @@ use Livewire\Component;
 class SystemStatus extends Component
 {
     public int $counter = 0;
+
     public string $dbStatus = 'checking';
+
     public ?string $dbName = null;
 
     public function mount(): void
@@ -28,7 +30,7 @@ class SystemStatus extends Component
             $this->dbStatus = 'connected';
             $this->dbName = DB::connection()->getDatabaseName();
         } catch (\Throwable $e) {
-            $this->dbStatus = 'error: ' . $e->getMessage();
+            $this->dbStatus = 'error: '.$e->getMessage();
         }
     }
 

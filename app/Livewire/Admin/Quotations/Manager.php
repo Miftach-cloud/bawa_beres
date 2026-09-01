@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\Quotation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class Manager extends Component
@@ -19,19 +20,27 @@ class Manager extends Component
 
     // Modal state
     public bool $showQuotationModal = false;
+
     public bool $isRevision = false;
+
     public ?int $baseQuotationId = null;
 
     // Form inputs
     public array $items = [];
+
     public float|string $discount = 0;
+
     public float|string $tax = 0;
+
     public string $notes = '';
+
     public ?string $validUntil = null;
 
     // Rejection modal
     public bool $showRejectModal = false;
+
     public ?int $rejectingQuotationId = null;
+
     public string $rejectionReason = '';
 
     protected function rules(): array
@@ -128,22 +137,22 @@ class Manager extends Component
         $this->resetValidation();
     }
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function calculateSubtotal(): float
     {
         $sub = 0;
         foreach ($this->items as $item) {
             $sub += ((int) ($item['quantity'] ?? 1) * (float) ($item['unit_price'] ?? 0));
         }
+
         return $sub;
     }
 
-    #[\Livewire\Attributes\Computed]
+    #[Computed]
     public function calculateTotal(): float
     {
         return max(0, $this->calculateSubtotal() - (float) $this->discount + (float) $this->tax);
     }
-
 
     public function saveQuotation(CreateQuotation $createAction, CreateQuotationRevision $revisionAction): void
     {

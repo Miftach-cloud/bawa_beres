@@ -3,6 +3,7 @@
 namespace App\Actions\Inventory;
 
 use App\Enums\InventoryStatus;
+use App\Events\InventoryReceived;
 use App\Models\InventoryItem;
 use App\Models\User;
 
@@ -20,9 +21,8 @@ class ReceiveInventoryItem
         ]);
 
         $freshItem = $item->fresh(['order.customer', 'receiver']);
-        \App\Events\InventoryReceived::dispatch($freshItem->order, $freshItem);
+        InventoryReceived::dispatch($freshItem->order, $freshItem);
 
         return $freshItem;
     }
 }
-

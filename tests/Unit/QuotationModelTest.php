@@ -10,13 +10,14 @@ use App\Models\Quotation;
 use App\Models\QuotationItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuotationModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function quotation_item_calculates_total_price_automatically(): void
     {
         $order = Order::factory()->create();
@@ -39,7 +40,7 @@ class QuotationModelTest extends TestCase
         $this->assertEquals(160000, (int) $item->total_price);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function order_can_have_multiple_quotation_revisions_without_overwriting(): void
     {
         $admin = User::factory()->admin()->create();

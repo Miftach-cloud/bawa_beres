@@ -44,7 +44,7 @@ class CompleteSchedule
                     $this->changeOrderStatus->execute(
                         $order,
                         OrderStatus::DELIVERED,
-                        "Misi pengantaran barang (Delivery) selesai diantar ke alamat tujuan.",
+                        'Misi pengantaran barang (Delivery) selesai diantar ke alamat tujuan.',
                         $actor
                     );
                 }

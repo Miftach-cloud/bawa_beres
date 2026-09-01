@@ -12,6 +12,10 @@ use App\Livewire\Admin\Payments\Index as PaymentIndex;
 use App\Livewire\Admin\Schedules\Index as ScheduleIndex;
 use App\Livewire\Admin\Services\Index as ServiceIndex;
 use App\Livewire\Admin\Storage\Index as StorageIndex;
+use App\Livewire\Public\InventoryScan;
+use App\Livewire\Public\OrderTracking;
+use App\Models\InventoryItem;
+use App\Models\Service;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
@@ -21,11 +25,12 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/services', function () {
-    $services = \App\Models\Service::where('is_active', true)->get();
+    $services = Service::where('is_active', true)->get();
+
     return view('public.services.index', ['services' => $services]);
 })->name('public.services');
 
-Route::get('/services/{service}', function (\App\Models\Service $service) {
+Route::get('/services/{service}', function (Service $service) {
     return view('public.services.show', ['service' => $service]);
 })->name('public.services.show');
 
@@ -59,7 +64,7 @@ Route::get('/booking', function () {
 
 // Phase 17: SEO Sitemap XML
 Route::get('/sitemap.xml', function () {
-    $services = \App\Models\Service::where('is_active', true)->get();
+    $services = Service::where('is_active', true)->get();
     $baseUrl = config('app.url', url('/'));
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>';
@@ -79,17 +84,17 @@ Route::get('/sitemap.xml', function () {
 
     foreach ($staticRoutes as $route) {
         $xml .= '<url>';
-        $xml .= '<loc>' . htmlspecialchars($route['loc']) . '</loc>';
-        $xml .= '<lastmod>' . date('Y-m-d') . '</lastmod>';
-        $xml .= '<changefreq>' . $route['changefreq'] . '</changefreq>';
-        $xml .= '<priority>' . $route['priority'] . '</priority>';
+        $xml .= '<loc>'.htmlspecialchars($route['loc']).'</loc>';
+        $xml .= '<lastmod>'.date('Y-m-d').'</lastmod>';
+        $xml .= '<changefreq>'.$route['changefreq'].'</changefreq>';
+        $xml .= '<priority>'.$route['priority'].'</priority>';
         $xml .= '</url>';
     }
 
     foreach ($services as $service) {
         $xml .= '<url>';
-        $xml .= '<loc>' . htmlspecialchars(route('public.services.show', $service)) . '</loc>';
-        $xml .= '<lastmod>' . ($service->updated_at ? $service->updated_at->format('Y-m-d') : date('Y-m-d')) . '</lastmod>';
+        $xml .= '<loc>'.htmlspecialchars(route('public.services.show', $service)).'</loc>';
+        $xml .= '<lastmod>'.($service->updated_at ? $service->updated_at->format('Y-m-d') : date('Y-m-d')).'</lastmod>';
         $xml .= '<changefreq>weekly</changefreq>';
         $xml .= '<priority>0.8</priority>';
         $xml .= '</url>';
@@ -101,22 +106,22 @@ Route::get('/sitemap.xml', function () {
 })->name('sitemap.xml');
 
 Route::get('/robots.txt', function () {
-    $content = "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /admin/*\nDisallow: /livewire/\n\nSitemap: " . url('/sitemap.xml') . "\n";
+    $content = "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /admin/*\nDisallow: /livewire/\n\nSitemap: ".url('/sitemap.xml')."\n";
+
     return response($content, 200)->header('Content-Type', 'text/plain');
 });
 
 // Phase 15: Public Order Tracking (Rate Limited)
 Route::middleware('throttle:tracking')->group(function () {
-    Route::get('/track', \App\Livewire\Public\OrderTracking::class)->name('public.track');
-    Route::get('/track/{order_code}', \App\Livewire\Public\OrderTracking::class)->name('public.track.order');
-    Route::get('/i/{code}', \App\Livewire\Public\InventoryScan::class)->name('inventory.scan');
+    Route::get('/track', OrderTracking::class)->name('public.track');
+    Route::get('/track/{order_code}', OrderTracking::class)->name('public.track.order');
+    Route::get('/i/{code}', InventoryScan::class)->name('inventory.scan');
 });
 
 // Admin Guest Routes (Rate Limited)
 Route::middleware(['guest', 'throttle:login'])->prefix('admin')->group(function () {
     Route::get('/login', Login::class)->name('admin.login');
 });
-
 
 // Admin Protected Routes
 Route::middleware('auth')->prefix('admin')->group(function () {
@@ -135,14 +140,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
     // Phase 9: Inventory Management
     Route::get('/inventory', InventoryIndex::class)->name('admin.inventory');
-    Route::get('/inventory/{inventoryItem}/label', function (\App\Models\InventoryItem $inventoryItem) {
+    Route::get('/inventory/{inventoryItem}/label', function (InventoryItem $inventoryItem) {
         Gate::authorize('manage-inventory');
+
         return view('admin.inventory.label', ['item' => $inventoryItem]);
     })->name('admin.inventory.label');
 
     // Phase 11: Storage Location Management
     Route::get('/storage', StorageIndex::class)->name('admin.storage');
-
 
     // Phase 4: Service Management
     Route::get('/services', ServiceIndex::class)->name('admin.services');
@@ -154,6 +159,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     // Phase 12+: Other Modules
     Route::get('/settings', function () {
         abort_if(Gate::denies('manage-settings'), 403, 'Akses ditolak.');
+
         return view('admin.placeholder', ['title' => 'Pengaturan Sistem']);
     })->name('admin.settings');
 });

@@ -14,7 +14,6 @@ use App\Enums\ScheduleType;
 use App\Enums\StorageLocationStatus;
 use App\Enums\StorageLocationType;
 use App\Enums\UserRole;
-
 use App\Models\Customer;
 use App\Models\InventoryItem;
 use App\Models\Order;
@@ -32,6 +31,7 @@ use App\Notifications\QuotationCreatedNotification;
 use App\Services\WhatsAppTemplateService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class NotificationFoundationTest extends TestCase
@@ -39,8 +39,11 @@ class NotificationFoundationTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $operation;
+
     protected User $owner;
+
     protected Service $service;
 
     protected function setUp(): void
@@ -73,7 +76,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function order_created_event_dispatches_database_notifications(): void
     {
         $createOrder = app(CreateOrder::class);
@@ -102,7 +105,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function quotation_created_event_dispatches_database_notifications(): void
     {
         $customer = Customer::create(['name' => 'Siti Rahma', 'phone' => '081987654321']);
@@ -126,7 +129,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function order_confirmed_event_dispatches_database_notifications(): void
     {
         $customer = Customer::create(['name' => 'Andi Wijaya', 'phone' => '08122334455']);
@@ -146,7 +149,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function pickup_scheduled_event_dispatches_database_notifications(): void
     {
         $customer = Customer::create(['name' => 'Dewi Lestari', 'phone' => '08133445566']);
@@ -172,7 +175,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function inventory_received_event_dispatches_database_notifications(): void
     {
         $customer = Customer::create(['name' => 'Rian Pratama', 'phone' => '08155667788']);
@@ -199,7 +202,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function inventory_stored_event_dispatches_database_notifications(): void
     {
         $customer = Customer::create(['name' => 'Maya Indah', 'phone' => '08166778899']);
@@ -227,9 +230,6 @@ class NotificationFoundationTest extends TestCase
             'status' => StorageLocationStatus::AVAILABLE,
         ]);
 
-
-
-
         $assignAction = app(AssignInventoryToLocation::class);
         $assignAction->execute($item, $location, $this->operation);
 
@@ -240,7 +240,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function order_completed_event_dispatches_database_notifications(): void
     {
         $customer = Customer::create(['name' => 'Eko Prasetyo', 'phone' => '08177889900']);
@@ -260,7 +260,7 @@ class NotificationFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function whatsapp_template_service_generates_accurate_manual_templates_and_links(): void
     {
         $service = app(WhatsAppTemplateService::class);

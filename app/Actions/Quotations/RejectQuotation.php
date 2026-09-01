@@ -14,8 +14,8 @@ class RejectQuotation
      */
     public function execute(Quotation $quotation, string $reason, ?User $actor = null): Quotation
     {
-        return DB::transaction(function () use ($quotation, $reason, $actor) {
-            $notes = $quotation->notes ? ($quotation->notes . "\n[Ditolak: {$reason}]") : "[Ditolak: {$reason}]";
+        return DB::transaction(function () use ($quotation, $reason) {
+            $notes = $quotation->notes ? ($quotation->notes."\n[Ditolak: {$reason}]") : "[Ditolak: {$reason}]";
 
             $quotation->update([
                 'status' => QuotationStatus::REJECTED,

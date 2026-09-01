@@ -8,7 +8,6 @@ use App\Actions\Inventory\ReleaseInventoryItem;
 use App\Actions\Movements\RelocateInventoryItem;
 use App\Actions\Storage\AssignInventoryToLocation;
 use App\Actions\Storage\VacateInventoryFromLocation;
-use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
 use App\Models\InventoryItem;
 use App\Models\StorageLocation;
@@ -19,20 +18,27 @@ use Livewire\Component;
 class InventoryScan extends Component
 {
     public string $code;
+
     public ?InventoryItem $item = null;
 
     // Quick Store / Relocate Modal states
     public bool $showStoreModal = false;
+
     public ?int $selectedLocationId = null;
+
     public string $storageLocation = '';
 
     public bool $showRelocateModal = false;
+
     public ?int $relocateLocationId = null;
+
     public string $relocateNotes = '';
 
     // Quick QC Modal
     public bool $showCheckModal = false;
+
     public string $condition = 'GOOD';
+
     public string $checkNotes = '';
 
     public function mount(string $code): void
@@ -62,7 +68,9 @@ class InventoryScan extends Component
     {
         Gate::authorize('manage-inventory');
 
-        if (!$this->item) return;
+        if (! $this->item) {
+            return;
+        }
 
         $action->execute($this->item, Auth::user());
         $this->item->refresh();
@@ -85,13 +93,15 @@ class InventoryScan extends Component
     {
         Gate::authorize('manage-inventory');
 
-        if (!$this->item) return;
+        if (! $this->item) {
+            return;
+        }
 
         $action->execute($this->item, $this->condition, $this->checkNotes);
         $this->showCheckModal = false;
         $this->item->refresh();
 
-        session()->flash('scan_message', "Pemeriksaan QC kondisi fisik berhasil disimpan (CHECKED).");
+        session()->flash('scan_message', 'Pemeriksaan QC kondisi fisik berhasil disimpan (CHECKED).');
     }
 
     public function openStoreModal(): void
@@ -109,7 +119,9 @@ class InventoryScan extends Component
     {
         Gate::authorize('manage-inventory');
 
-        if (!$this->item) return;
+        if (! $this->item) {
+            return;
+        }
 
         if ($this->selectedLocationId) {
             $location = StorageLocation::findOrFail($this->selectedLocationId);
@@ -119,7 +131,7 @@ class InventoryScan extends Component
         $this->showStoreModal = false;
         $this->item->refresh();
 
-        session()->flash('scan_message', "Barang fisik berhasil disimpan di rak gudang.");
+        session()->flash('scan_message', 'Barang fisik berhasil disimpan di rak gudang.');
     }
 
     public function openRelocateModal(): void
@@ -141,7 +153,9 @@ class InventoryScan extends Component
             'relocateLocationId' => 'required|exists:storage_locations,id',
         ]);
 
-        if (!$this->item) return;
+        if (! $this->item) {
+            return;
+        }
 
         $targetLocation = StorageLocation::findOrFail($this->relocateLocationId);
         $relocateAction->execute($this->item, $targetLocation, Auth::user(), $this->relocateNotes ?: null);
@@ -156,13 +170,15 @@ class InventoryScan extends Component
     {
         Gate::authorize('manage-inventory');
 
-        if (!$this->item) return;
+        if (! $this->item) {
+            return;
+        }
 
         $vacateAction->execute($this->item, Auth::user());
         $action->execute($this->item);
         $this->item->refresh();
 
-        session()->flash('scan_message', "Barang telah diserahterimakan (RELEASED).");
+        session()->flash('scan_message', 'Barang telah diserahterimakan (RELEASED).');
     }
 
     public function render()
@@ -180,4 +196,3 @@ class InventoryScan extends Component
         ])->layout('layouts.public', ['title' => $this->item ? "Scan #{$this->item->inventory_code} - BawaBeres" : 'Scan QR Barang']);
     }
 }
-

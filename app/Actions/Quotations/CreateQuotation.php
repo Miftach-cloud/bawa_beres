@@ -3,6 +3,7 @@
 namespace App\Actions\Quotations;
 
 use App\Enums\QuotationStatus;
+use App\Events\QuotationCreated;
 use App\Models\Order;
 use App\Models\Quotation;
 use App\Models\User;
@@ -47,7 +48,7 @@ class CreateQuotation
             ]);
 
             foreach ($items as $item) {
-                if (!empty($item['name'])) {
+                if (! empty($item['name'])) {
                     $qty = (int) ($item['quantity'] ?? 1);
                     $unitPrice = (float) ($item['unit_price'] ?? 0);
                     $quotation->items()->create([
@@ -61,10 +62,9 @@ class CreateQuotation
             }
 
             $freshQuotation = $quotation->fresh(['items', 'order.customer']);
-            \App\Events\QuotationCreated::dispatch($freshQuotation);
+            QuotationCreated::dispatch($freshQuotation);
 
             return $freshQuotation;
         });
     }
 }
-

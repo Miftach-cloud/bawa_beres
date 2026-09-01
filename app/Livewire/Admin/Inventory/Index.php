@@ -6,9 +6,13 @@ use App\Actions\Inventory\CheckInventoryItem;
 use App\Actions\Inventory\ReceiveInventoryItem;
 use App\Actions\Inventory\ReleaseInventoryItem;
 use App\Actions\Inventory\StoreInventoryItem;
+use App\Actions\Movements\RelocateInventoryItem;
+use App\Actions\Storage\AssignInventoryToLocation;
+use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
 use App\Models\InventoryItem;
+use App\Models\StorageLocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
@@ -23,24 +27,32 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $statusFilter = '';
+
     public string $conditionFilter = '';
 
     // Quick Store Modal
     public bool $showStoreModal = false;
+
     public ?int $selectedItemId = null;
+
     public ?int $selectedLocationId = null;
+
     public string $storageLocation = 'Rak A-01 (Gudang Dinoyo)';
 
     // Quick Relocate Modal
     public bool $showRelocateModal = false;
+
     public ?int $relocateLocationId = null;
+
     public string $relocateNotes = '';
 
     // Quick QC Modal
     public bool $showCheckModal = false;
 
     public string $condition = 'GOOD';
+
     public string $checkNotes = '';
 
     public function mount(): void
@@ -119,14 +131,14 @@ class Index extends Component
         $this->selectedLocationId = null;
     }
 
-    public function confirmStore(StoreInventoryItem $action, \App\Actions\Storage\AssignInventoryToLocation $assignAction): void
+    public function confirmStore(StoreInventoryItem $action, AssignInventoryToLocation $assignAction): void
     {
         Gate::authorize('manage-inventory');
 
         $item = InventoryItem::findOrFail($this->selectedItemId);
 
         if ($this->selectedLocationId) {
-            $location = \App\Models\StorageLocation::findOrFail($this->selectedLocationId);
+            $location = StorageLocation::findOrFail($this->selectedLocationId);
             $assignAction->execute($item, $location, Auth::user());
         } else {
             $action->execute($item, $this->storageLocation ?: 'Rak A-01 (Gudang Dinoyo)', Auth::user());
@@ -154,7 +166,7 @@ class Index extends Component
         $this->relocateLocationId = null;
     }
 
-    public function confirmRelocate(\App\Actions\Movements\RelocateInventoryItem $action): void
+    public function confirmRelocate(RelocateInventoryItem $action): void
     {
         Gate::authorize('manage-storage');
 
@@ -163,7 +175,7 @@ class Index extends Component
         ]);
 
         $item = InventoryItem::findOrFail($this->selectedItemId);
-        $targetLocation = \App\Models\StorageLocation::findOrFail($this->relocateLocationId);
+        $targetLocation = StorageLocation::findOrFail($this->relocateLocationId);
 
         $action->execute($item, $targetLocation, Auth::user(), $this->relocateNotes ?: null);
 
@@ -171,7 +183,7 @@ class Index extends Component
         session()->flash('message', "Barang #{$item->inventory_code} berhasil dipindahkan ke rak {$targetLocation->code}.");
     }
 
-    public function release(int $itemId, ReleaseInventoryItem $action, \App\Actions\Storage\VacateInventoryFromLocation $vacateAction): void
+    public function release(int $itemId, ReleaseInventoryItem $action, VacateInventoryFromLocation $vacateAction): void
     {
         Gate::authorize('manage-inventory');
 
@@ -217,7 +229,7 @@ class Index extends Component
         }
 
         $items = $query->latest('id')->paginate(15);
-        $availableLocations = \App\Models\StorageLocation::available()->get();
+        $availableLocations = StorageLocation::available()->get();
 
         return view('livewire.admin.inventory.index', [
             'items' => $items,
@@ -227,4 +239,3 @@ class Index extends Component
         ]);
     }
 }
-

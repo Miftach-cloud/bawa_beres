@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use App\Enums\OrderStatus;
-use App\Enums\PricingType;
-use App\Enums\UserRole;
 use App\Livewire\Admin\Orders\Index as OrderIndex;
 use App\Livewire\Admin\Orders\Show as OrderShow;
 use App\Models\Customer;
@@ -14,6 +12,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class OrderManagementTest extends TestCase
@@ -21,6 +20,7 @@ class OrderManagementTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $operation;
 
     protected function setUp(): void
@@ -31,7 +31,7 @@ class OrderManagementTest extends TestCase
         $this->operation = User::factory()->operation()->create();
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_view_and_search_orders_list(): void
     {
         $customer1 = Customer::factory()->create(['name' => 'Bambang Sudiro', 'phone' => '0811223344']);
@@ -59,7 +59,7 @@ class OrderManagementTest extends TestCase
             ->assertDontSee($order2->order_code);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_filter_orders_by_status_and_service_and_date(): void
     {
         $service1 = Service::factory()->create(['name' => 'Jasa Pindahan']);
@@ -98,7 +98,7 @@ class OrderManagementTest extends TestCase
             ->assertDontSee($orderStored->order_code);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_create_new_order_via_modal(): void
     {
         $service = Service::factory()->create(['name' => 'Pindahan Kost']);
@@ -131,7 +131,7 @@ class OrderManagementTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_view_order_detail_and_transition_status(): void
     {
         $order = Order::factory()->create([
@@ -155,7 +155,7 @@ class OrderManagementTest extends TestCase
         $this->assertCount(2, $order->statusHistories);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_cancel_order_with_reason(): void
     {
         $order = Order::factory()->create([
@@ -173,7 +173,7 @@ class OrderManagementTest extends TestCase
         $this->assertEquals(OrderStatus::CANCELLED, $order->status);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_update_order_notes_and_amount(): void
     {
         $order = Order::factory()->create([
@@ -192,7 +192,7 @@ class OrderManagementTest extends TestCase
         $this->assertEquals(320000, (int) $order->total_amount);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operation_role_is_denied_from_order_management(): void
     {
         $order = Order::factory()->create();
@@ -200,6 +200,6 @@ class OrderManagementTest extends TestCase
         $this->actingAs($this->operation);
 
         $this->get('/admin/orders')->assertStatus(403);
-        $this->get('/admin/orders/' . $order->id)->assertStatus(403);
+        $this->get('/admin/orders/'.$order->id)->assertStatus(403);
     }
 }

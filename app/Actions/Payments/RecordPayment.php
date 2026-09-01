@@ -24,7 +24,7 @@ class RecordPayment
 
             $method = $data['method'] instanceof PaymentMethod ? $data['method'] : PaymentMethod::from($data['method']);
             $status = $data['status'] ?? ($proofPath ? PaymentStatus::WAITING_VERIFICATION : PaymentStatus::PENDING);
-            if (!($status instanceof PaymentStatus)) {
+            if (! ($status instanceof PaymentStatus)) {
                 $status = PaymentStatus::from($status);
             }
 

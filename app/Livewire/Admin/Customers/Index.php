@@ -4,7 +4,6 @@ namespace App\Livewire\Admin\Customers;
 
 use App\Models\Customer;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -17,12 +16,17 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+
     public bool $showModal = false;
+
     public ?int $editingId = null;
 
     public string $name = '';
+
     public string $phone = '';
+
     public string $email = '';
+
     public string $notes = '';
 
     protected function rules(): array

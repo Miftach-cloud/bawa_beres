@@ -17,12 +17,16 @@ class PhotosModal extends Component
     use WithFileUploads;
 
     public ?InventoryItem $item = null;
+
     public bool $show = false;
 
     // Upload form
     public $photos = [];
+
     public string $type = 'CONDITION';
+
     public string $caption = '';
+
     public string $selectedCategoryFilter = '';
 
     // Lightbox modal preview
@@ -109,7 +113,7 @@ class PhotosModal extends Component
         }
 
         $this->item->refresh();
-        session()->flash('photo_message', "Foto dokumentasi berhasil dihapus.");
+        session()->flash('photo_message', 'Foto dokumentasi berhasil dihapus.');
     }
 
     public function render()

@@ -22,15 +22,19 @@ class Show extends Component
 
     // Status transition modal
     public bool $showTransitionModal = false;
+
     public ?string $targetStatus = null;
+
     public string $transitionNotes = '';
 
     // Cancel modal
     public bool $showCancelModal = false;
+
     public string $cancelReason = '';
 
     // Quick notes & amount edit
     public string $adminNotes = '';
+
     public float|string $totalAmount = 0;
 
     public function mount(Order $order): void
@@ -69,7 +73,7 @@ class Show extends Component
     {
         Gate::authorize('manage-orders');
 
-        if (!$this->targetStatus) {
+        if (! $this->targetStatus) {
             return;
         }
 

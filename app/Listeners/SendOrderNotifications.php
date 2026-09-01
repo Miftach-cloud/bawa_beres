@@ -18,7 +18,6 @@ use App\Notifications\OrderConfirmedNotification;
 use App\Notifications\OrderCreatedNotification;
 use App\Notifications\PickupScheduledNotification;
 use App\Notifications\QuotationCreatedNotification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Notification;
 
 class SendOrderNotifications

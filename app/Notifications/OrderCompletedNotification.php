@@ -35,7 +35,7 @@ class OrderCompletedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject("Layanan Selesai — Terima Kasih Telah Menggunakan BawaBeres")
+            ->subject('Layanan Selesai — Terima Kasih Telah Menggunakan BawaBeres')
             ->greeting("Halo, {$this->order->customer?->name}")
             ->line("Pesanan {$this->order->order_code} telah selesai sepenuhnya.")
             ->line('Terima kasih telah mempercayakan kebutuhan pindahan dan storage Anda kepada kami.')

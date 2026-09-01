@@ -19,14 +19,21 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+
     public bool $showModal = false;
+
     public ?int $editingId = null;
 
     public string $name = '';
+
     public string $slug = '';
+
     public string $description = '';
+
     public string $pricing_type = 'QUOTATION';
+
     public float|string $base_price = 0;
+
     public bool $is_active = true;
 
     protected function rules(): array
@@ -53,7 +60,7 @@ class Index extends Component
 
     public function updatedName($value): void
     {
-        if (!$this->editingId) {
+        if (! $this->editingId) {
             $this->slug = Str::slug($value);
         }
     }
@@ -111,7 +118,7 @@ class Index extends Component
 
         $service = Service::findOrFail($serviceId);
         $service->update([
-            'is_active' => !$service->is_active,
+            'is_active' => ! $service->is_active,
         ]);
 
         $statusText = $service->is_active ? 'diaktifkan' : 'dinonaktifkan';

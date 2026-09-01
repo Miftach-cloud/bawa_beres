@@ -3,7 +3,6 @@
 namespace App\Providers;
 
 use App\Enums\UserRole;
-
 use App\Listeners\SendOrderNotifications;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -43,7 +42,6 @@ class AppServiceProvider extends ServiceProvider
 
         // Register Event Subscribers
         Event::subscribe(SendOrderNotifications::class);
-
 
         // Superadmin bypass for Owner
 
@@ -99,5 +97,3 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 }
-
-

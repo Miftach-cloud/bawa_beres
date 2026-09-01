@@ -47,6 +47,7 @@ class Payment extends Model
     {
         $count = $order->payments()->count() + 1;
         $seq = str_pad((string) $count, 2, '0', STR_PAD_LEFT);
+
         return "PAY-{$order->order_code}-{$seq}";
     }
 
@@ -62,7 +63,7 @@ class Payment extends Model
 
     public function getProofUrlAttribute(): ?string
     {
-        if (!$this->proof_path) {
+        if (! $this->proof_path) {
             return null;
         }
 

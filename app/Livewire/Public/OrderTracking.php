@@ -9,10 +9,13 @@ use Livewire\Component;
 class OrderTracking extends Component
 {
     public string $orderCode = '';
+
     public string $phone = '';
 
     public ?Order $order = null;
+
     public bool $hasSearched = false;
+
     public ?string $errorMessage = null;
 
     protected $queryString = [
@@ -26,7 +29,7 @@ class OrderTracking extends Component
             $this->orderCode = $order_code;
         }
 
-        if (!empty($this->orderCode) && !empty($this->phone)) {
+        if (! empty($this->orderCode) && ! empty($this->phone)) {
             $this->track();
         }
     }
@@ -60,8 +63,9 @@ class OrderTracking extends Component
             ->where('order_code', $cleanCode)
             ->first();
 
-        if (!$order) {
+        if (! $order) {
             $this->errorMessage = "Pesanan dengan nomor {$cleanCode} tidak ditemukan di sistem kami.";
+
             return;
         }
 
@@ -77,8 +81,9 @@ class OrderTracking extends Component
             }
         }
 
-        if (!$isPhoneMatched) {
+        if (! $isPhoneMatched) {
             $this->errorMessage = "Nomor WhatsApp/HP tidak sesuai dengan data pemesan nomor order {$cleanCode}.";
+
             return;
         }
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Livewire\Public\OrderTracking;
 use App\Models\Customer;
@@ -9,6 +10,7 @@ use App\Models\Order;
 use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PublicOrderTrackingTest extends TestCase
@@ -16,7 +18,9 @@ class PublicOrderTrackingTest extends TestCase
     use RefreshDatabase;
 
     protected Customer $customer;
+
     protected Service $service;
+
     protected Order $order;
 
     protected function setUp(): void
@@ -49,13 +53,13 @@ class PublicOrderTrackingTest extends TestCase
         ]);
 
         $this->order->addresses()->create([
-            'type' => \App\Enums\AddressType::PICKUP,
+            'type' => AddressType::PICKUP,
             'address' => 'Jl. Ijen No. 1, Kota Malang',
             'city' => 'Kota Malang',
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function tracking_page_is_publicly_accessible(): void
     {
         $response = $this->get('/track');
@@ -65,7 +69,7 @@ class PublicOrderTrackingTest extends TestCase
         $response->assertSee('Nomor Pesanan (Order Code)');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function tracking_fails_with_invalid_order_code(): void
     {
         Livewire::test(OrderTracking::class)
@@ -75,7 +79,7 @@ class PublicOrderTrackingTest extends TestCase
             ->assertSee('tidak ditemukan di sistem kami');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function tracking_fails_with_wrong_phone_number(): void
     {
         Livewire::test(OrderTracking::class)
@@ -85,7 +89,7 @@ class PublicOrderTrackingTest extends TestCase
             ->assertSee('Nomor WhatsApp/HP tidak sesuai');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function tracking_succeeds_with_matching_phone_and_displays_milestones(): void
     {
         Livewire::test(OrderTracking::class)
@@ -101,7 +105,7 @@ class PublicOrderTrackingTest extends TestCase
             ->assertSee('Penyimpanan & Penguasaan Barang');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function tracking_succeeds_with_last_4_digits_phone_verification(): void
     {
         Livewire::test(OrderTracking::class)
@@ -112,7 +116,7 @@ class PublicOrderTrackingTest extends TestCase
             ->assertSee('ORD-2026-000051');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function internal_confidential_notes_are_never_leaked_on_public_tracking(): void
     {
         $response = $this->get('/track?code=ORD-2026-000051&phone=081234567890');

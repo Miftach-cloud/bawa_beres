@@ -6,13 +6,14 @@ use App\Actions\Inventory\GenerateInventoryQrCode;
 use App\Models\InventoryItem;
 use App\Models\Order;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryQrTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function inventory_item_automatically_generates_unique_qr_code(): void
     {
         $order = Order::factory()->create();
@@ -27,7 +28,7 @@ class InventoryQrTest extends TestCase
         $this->assertStringContainsString($item->qr_code, $item->scan_url);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function qr_svg_generation_returns_valid_svg_markup(): void
     {
         $order = Order::factory()->create();

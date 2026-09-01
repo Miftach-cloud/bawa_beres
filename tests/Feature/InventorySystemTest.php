@@ -2,10 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Inventory\CheckInventoryItem;
-use App\Actions\Inventory\GenerateExpectedInventory;
-use App\Actions\Inventory\ReceiveInventoryItem;
-use App\Actions\Inventory\StoreInventoryItem;
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
 use App\Enums\OrderStatus;
@@ -17,6 +13,7 @@ use App\Models\OrderItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventorySystemTest extends TestCase
@@ -24,7 +21,9 @@ class InventorySystemTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $operation;
+
     protected Order $order;
 
     protected function setUp(): void
@@ -45,7 +44,7 @@ class InventorySystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operation_can_access_inventory_register_while_admin_is_denied(): void
     {
         $this->actingAs($this->operation);
@@ -55,8 +54,7 @@ class InventorySystemTest extends TestCase
         $this->get('/admin/inventory')->assertStatus(403);
     }
 
-
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function field_team_can_generate_and_receive_inventory_items(): void
     {
         $this->actingAs($this->operation);
@@ -82,7 +80,7 @@ class InventorySystemTest extends TestCase
         $this->assertNotNull($item->received_at);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function team_can_perform_qc_check_and_store_to_rack(): void
     {
         $this->actingAs($this->operation);
@@ -116,7 +114,7 @@ class InventorySystemTest extends TestCase
         $this->assertEquals('Rak B-04 Gudang Dinoyo', $item->storage_location);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function inventory_index_can_filter_by_status_and_condition(): void
     {
         $itemGood = InventoryItem::create([

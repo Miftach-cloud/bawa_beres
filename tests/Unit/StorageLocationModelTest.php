@@ -9,20 +9,21 @@ use App\Models\InventoryItem;
 use App\Models\Order;
 use App\Models\StorageLocation;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class StorageLocationModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function format_code_generates_standard_hierarchical_code(): void
     {
         $code = StorageLocation::formatCode('mlg01', 'a', 'r02', 'l03');
         $this->assertEquals('MLG01-A-R02-L03', $code);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function storage_location_computes_occupancy_and_availability(): void
     {
         $location = StorageLocation::create([

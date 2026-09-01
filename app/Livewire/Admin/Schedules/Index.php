@@ -9,7 +9,6 @@ use App\Enums\ScheduleStatus;
 use App\Enums\ScheduleType;
 use App\Models\Order;
 use App\Models\Schedule;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
@@ -27,18 +26,28 @@ class Index extends Component
     public string $activeTab = 'today';
 
     public string $search = '';
+
     public string $typeFilter = '';
+
     public string $statusFilter = '';
 
     // Create Modal
     public bool $showCreateModal = false;
+
     public ?int $selectedOrderId = null;
+
     public string $type = 'PICKUP';
+
     public string $scheduledDate = '';
+
     public string $startTime = '09:00';
+
     public string $endTime = '12:00';
+
     public string $assignedTeam = 'Tim Lapangan 1 (Budi & Eko)';
+
     public string $vehicle = 'Daihatsu GranMax Pick-up N 1234 AB';
+
     public string $notes = '';
 
     protected function rules(): array

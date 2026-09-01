@@ -17,7 +17,7 @@ class CreateStorageLocation
             $data['level']
         );
 
-        $type = isset($data['type']) 
+        $type = isset($data['type'])
             ? ($data['type'] instanceof StorageLocationType ? $data['type'] : StorageLocationType::from($data['type']))
             : StorageLocationType::STANDARD_RACK;
 

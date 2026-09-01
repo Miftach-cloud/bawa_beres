@@ -22,24 +22,40 @@ class Index extends Component
 
     // Filters
     public string $search = '';
+
     public string $statusFilter = '';
+
     public string $serviceFilter = '';
+
     public string $dateFilter = 'all'; // all, today, this_week, this_month, custom
+
     public ?string $startDate = null;
+
     public ?string $endDate = null;
 
     // Create Order Modal State
     public bool $showCreateModal = false;
+
     public ?int $selectedCustomerId = null;
+
     public string $newCustomerName = '';
+
     public string $newCustomerPhone = '';
+
     public string $newCustomerEmail = '';
+
     public ?int $selectedServiceId = null;
+
     public string $customerNotes = '';
+
     public string $pickupAddress = '';
+
     public string $pickupDistrict = 'Lowokwaru';
+
     public string $destinationAddress = '';
+
     public string $destinationDistrict = 'Klojen';
+
     public array $items = [];
 
     public function mount(): void
@@ -92,7 +108,7 @@ class Index extends Component
     {
         $this->reset([
             'selectedCustomerId', 'newCustomerName', 'newCustomerPhone', 'newCustomerEmail',
-            'selectedServiceId', 'customerNotes', 'pickupAddress', 'destinationAddress'
+            'selectedServiceId', 'customerNotes', 'pickupAddress', 'destinationAddress',
         ]);
         $this->items = [];
         $this->addItemRow();
@@ -138,7 +154,7 @@ class Index extends Component
                 'city' => 'Kota Malang',
                 'district' => $this->destinationDistrict,
             ] : null,
-            'items' => array_filter($this->items, fn ($i) => !empty($i['name'])),
+            'items' => array_filter($this->items, fn ($i) => ! empty($i['name'])),
         ];
 
         $order = $createOrderAction->execute($payload);

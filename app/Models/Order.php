@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Actions\Orders\ChangeOrderStatus;
 use App\Enums\AddressType;
+use App\Enums\InventoryStatus;
 use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
+use App\Enums\QuotationStatus;
+use App\Enums\ScheduleType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -35,7 +39,6 @@ class Order extends Model
         ];
     }
 
-
     /**
      * Generate sequential/formatted order code: ORD-YYYY-XXXXXX
      */
@@ -55,7 +58,7 @@ class Order extends Model
             $number = 1;
         }
 
-        return $prefix . str_pad((string) $number, 6, '0', STR_PAD_LEFT);
+        return $prefix.str_pad((string) $number, 6, '0', STR_PAD_LEFT);
     }
 
     protected static function booted(): void
@@ -84,10 +87,10 @@ class Order extends Model
      */
     public function transitionTo(OrderStatus $newStatus, ?string $notes = null, ?User $changedBy = null): bool
     {
-        app(\App\Actions\Orders\ChangeOrderStatus::class)->execute($this, $newStatus, $notes, $changedBy);
+        app(ChangeOrderStatus::class)->execute($this, $newStatus, $notes, $changedBy);
+
         return true;
     }
-
 
     public function customer(): BelongsTo
     {
@@ -131,7 +134,7 @@ class Order extends Model
 
     public function acceptedQuotation(): HasOne
     {
-        return $this->hasOne(Quotation::class)->where('status', \App\Enums\QuotationStatus::ACCEPTED->value);
+        return $this->hasOne(Quotation::class)->where('status', QuotationStatus::ACCEPTED->value);
     }
 
     public function latestQuotation(): HasOne
@@ -146,7 +149,7 @@ class Order extends Model
 
     public function paidPayments(): HasMany
     {
-        return $this->hasMany(Payment::class)->where('status', \App\Enums\PaymentStatus::PAID->value);
+        return $this->hasMany(Payment::class)->where('status', PaymentStatus::PAID->value);
     }
 
     public function totalPaid(): float
@@ -176,14 +179,14 @@ class Order extends Model
 
     public function pickupSchedule(): HasOne
     {
-        return $this->hasOne(Schedule::class)->where('type', \App\Enums\ScheduleType::PICKUP->value);
+        return $this->hasOne(Schedule::class)->where('type', ScheduleType::PICKUP->value);
     }
 
     public function deliverySchedule(): HasOne
     {
         return $this->hasOne(Schedule::class)->whereIn('type', [
-            \App\Enums\ScheduleType::DELIVERY->value,
-            \App\Enums\ScheduleType::REDELIVERY->value,
+            ScheduleType::DELIVERY->value,
+            ScheduleType::REDELIVERY->value,
         ]);
     }
 
@@ -194,10 +197,6 @@ class Order extends Model
 
     public function storedInventoryItems(): HasMany
     {
-        return $this->hasMany(InventoryItem::class)->where('status', \App\Enums\InventoryStatus::STORED->value);
+        return $this->hasMany(InventoryItem::class)->where('status', InventoryStatus::STORED->value);
     }
 }
-
-
-
-

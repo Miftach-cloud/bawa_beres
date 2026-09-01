@@ -8,6 +8,7 @@ use App\Enums\InventoryStatus;
 use App\Enums\MovementType;
 use App\Enums\OrderStatus;
 use App\Enums\StorageLocationStatus;
+use App\Events\InventoryStored;
 use App\Models\InventoryItem;
 use App\Models\StorageLocation;
 use App\Models\User;
@@ -54,7 +55,6 @@ class AssignInventoryToLocation
 
             $order = $item->order->fresh();
 
-
             // If order has storage requirement and all items are stored, transition order to STORED
             $unstoredCount = $order->inventoryItems()
                 ->where('status', '!=', InventoryStatus::STORED->value)
@@ -72,11 +72,9 @@ class AssignInventoryToLocation
             }
 
             $freshItem = $item->fresh(['storageLocation', 'order.customer', 'movements']);
-            \App\Events\InventoryStored::dispatch($freshItem, $location);
+            InventoryStored::dispatch($freshItem, $location);
 
             return $freshItem;
         });
     }
 }
-
-

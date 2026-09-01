@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PublicWebsiteFoundationTest extends TestCase
@@ -24,7 +25,7 @@ class PublicWebsiteFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function homepage_renders_all_marketing_narrative_sections(): void
     {
         $response = $this->get('/');
@@ -40,7 +41,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Pesan Jasa Pindahan');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function services_catalog_page_displays_active_services(): void
     {
         $response = $this->get('/services');
@@ -51,7 +52,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('200.000');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function service_detail_page_renders_service_specifics(): void
     {
         $response = $this->get("/services/{$this->service->id}");
@@ -63,7 +64,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Pesan Layanan Ini Sekarang');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function how_it_works_page_loads_with_4_steps(): void
     {
         $response = $this->get('/how-it-works');
@@ -74,7 +75,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Antar Tujuan / Simpan Aman');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function storage_security_page_loads_with_facility_details(): void
     {
         $response = $this->get('/storage-security');
@@ -85,8 +86,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Struktur Penempatan Bertingkat');
     }
 
-
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function coverage_page_loads_with_malang_raya_zones(): void
     {
         $response = $this->get('/coverage');
@@ -98,7 +98,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Kabupaten Malang');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function faq_page_loads_with_common_questions(): void
     {
         $response = $this->get('/faq');
@@ -108,7 +108,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Apakah saya wajib membuat akun untuk memesan?');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function about_page_loads_with_vision_and_mission(): void
     {
         $response = $this->get('/about');
@@ -119,8 +119,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Misi Kami');
     }
 
-
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function contact_page_loads_with_hub_information(): void
     {
         $response = $this->get('/contact');

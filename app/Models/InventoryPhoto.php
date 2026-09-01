@@ -58,7 +58,7 @@ class InventoryPhoto extends Model
      */
     public function getFormattedSizeAttribute(): string
     {
-        if (!$this->file_size) {
+        if (! $this->file_size) {
             return '-';
         }
 
@@ -69,6 +69,6 @@ class InventoryPhoto extends Model
 
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, 1) . ' ' . $units[$pow];
+        return round($bytes, 1).' '.$units[$pow];
     }
 }

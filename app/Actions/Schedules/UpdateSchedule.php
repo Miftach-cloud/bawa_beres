@@ -9,7 +9,7 @@ class UpdateSchedule
 {
     public function execute(Schedule $schedule, array $data): Schedule
     {
-        $type = isset($data['type']) 
+        $type = isset($data['type'])
             ? ($data['type'] instanceof ScheduleType ? $data['type'] : ScheduleType::from($data['type']))
             : $schedule->type;
 

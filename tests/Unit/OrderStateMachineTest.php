@@ -5,21 +5,20 @@ namespace Tests\Unit;
 use App\Actions\Orders\CancelOrder;
 use App\Actions\Orders\ChangeOrderStatus;
 use App\Actions\Orders\CreateOrder;
-use App\Actions\Orders\UpdateOrder;
 use App\Enums\OrderStatus;
 use App\Exceptions\InvalidOrderStateTransitionException;
-use App\Models\Customer;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class OrderStateMachineTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function state_machine_allows_valid_status_transitions(): void
     {
         $this->assertTrue(OrderStatus::DRAFT->canTransitionTo(OrderStatus::SUBMITTED));
@@ -32,7 +31,7 @@ class OrderStateMachineTest extends TestCase
         $this->assertTrue(OrderStatus::DELIVERED->canTransitionTo(OrderStatus::COMPLETED));
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function state_machine_rejects_invalid_status_jumps(): void
     {
         $this->assertFalse(OrderStatus::SUBMITTED->canTransitionTo(OrderStatus::COMPLETED));
@@ -42,7 +41,7 @@ class OrderStateMachineTest extends TestCase
         $this->assertFalse(OrderStatus::CANCELLED->canTransitionTo(OrderStatus::QUOTED));
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function change_order_status_action_throws_exception_on_forbidden_transition(): void
     {
         $order = Order::factory()->create(['status' => OrderStatus::SUBMITTED]);
@@ -52,7 +51,7 @@ class OrderStateMachineTest extends TestCase
         $action->execute($order, OrderStatus::COMPLETED);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function change_order_status_action_executes_valid_transition_and_records_history(): void
     {
         $admin = User::factory()->admin()->create();
@@ -71,7 +70,7 @@ class OrderStateMachineTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function create_order_action_creates_full_entity_graph(): void
     {
         $service = Service::factory()->create();
@@ -106,7 +105,7 @@ class OrderStateMachineTest extends TestCase
         $this->assertEquals('Jl. Sulfat No. 88', $order->destinationAddress->address);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function cancel_order_action_cancels_order_with_audit_trail(): void
     {
         $admin = User::factory()->admin()->create();

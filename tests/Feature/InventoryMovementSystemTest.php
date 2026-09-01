@@ -17,6 +17,7 @@ use App\Models\StorageLocation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryMovementSystemTest extends TestCase
@@ -24,9 +25,13 @@ class InventoryMovementSystemTest extends TestCase
     use RefreshDatabase;
 
     protected User $operation;
+
     protected Order $order;
+
     protected InventoryItem $item;
+
     protected StorageLocation $locationA;
+
     protected StorageLocation $locationB;
 
     protected function setUp(): void
@@ -64,7 +69,7 @@ class InventoryMovementSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function full_movement_journey_inbound_relocation_and_outbound(): void
     {
         // 1. Inbound to Location A
@@ -104,7 +109,7 @@ class InventoryMovementSystemTest extends TestCase
         $this->assertEquals(MovementType::OUTBOUND, $this->item->latestMovement->movement_type);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function movement_timeline_modal_renders_chronological_events(): void
     {
         $assignAction = app(AssignInventoryToLocation::class);
@@ -123,7 +128,7 @@ class InventoryMovementSystemTest extends TestCase
             ->assertSee('Pindah ke zona B');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function livewire_manager_performs_relocation(): void
     {
         $assignAction = app(AssignInventoryToLocation::class);

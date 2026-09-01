@@ -75,7 +75,7 @@ class StorageLocation extends Model
 
     public function isAvailable(): bool
     {
-        return $this->status === StorageLocationStatus::AVAILABLE && !$this->isFull();
+        return $this->status === StorageLocationStatus::AVAILABLE && ! $this->isFull();
     }
 
     public function scopeAvailable(Builder $query): Builder

@@ -24,7 +24,7 @@ class WhatsAppTemplateService
 
         // Convert leading 0 to 62
         if (str_starts_with($digits, '0')) {
-            $digits = '62' . substr($digits, 1);
+            $digits = '62'.substr($digits, 1);
         }
 
         return $digits;
@@ -52,15 +52,15 @@ class WhatsAppTemplateService
         $preferredDate = $order->preferred_date ? $order->preferred_date->format('d M Y') : 'Sesuai kesepakatan';
 
         return "Halo Kak *{$customerName}*,\n\n"
-            . "Terima kasih telah memesan layanan *BawaBeres*! 📦\n\n"
-            . "📌 *Detail Pesanan Anda:*\n"
-            . "• Nomor Order: *{$order->order_code}*\n"
-            . "• Layanan: {$serviceName}\n"
-            . "• Rencana Tanggal: {$preferredDate}\n\n"
-            . "Tim kami sedang meninjau rincian barang Anda untuk menerbitkan rincian penawaran resmi.\n\n"
-            . "🔎 Pantau progres pesanan Anda secara realtime di:\n"
-            . "{$trackUrl}\n\n"
-            . "Ada yang ingin ditanyakan? Balas pesan ini untuk terhubung langsung dengan Tim BawaBeres. 😊";
+            ."Terima kasih telah memesan layanan *BawaBeres*! 📦\n\n"
+            ."📌 *Detail Pesanan Anda:*\n"
+            ."• Nomor Order: *{$order->order_code}*\n"
+            ."• Layanan: {$serviceName}\n"
+            ."• Rencana Tanggal: {$preferredDate}\n\n"
+            ."Tim kami sedang meninjau rincian barang Anda untuk menerbitkan rincian penawaran resmi.\n\n"
+            ."🔎 Pantau progres pesanan Anda secara realtime di:\n"
+            ."{$trackUrl}\n\n"
+            .'Ada yang ingin ditanyakan? Balas pesan ini untuk terhubung langsung dengan Tim BawaBeres. 😊';
     }
 
     /**
@@ -74,14 +74,14 @@ class WhatsAppTemplateService
         $trackUrl = url("/track/{$order?->order_code}");
 
         return "Halo Kak *{$customerName}*,\n\n"
-            . "Estimasi dan Penawaran Resmi dari *BawaBeres* telah siap! 📄\n\n"
-            . "📌 *Rincian Penawaran:*\n"
-            . "• No. Penawaran: *{$quotation->quotation_number}*\n"
-            . "• Nomor Order: *{$order?->order_code}*\n"
-            . "• Total Biaya: *Rp {$totalAmount}*\n\n"
-            . "Silakan cek rincian lengkap atau setujui penawaran melalui tautan berikut:\n"
-            . "{$trackUrl}\n\n"
-            . "Jika sudah sesuai, silakan konfirmasi pembayaran agar armada segera kami jadwalkan. Terima kasih! 🙏";
+            ."Estimasi dan Penawaran Resmi dari *BawaBeres* telah siap! 📄\n\n"
+            ."📌 *Rincian Penawaran:*\n"
+            ."• No. Penawaran: *{$quotation->quotation_number}*\n"
+            ."• Nomor Order: *{$order?->order_code}*\n"
+            ."• Total Biaya: *Rp {$totalAmount}*\n\n"
+            ."Silakan cek rincian lengkap atau setujui penawaran melalui tautan berikut:\n"
+            ."{$trackUrl}\n\n"
+            .'Jika sudah sesuai, silakan konfirmasi pembayaran agar armada segera kami jadwalkan. Terima kasih! 🙏';
     }
 
     /**
@@ -93,11 +93,11 @@ class WhatsAppTemplateService
         $trackUrl = url("/track/{$order->order_code}");
 
         return "Halo Kak *{$customerName}*,\n\n"
-            . "Pembayaran & konfirmasi untuk pesanan *{$order->order_code}* telah berhasil diverifikasi! ✅\n\n"
-            . "Tim operasional kami saat ini sedang mengatur penugasan driver dan armada jemput.\n\n"
-            . "Pantau status jadwal penjemputan di:\n"
-            . "{$trackUrl}\n\n"
-            . "BawaBeres — Beres Pindahannya, Aman Simpannya!";
+            ."Pembayaran & konfirmasi untuk pesanan *{$order->order_code}* telah berhasil diverifikasi! ✅\n\n"
+            ."Tim operasional kami saat ini sedang mengatur penugasan driver dan armada jemput.\n\n"
+            ."Pantau status jadwal penjemputan di:\n"
+            ."{$trackUrl}\n\n"
+            .'BawaBeres — Beres Pindahannya, Aman Simpannya!';
     }
 
     /**
@@ -112,14 +112,14 @@ class WhatsAppTemplateService
         $trackUrl = url("/track/{$order->order_code}");
 
         return "Halo Kak *{$customerName}*,\n\n"
-            . "Jadwal penjemputan pesanan *{$order->order_code}* telah ditetapkan! 🚚\n\n"
-            . "📌 *Detail Penjemputan:*\n"
-            . "• Tanggal & Jam: *{$pickupDate}*\n"
-            . "• Driver Bertugas: *{$driverName}*\n"
-            . "• Plat Nomor Armada: *{$vehiclePlate}*\n\n"
-            . "Pastikan barang Anda sudah dikemas rapi sebelum tim kami tiba.\n\n"
-            . "Lacak posisi & koordinasi:\n"
-            . "{$trackUrl}";
+            ."Jadwal penjemputan pesanan *{$order->order_code}* telah ditetapkan! 🚚\n\n"
+            ."📌 *Detail Penjemputan:*\n"
+            ."• Tanggal & Jam: *{$pickupDate}*\n"
+            ."• Driver Bertugas: *{$driverName}*\n"
+            ."• Plat Nomor Armada: *{$vehiclePlate}*\n\n"
+            ."Pastikan barang Anda sudah dikemas rapi sebelum tim kami tiba.\n\n"
+            ."Lacak posisi & koordinasi:\n"
+            ."{$trackUrl}";
     }
 
     /**
@@ -131,13 +131,13 @@ class WhatsAppTemplateService
         $qrUrl = url("/qr/{$item->qr_code}");
 
         return "Halo Kak *{$customerName}*,\n\n"
-            . "Barang Anda telah sampai dan berhasil diterima di Hub BawaBeres! 📦\n\n"
-            . "📌 *Identitas Barang:*\n"
-            . "• Nama Item: *{$item->name}*\n"
-            . "• QR Token: *{$item->qr_code}*\n\n"
-            . "Setiap item telah ditempel label QR Code unik untuk memastikan tidak tertukar atau hilang.\n\n"
-            . "Cek foto & data barang:\n"
-            . "{$qrUrl}";
+            ."Barang Anda telah sampai dan berhasil diterima di Hub BawaBeres! 📦\n\n"
+            ."📌 *Identitas Barang:*\n"
+            ."• Nama Item: *{$item->name}*\n"
+            ."• QR Token: *{$item->qr_code}*\n\n"
+            ."Setiap item telah ditempel label QR Code unik untuk memastikan tidak tertukar atau hilang.\n\n"
+            ."Cek foto & data barang:\n"
+            ."{$qrUrl}";
     }
 
     /**
@@ -150,14 +150,14 @@ class WhatsAppTemplateService
         $qrUrl = url("/qr/{$item->qr_code}");
 
         return "Halo Kak *{$customerName}*,\n\n"
-            . "Barang Anda telah tersimpan rapi dan aman di Storage Facility BawaBeres! 🔒\n\n"
-            . "📌 *Lokasi Penyimpanan:*\n"
-            . "• Item: *{$item->name}*\n"
-            . "• QR Token: *{$item->qr_code}*\n"
-            . "• Lokasi Rak: *{$location->code}* (Zona {$location->zone})\n\n"
-            . "Fasilitas kami dilengkapi CCTV 24/7 dan kontrol akses ketat.\n\n"
-            . "Status penyimpanan:\n"
-            . "{$qrUrl}";
+            ."Barang Anda telah tersimpan rapi dan aman di Storage Facility BawaBeres! 🔒\n\n"
+            ."📌 *Lokasi Penyimpanan:*\n"
+            ."• Item: *{$item->name}*\n"
+            ."• QR Token: *{$item->qr_code}*\n"
+            ."• Lokasi Rak: *{$location->code}* (Zona {$location->zone})\n\n"
+            ."Fasilitas kami dilengkapi CCTV 24/7 dan kontrol akses ketat.\n\n"
+            ."Status penyimpanan:\n"
+            ."{$qrUrl}";
     }
 
     /**
@@ -168,9 +168,9 @@ class WhatsAppTemplateService
         $customerName = $order->customer?->name ?? 'Pelanggan';
 
         return "Halo Kak *{$customerName}*,\n\n"
-            . "Layanan pesanan *{$order->order_code}* telah selesai seluruhnya! 🎉\n\n"
-            . "Terima kasih banyak telah mempercayakan kebutuhan logistik dan penyimpanan barang Anda kepada *BawaBeres*.\n\n"
-            . "Bagaimana pengalaman Kakak bersama kami? Kami sangat berterima kasih jika Kakak berkenan memberikan ulasan singkat. 😊\n\n"
-            . "Sampai jumpa di kebutuhan pindahan & storage berikutnya!";
+            ."Layanan pesanan *{$order->order_code}* telah selesai seluruhnya! 🎉\n\n"
+            ."Terima kasih banyak telah mempercayakan kebutuhan logistik dan penyimpanan barang Anda kepada *BawaBeres*.\n\n"
+            ."Bagaimana pengalaman Kakak bersama kami? Kami sangat berterima kasih jika Kakak berkenan memberikan ulasan singkat. 😊\n\n"
+            .'Sampai jumpa di kebutuhan pindahan & storage berikutnya!';
     }
 }

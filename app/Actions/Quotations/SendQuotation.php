@@ -34,7 +34,7 @@ class SendQuotation
                     $this->changeOrderStatus->execute(
                         $order,
                         OrderStatus::QUOTED,
-                        "Penawaran harga #{$quotation->quotation_number} (v{$quotation->version}) sebesar Rp " . number_format($quotation->total_amount, 0, ',', '.') . " dikirimkan ke pelanggan.",
+                        "Penawaran harga #{$quotation->quotation_number} (v{$quotation->version}) sebesar Rp ".number_format($quotation->total_amount, 0, ',', '.').' dikirimkan ke pelanggan.',
                         $sender
                     );
                 }

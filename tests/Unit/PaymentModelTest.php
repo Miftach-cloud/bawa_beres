@@ -3,7 +3,6 @@
 namespace Tests\Unit;
 
 use App\Actions\Payments\RecordPayment;
-use App\Actions\Payments\VerifyPayment;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
@@ -13,13 +12,14 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PaymentModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function order_supports_multiple_partial_payments_and_computes_balance(): void
     {
         $admin = User::factory()->admin()->create();
@@ -68,7 +68,7 @@ class PaymentModelTest extends TestCase
         $this->assertCount(2, $order->payments);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function record_payment_stores_proof_file_and_generates_url(): void
     {
         Storage::fake('public');

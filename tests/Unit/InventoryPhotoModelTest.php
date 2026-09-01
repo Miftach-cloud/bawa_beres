@@ -6,16 +6,16 @@ use App\Enums\PhotoType;
 use App\Models\InventoryItem;
 use App\Models\InventoryPhoto;
 use App\Models\Order;
-use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryPhotoModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function photo_model_resolves_url_and_formats_size(): void
     {
         Storage::fake('public');

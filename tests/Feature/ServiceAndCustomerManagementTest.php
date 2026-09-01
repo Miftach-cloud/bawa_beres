@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Enums\OrderStatus;
 use App\Enums\PricingType;
-use App\Enums\UserRole;
 use App\Livewire\Admin\Customers\Index as CustomerIndex;
 use App\Livewire\Admin\Customers\Show as CustomerShow;
 use App\Livewire\Admin\Services\Index as ServiceIndex;
@@ -14,6 +13,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ServiceAndCustomerManagementTest extends TestCase
@@ -21,6 +21,7 @@ class ServiceAndCustomerManagementTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $operation;
 
     protected function setUp(): void
@@ -31,7 +32,7 @@ class ServiceAndCustomerManagementTest extends TestCase
         $this->operation = User::factory()->operation()->create();
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_view_services_list(): void
     {
         $service = Service::factory()->create([
@@ -47,7 +48,7 @@ class ServiceAndCustomerManagementTest extends TestCase
             ->assertSee('Katalog Layanan');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_create_new_service(): void
     {
         $this->actingAs($this->admin);
@@ -71,7 +72,7 @@ class ServiceAndCustomerManagementTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_edit_existing_service(): void
     {
         $service = Service::factory()->create([
@@ -93,7 +94,7 @@ class ServiceAndCustomerManagementTest extends TestCase
         $this->assertEquals(175000, (int) $service->base_price);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_toggle_service_active_status(): void
     {
         $service = Service::factory()->create([
@@ -115,7 +116,7 @@ class ServiceAndCustomerManagementTest extends TestCase
         $this->assertTrue($service->is_active);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operation_role_cannot_access_service_management(): void
     {
         $this->actingAs($this->operation);
@@ -123,7 +124,7 @@ class ServiceAndCustomerManagementTest extends TestCase
         $this->get('/admin/services')->assertStatus(403);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_view_and_search_customers_list(): void
     {
         $customer1 = Customer::factory()->create([
@@ -146,7 +147,7 @@ class ServiceAndCustomerManagementTest extends TestCase
             ->assertDontSee('Siti Nurhaliza');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_create_new_customer(): void
     {
         $this->actingAs($this->admin);
@@ -167,7 +168,7 @@ class ServiceAndCustomerManagementTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_view_customer_detail_with_orders(): void
     {
         $customer = Customer::factory()->create([
@@ -206,7 +207,7 @@ class ServiceAndCustomerManagementTest extends TestCase
 
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_update_customer_from_detail_page(): void
     {
         $customer = Customer::factory()->create([
@@ -228,7 +229,7 @@ class ServiceAndCustomerManagementTest extends TestCase
         $this->assertEquals('082222222222', $customer->phone);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operation_role_cannot_access_customer_management(): void
     {
         $customer = Customer::factory()->create();
@@ -236,6 +237,6 @@ class ServiceAndCustomerManagementTest extends TestCase
         $this->actingAs($this->operation);
 
         $this->get('/admin/customers')->assertStatus(403);
-        $this->get('/admin/customers/' . $customer->id)->assertStatus(403);
+        $this->get('/admin/customers/'.$customer->id)->assertStatus(403);
     }
 }

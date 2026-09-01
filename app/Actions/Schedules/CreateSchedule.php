@@ -6,6 +6,7 @@ use App\Actions\Orders\ChangeOrderStatus;
 use App\Enums\OrderStatus;
 use App\Enums\ScheduleStatus;
 use App\Enums\ScheduleType;
+use App\Events\PickupScheduled;
 use App\Models\Order;
 use App\Models\Schedule;
 use App\Models\User;
@@ -25,7 +26,7 @@ class CreateSchedule
         return DB::transaction(function () use ($order, $data, $creator) {
             $type = $data['type'] instanceof ScheduleType ? $data['type'] : ScheduleType::from($data['type']);
             $status = $data['status'] ?? ScheduleStatus::SCHEDULED;
-            if (!($status instanceof ScheduleStatus)) {
+            if (! ($status instanceof ScheduleStatus)) {
                 $status = ScheduleStatus::from($status);
             }
 
@@ -48,7 +49,7 @@ class CreateSchedule
                     $this->changeOrderStatus->execute(
                         $order,
                         OrderStatus::SCHEDULED,
-                        "Jadwal operasional {$type->label()} telah ditetapkan pada tanggal {$data['scheduled_date']} " . ($data['start_time'] ? "pukul {$data['start_time']}" : '') . ".",
+                        "Jadwal operasional {$type->label()} telah ditetapkan pada tanggal {$data['scheduled_date']} ".($data['start_time'] ? "pukul {$data['start_time']}" : '').'.',
                         $creator
                     );
                 }
@@ -57,11 +58,10 @@ class CreateSchedule
             $freshSchedule = $schedule->fresh(['order.customer', 'creator']);
 
             if ($type === ScheduleType::PICKUP) {
-                \App\Events\PickupScheduled::dispatch($order->fresh(['customer', 'service']), $freshSchedule);
+                PickupScheduled::dispatch($order->fresh(['customer', 'service']), $freshSchedule);
             }
 
             return $freshSchedule;
         });
     }
 }
-

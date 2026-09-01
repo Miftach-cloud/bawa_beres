@@ -7,10 +7,14 @@ use App\Actions\Inventory\GenerateExpectedInventory;
 use App\Actions\Inventory\ReceiveInventoryItem;
 use App\Actions\Inventory\ReleaseInventoryItem;
 use App\Actions\Inventory\StoreInventoryItem;
+use App\Actions\Movements\RelocateInventoryItem;
+use App\Actions\Storage\AssignInventoryToLocation;
+use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
 use App\Models\InventoryItem;
 use App\Models\Order;
+use App\Models\StorageLocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
@@ -21,26 +25,36 @@ class Manager extends Component
 
     // Check & QC Modal
     public bool $showCheckModal = false;
+
     public ?int $selectedItemId = null;
+
     public string $condition = 'GOOD';
+
     public string $checkNotes = '';
 
     // Store Modal
     public bool $showStoreModal = false;
+
     public ?int $selectedLocationId = null;
+
     public string $storageLocation = 'Rak A-01 (Gudang Dinoyo)';
 
     // Relocate Modal
     public bool $showRelocateModal = false;
+
     public ?int $relocateLocationId = null;
+
     public string $relocateNotes = '';
 
     // Add Item Modal
     public bool $showAddModal = false;
 
     public string $newItemName = '';
+
     public string $newItemCategory = 'Sedang';
+
     public string $newItemCondition = 'GOOD';
+
     public string $newItemNotes = '';
 
     public function mount(Order $order): void
@@ -116,14 +130,14 @@ class Manager extends Component
         $this->selectedLocationId = null;
     }
 
-    public function confirmStore(StoreInventoryItem $action, \App\Actions\Storage\AssignInventoryToLocation $assignAction): void
+    public function confirmStore(StoreInventoryItem $action, AssignInventoryToLocation $assignAction): void
     {
         Gate::authorize('manage-inventory');
 
         $item = InventoryItem::findOrFail($this->selectedItemId);
 
         if ($this->selectedLocationId) {
-            $location = \App\Models\StorageLocation::findOrFail($this->selectedLocationId);
+            $location = StorageLocation::findOrFail($this->selectedLocationId);
             $assignAction->execute($item, $location, Auth::user());
         } else {
             $action->execute($item, $this->storageLocation ?: 'Rak A-01 (Gudang Dinoyo)', Auth::user());
@@ -152,7 +166,7 @@ class Manager extends Component
         $this->relocateLocationId = null;
     }
 
-    public function confirmRelocate(\App\Actions\Movements\RelocateInventoryItem $action): void
+    public function confirmRelocate(RelocateInventoryItem $action): void
     {
         Gate::authorize('manage-storage');
 
@@ -161,7 +175,7 @@ class Manager extends Component
         ]);
 
         $item = InventoryItem::findOrFail($this->selectedItemId);
-        $targetLocation = \App\Models\StorageLocation::findOrFail($this->relocateLocationId);
+        $targetLocation = StorageLocation::findOrFail($this->relocateLocationId);
 
         $action->execute($item, $targetLocation, Auth::user(), $this->relocateNotes ?: null);
 
@@ -170,7 +184,7 @@ class Manager extends Component
         session()->flash('inventory_message', "Barang #{$item->inventory_code} berhasil dipindahkan ke rak {$targetLocation->code}.");
     }
 
-    public function release(int $itemId, ReleaseInventoryItem $action, \App\Actions\Storage\VacateInventoryFromLocation $vacateAction): void
+    public function release(int $itemId, ReleaseInventoryItem $action, VacateInventoryFromLocation $vacateAction): void
     {
         Gate::authorize('manage-inventory');
 
@@ -181,8 +195,6 @@ class Manager extends Component
         $this->order->refresh();
         session()->flash('inventory_message', "Barang #{$item->inventory_code} telah diserahterimakan (RELEASED).");
     }
-
-
 
     public function openAddModal(): void
     {
@@ -227,7 +239,7 @@ class Manager extends Component
     public function render()
     {
         $items = $this->order->inventoryItems()->with(['orderItem', 'receiver', 'storageLocation', 'photos'])->get();
-        $availableLocations = \App\Models\StorageLocation::available()->get();
+        $availableLocations = StorageLocation::available()->get();
 
         return view('livewire.admin.inventory.manager', [
             'items' => $items,
@@ -236,4 +248,3 @@ class Manager extends Component
         ]);
     }
 }
-

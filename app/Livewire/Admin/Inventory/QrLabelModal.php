@@ -9,6 +9,7 @@ use Livewire\Component;
 class QrLabelModal extends Component
 {
     public ?InventoryItem $item = null;
+
     public bool $show = false;
 
     protected $listeners = [

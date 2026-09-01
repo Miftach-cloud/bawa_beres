@@ -4,9 +4,14 @@ namespace App\Models;
 
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
+use App\Enums\PhotoType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class InventoryItem extends Model
 {
@@ -62,7 +67,7 @@ class InventoryItem extends Model
             $number = 1;
         }
 
-        return $prefix . str_pad((string) $number, 6, '0', STR_PAD_LEFT);
+        return $prefix.str_pad((string) $number, 6, '0', STR_PAD_LEFT);
     }
 
     /**
@@ -71,7 +76,7 @@ class InventoryItem extends Model
     public static function generateQrCode(): string
     {
         do {
-            $token = strtoupper(\Illuminate\Support\Str::random(8));
+            $token = strtoupper(Str::random(8));
         } while (static::where('qr_code', $token)->exists());
 
         return $token;
@@ -84,7 +89,7 @@ class InventoryItem extends Model
 
     public function getQrSvg(int $size = 180): string
     {
-        return \SimpleSoftwareIO\QrCode\Facades\QrCode::size($size)->margin(1)->generate($this->scan_url);
+        return QrCode::size($size)->margin(1)->generate($this->scan_url);
     }
 
     protected static function booted(): void
@@ -107,7 +112,6 @@ class InventoryItem extends Model
         });
     }
 
-
     public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
@@ -128,33 +132,30 @@ class InventoryItem extends Model
         return $this->belongsTo(StorageLocation::class, 'storage_location_id');
     }
 
-    public function movements(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function movements(): HasMany
     {
         return $this->hasMany(InventoryMovement::class)->orderBy('moved_at', 'desc')->orderBy('id', 'desc');
     }
 
-    public function latestMovement(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function latestMovement(): HasOne
     {
         return $this->hasOne(InventoryMovement::class)->latestOfMany('moved_at');
     }
 
-    public function photos(): \Illuminate\Database\Eloquent\Relations\HasMany
-
-
+    public function photos(): HasMany
     {
         return $this->hasMany(InventoryPhoto::class)->latest('id');
     }
 
-    public function damagePhotos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function damagePhotos(): HasMany
     {
-        return $this->hasMany(InventoryPhoto::class)->where('type', \App\Enums\PhotoType::DAMAGE->value);
+        return $this->hasMany(InventoryPhoto::class)->where('type', PhotoType::DAMAGE->value);
     }
 
     public function isStored(): bool
     {
         return $this->status === InventoryStatus::STORED;
     }
-
 
     public function isReceived(): bool
     {

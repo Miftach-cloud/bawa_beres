@@ -9,13 +9,14 @@ use App\Models\InventoryItem;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryItemModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function inventory_item_generates_sequential_inv_code_and_qr_payload(): void
     {
         $order = Order::factory()->create();
@@ -40,7 +41,7 @@ class InventoryItemModelTest extends TestCase
         $this->assertEquals("INV-{$year}-000002", $item2->inventory_code);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function generate_expected_inventory_creates_physical_units_from_booking_items(): void
     {
         $order = Order::factory()->create();

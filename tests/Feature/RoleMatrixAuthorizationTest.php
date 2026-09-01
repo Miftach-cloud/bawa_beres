@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class RoleMatrixAuthorizationTest extends TestCase
@@ -12,7 +13,9 @@ class RoleMatrixAuthorizationTest extends TestCase
     use RefreshDatabase;
 
     protected User $owner;
+
     protected User $admin;
+
     protected User $operation;
 
     protected function setUp(): void
@@ -38,7 +41,7 @@ class RoleMatrixAuthorizationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function owner_has_complete_unrestricted_access_to_all_admin_modules(): void
     {
         $this->actingAs($this->owner);
@@ -54,7 +57,7 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/admin/settings')->assertStatus(200);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_role_can_access_business_modules_but_not_inventory_storage_or_settings(): void
     {
         $this->actingAs($this->admin);
@@ -73,7 +76,7 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/admin/settings')->assertStatus(403);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operation_role_can_access_operational_modules_but_not_commercial_modules(): void
     {
         $this->actingAs($this->operation);
@@ -92,7 +95,7 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/admin/settings')->assertStatus(403);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function public_guest_can_access_marketing_and_tracking_but_is_redirected_from_admin(): void
     {
         // Public pages (200 OK)

@@ -7,13 +7,13 @@ use App\Actions\Documentation\UploadInventoryPhoto;
 use App\Enums\PhotoType;
 use App\Livewire\Admin\Inventory\PhotosModal;
 use App\Models\InventoryItem;
-use App\Models\InventoryPhoto;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class InventoryPhotoDocumentationTest extends TestCase
@@ -21,8 +21,11 @@ class InventoryPhotoDocumentationTest extends TestCase
     use RefreshDatabase;
 
     protected User $operation;
+
     protected User $customerUser;
+
     protected Order $order;
+
     protected InventoryItem $item;
 
     protected function setUp(): void
@@ -37,7 +40,7 @@ class InventoryPhotoDocumentationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function action_uploads_photo_with_extracted_metadata(): void
     {
         Storage::fake('public');
@@ -65,7 +68,7 @@ class InventoryPhotoDocumentationTest extends TestCase
         Storage::disk('public')->assertExists($photo->file_path);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function action_deletes_photo_and_cleans_up_storage(): void
     {
         Storage::fake('public');
@@ -83,7 +86,7 @@ class InventoryPhotoDocumentationTest extends TestCase
         Storage::disk('public')->assertMissing($photo->file_path);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function livewire_photos_modal_uploads_multiple_photos_and_filters(): void
     {
         Storage::fake('public');

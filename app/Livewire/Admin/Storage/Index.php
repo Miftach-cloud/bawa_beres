@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Storage;
 
 use App\Actions\Storage\CreateStorageLocation;
+use App\Enums\InventoryStatus;
 use App\Enums\StorageLocationStatus;
 use App\Enums\StorageLocationType;
 use App\Models\InventoryItem;
@@ -20,22 +21,33 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $warehouseFilter = '';
+
     public string $zoneFilter = '';
+
     public string $statusFilter = '';
 
     // Slot Detail Drawer
     public ?StorageLocation $selectedLocation = null;
+
     public bool $showDetailDrawer = false;
 
     // Create Modal
     public bool $showCreateModal = false;
+
     public string $warehouse = 'MLG01';
+
     public string $zone = 'A';
+
     public string $rack = 'R01';
+
     public string $level = 'L01';
+
     public string $type = 'STANDARD_RACK';
+
     public int $capacity = 5;
+
     public string $notes = '';
 
     protected function rules(): array
@@ -112,6 +124,7 @@ class Index extends Component
 
         if (StorageLocation::where('code', $code)->exists()) {
             $this->addError('code', "Kode lokasi rak {$code} sudah ada dalam sistem.");
+
             return;
         }
 
@@ -178,7 +191,7 @@ class Index extends Component
             'total_slots' => StorageLocation::count(),
             'available_slots' => StorageLocation::where('status', StorageLocationStatus::AVAILABLE->value)->count(),
             'occupied_slots' => StorageLocation::where('status', StorageLocationStatus::OCCUPIED->value)->count(),
-            'stored_items' => InventoryItem::where('status', \App\Enums\InventoryStatus::STORED->value)->count(),
+            'stored_items' => InventoryItem::where('status', InventoryStatus::STORED->value)->count(),
         ];
 
         $warehouses = StorageLocation::select('warehouse')->distinct()->pluck('warehouse');

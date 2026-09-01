@@ -7,8 +7,6 @@ use App\Actions\Inventory\OutboundInventoryItem;
 use App\Actions\Inventory\ReceiveInventoryItem;
 use App\Actions\Movements\RelocateInventoryItem;
 use App\Actions\Orders\ChangeOrderStatus;
-use App\Actions\Orders\CreateOrder;
-use App\Actions\Payments\RecordPayment;
 use App\Actions\Payments\VerifyPayment;
 use App\Actions\Quotations\CreateQuotation;
 use App\Actions\Schedules\CreateSchedule;
@@ -42,6 +40,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class CompleteOrderLifecycleEndToEndTest extends TestCase
@@ -49,8 +48,11 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
     use RefreshDatabase;
 
     protected User $owner;
+
     protected User $admin;
+
     protected User $operation;
+
     protected Service $service;
 
     protected function setUp(): void
@@ -85,7 +87,7 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function full_order_lifecycle_from_public_booking_to_completion(): void
     {
         // -------------------------------------------------------------
@@ -175,7 +177,6 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
 
         $this->assertEquals(PaymentStatus::PAID, $payment->fresh()->status);
         $this->assertEquals(OrderStatus::PAID, $order->fresh()->status);
-
 
         // -------------------------------------------------------------
         // STEP 5: Operations Schedules Pickup Dispatch & Completes Pickup
@@ -331,8 +332,6 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
 
         $this->assertEquals(OrderStatus::COMPLETED, $order->fresh()->status);
 
-
-
         // Verify OrderCompleted notification sent
         $this->assertDatabaseHas('notifications', [
             'notifiable_id' => $order->customer->id,
@@ -346,4 +345,3 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         $this->assertEquals($this->admin->id, $histories->last()->changed_by);
     }
 }
-

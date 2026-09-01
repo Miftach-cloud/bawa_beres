@@ -2,20 +2,17 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Quotations\AcceptQuotation;
 use App\Actions\Quotations\CreateQuotation;
-use App\Actions\Quotations\CreateQuotationRevision;
-use App\Actions\Quotations\RejectQuotation;
 use App\Actions\Quotations\SendQuotation;
 use App\Enums\OrderStatus;
 use App\Enums\QuotationStatus;
 use App\Livewire\Admin\Quotations\Manager;
 use App\Models\Order;
 use App\Models\Quotation;
-use App\Models\Service;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QuotationSystemTest extends TestCase
@@ -23,7 +20,9 @@ class QuotationSystemTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $operation;
+
     protected Order $order;
 
     protected function setUp(): void
@@ -38,7 +37,7 @@ class QuotationSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_compose_and_create_new_quotation(): void
     {
         $this->actingAs($this->admin);
@@ -71,7 +70,7 @@ class QuotationSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_send_quotation_and_advance_order_status_to_quoted(): void
     {
         $createAction = app(CreateQuotation::class);
@@ -95,7 +94,7 @@ class QuotationSystemTest extends TestCase
         $this->assertEquals(OrderStatus::QUOTED, $this->order->status);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function accepting_quotation_syncs_order_total_and_advances_status_to_confirmed(): void
     {
         $createAction = app(CreateQuotation::class);
@@ -124,7 +123,7 @@ class QuotationSystemTest extends TestCase
         $this->assertEquals($quotation->id, $this->order->acceptedQuotation->id);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function rejecting_quotation_and_creating_revision_v2(): void
     {
         $createAction = app(CreateQuotation::class);

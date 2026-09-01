@@ -22,19 +22,27 @@ class Index extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $statusFilter = '';
+
     public string $methodFilter = '';
+
     public string $dateFilter = 'all';
+
     public ?string $startDate = null;
+
     public ?string $endDate = null;
 
     // Proof Preview
     public bool $showProofModal = false;
+
     public ?string $previewProofUrl = null;
 
     // Rejection Modal
     public bool $showRejectModal = false;
+
     public ?int $selectedPaymentId = null;
+
     public string $rejectionReason = '';
 
     public function mount(): void

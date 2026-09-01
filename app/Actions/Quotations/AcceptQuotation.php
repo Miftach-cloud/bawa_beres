@@ -44,7 +44,7 @@ class AcceptQuotation
                 $this->changeOrderStatus->execute(
                     $order,
                     OrderStatus::CONFIRMED,
-                    "Pelanggan menyetujui penawaran harga #{$quotation->quotation_number} (v{$quotation->version}) sebesar Rp " . number_format($quotation->total_amount, 0, ',', '.') . ".",
+                    "Pelanggan menyetujui penawaran harga #{$quotation->quotation_number} (v{$quotation->version}) sebesar Rp ".number_format($quotation->total_amount, 0, ',', '.').'.',
                     $actor
                 );
             }

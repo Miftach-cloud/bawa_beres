@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SeoFoundationTest extends TestCase
@@ -24,7 +25,7 @@ class SeoFoundationTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function robots_txt_returns_proper_rules_and_sitemap_link(): void
     {
         $response = $this->get('/robots.txt');
@@ -36,7 +37,7 @@ class SeoFoundationTest extends TestCase
         $response->assertSee('Sitemap:');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function sitemap_xml_returns_valid_xml_with_all_public_urls(): void
     {
         $response = $this->get('/sitemap.xml');
@@ -57,7 +58,7 @@ class SeoFoundationTest extends TestCase
         $response->assertSee(route('public.services.show', $this->service));
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function homepage_contains_meta_tags_opengraph_and_local_business_schema(): void
     {
         $response = $this->get('/');
@@ -77,7 +78,7 @@ class SeoFoundationTest extends TestCase
         $response->assertSee('"@type": "FAQPage"', false);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function service_detail_page_contains_service_and_breadcrumb_schema(): void
     {
         $response = $this->get("/services/{$this->service->id}");
@@ -88,7 +89,7 @@ class SeoFoundationTest extends TestCase
         $response->assertSee($this->service->name);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function faq_page_contains_faq_schema(): void
     {
         $response = $this->get('/faq');

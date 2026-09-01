@@ -25,16 +25,16 @@ class GenerateExpectedInventory
                 $qty = max(1, (int) $item->quantity);
 
                 // Determine default condition tag if fragile
-                $condition = ($item->estimated_size === 'Fragile') 
-                    ? ItemCondition::FRAGILE 
+                $condition = ($item->estimated_size === 'Fragile')
+                    ? ItemCondition::FRAGILE
                     : ItemCondition::GOOD;
 
                 for ($i = 1; $i <= $qty; $i++) {
-                    $suffix = ($qty > 1) ? " (#{$i})" : "";
+                    $suffix = ($qty > 1) ? " (#{$i})" : '';
                     $inventoryItem = InventoryItem::create([
                         'order_id' => $order->id,
                         'order_item_id' => $item->id,
-                        'name' => $item->name . $suffix,
+                        'name' => $item->name.$suffix,
                         'description' => $item->description,
                         'category' => $item->estimated_size,
                         'condition' => $condition,

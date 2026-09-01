@@ -7,7 +7,6 @@ use App\Models\InventoryItem;
 use App\Models\InventoryPhoto;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 
 class UploadInventoryPhoto
 {

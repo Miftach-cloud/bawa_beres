@@ -2,10 +2,8 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Inventory\ReceiveInventoryItem;
 use App\Actions\Movements\RelocateInventoryItem;
 use App\Actions\Orders\ChangeOrderStatus;
-use App\Actions\Orders\CreateOrder;
 use App\Actions\Payments\VerifyPayment;
 use App\Actions\Storage\AssignInventoryToLocation;
 use App\Enums\InventoryStatus;
@@ -27,6 +25,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class AuditAndSecurityTest extends TestCase
@@ -34,8 +33,11 @@ class AuditAndSecurityTest extends TestCase
     use RefreshDatabase;
 
     protected User $owner;
+
     protected User $admin;
+
     protected User $operation;
+
     protected Service $service;
 
     protected function setUp(): void
@@ -71,7 +73,7 @@ class AuditAndSecurityTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function audit_trail_records_actor_and_timestamp_for_order_status_changes(): void
     {
         $customer = Customer::create(['name' => 'Budi Santoso', 'phone' => '081234567890']);
@@ -93,7 +95,7 @@ class AuditAndSecurityTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function audit_trail_records_actor_and_timestamp_for_payment_verifications(): void
     {
         $customer = Customer::create(['name' => 'Siti Rahma', 'phone' => '081987654321']);
@@ -125,8 +127,7 @@ class AuditAndSecurityTest extends TestCase
         $this->assertNotNull($paymentFresh->verified_at);
     }
 
-
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function audit_trail_records_actor_and_locations_for_inventory_movements(): void
     {
         $customer = Customer::create(['name' => 'Rian Pratama', 'phone' => '08155667788']);
@@ -189,7 +190,7 @@ class AuditAndSecurityTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function role_based_authorization_strictly_protects_modules(): void
     {
         // 1. Operation cannot access Orders Management
@@ -215,7 +216,7 @@ class AuditAndSecurityTest extends TestCase
         $this->actingAs($this->owner)->get('/admin/storage')->assertStatus(200);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function upload_validation_rejects_disallowed_file_types_and_excessive_sizes(): void
     {
         $disallowedGif = UploadedFile::fake()->image('animation.gif');
@@ -240,16 +241,14 @@ class AuditAndSecurityTest extends TestCase
             ->assertHasErrors(['photos.0']);
     }
 
-
-
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function user_passwords_are_securely_hashed(): void
     {
         $this->assertTrue(Hash::check('secret123', $this->owner->password));
         $this->assertNotEquals('secret123', $this->owner->password);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function rate_limiting_throttles_excessive_tracking_requests(): void
     {
         for ($i = 0; $i < 15; $i++) {

@@ -38,7 +38,7 @@ class StoreInventoryItem
                     $this->changeOrderStatus->execute(
                         $order,
                         OrderStatus::STORED,
-                        "Seluruh barang fisik telah tersimpan aman di rak storage gudang.",
+                        'Seluruh barang fisik telah tersimpan aman di rak storage gudang.',
                         $actor
                     );
                 }

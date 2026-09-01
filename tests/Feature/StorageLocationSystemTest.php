@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Actions\Storage\AssignInventoryToLocation;
-use App\Actions\Storage\CreateStorageLocation;
 use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
 use App\Enums\OrderStatus;
@@ -16,6 +15,7 @@ use App\Models\StorageLocation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class StorageLocationSystemTest extends TestCase
@@ -23,8 +23,11 @@ class StorageLocationSystemTest extends TestCase
     use RefreshDatabase;
 
     protected User $operation;
+
     protected User $admin;
+
     protected Order $order;
+
     protected StorageLocation $location;
 
     protected function setUp(): void
@@ -49,14 +52,14 @@ class StorageLocationSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operation_role_can_access_storage_management_board(): void
     {
         $this->actingAs($this->operation);
         $this->get('/admin/storage')->assertStatus(200);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function action_assigns_inventory_item_and_updates_location_status_when_full(): void
     {
         $item = InventoryItem::create([
@@ -83,7 +86,7 @@ class StorageLocationSystemTest extends TestCase
         $this->assertEquals(OrderStatus::STORED, $this->order->status);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function action_vacates_item_and_restores_location_availability(): void
     {
         $item = InventoryItem::create([
@@ -105,7 +108,7 @@ class StorageLocationSystemTest extends TestCase
         $this->assertEquals(StorageLocationStatus::AVAILABLE, $this->location->status);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function livewire_storage_index_renders_and_filters_locations(): void
     {
         $this->actingAs($this->operation);

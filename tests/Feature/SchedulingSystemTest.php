@@ -2,8 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Schedules\CompleteSchedule;
-use App\Actions\Schedules\CreateSchedule;
 use App\Enums\OrderStatus;
 use App\Enums\ScheduleStatus;
 use App\Enums\ScheduleType;
@@ -15,6 +13,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class SchedulingSystemTest extends TestCase
@@ -22,7 +21,9 @@ class SchedulingSystemTest extends TestCase
     use RefreshDatabase;
 
     protected User $admin;
+
     protected User $operation;
+
     protected Order $order;
 
     protected function setUp(): void
@@ -36,7 +37,7 @@ class SchedulingSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function both_admin_and_operation_can_access_schedule_board(): void
     {
         $this->actingAs($this->admin);
@@ -46,7 +47,7 @@ class SchedulingSystemTest extends TestCase
         $this->get('/admin/schedule')->assertStatus(200);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function creating_schedule_transitions_paid_order_to_scheduled(): void
     {
         $this->actingAs($this->admin);
@@ -72,7 +73,7 @@ class SchedulingSystemTest extends TestCase
         $this->assertEquals(OrderStatus::SCHEDULED, $this->order->status);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function completing_pickup_schedule_transitions_order_to_picked_up(): void
     {
         $this->actingAs($this->operation);
@@ -99,7 +100,7 @@ class SchedulingSystemTest extends TestCase
         $this->assertEquals(OrderStatus::PICKED_UP, $this->order->status);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function operational_schedule_tabs_filter_by_today_and_tomorrow(): void
     {
         $todaySchedule = Schedule::create([

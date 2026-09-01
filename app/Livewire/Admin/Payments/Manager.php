@@ -22,20 +22,29 @@ class Manager extends Component
 
     // Record Payment Modal
     public bool $showRecordModal = false;
+
     public string $method = 'BANK_TRANSFER';
+
     public float|string $amount = 0;
+
     public string $bankName = 'BCA';
+
     public string $accountName = '';
+
     public string $notes = '';
+
     public $proofFile = null;
 
     // Verify / Reject Modal
     public bool $showRejectModal = false;
+
     public ?int $selectedPaymentId = null;
+
     public string $rejectionReason = '';
 
     // Proof Preview Modal
     public bool $showProofModal = false;
+
     public ?string $previewProofUrl = null;
 
     protected function rules(): array
@@ -96,7 +105,7 @@ class Manager extends Component
         $this->proofFile = null;
         $this->order->refresh();
 
-        session()->flash('payment_message', "Pembayaran #{$payment->payment_number} sebesar Rp " . number_format($payment->amount, 0, ',', '.') . " berhasil dicatat.");
+        session()->flash('payment_message', "Pembayaran #{$payment->payment_number} sebesar Rp ".number_format($payment->amount, 0, ',', '.').' berhasil dicatat.');
     }
 
     public function verify(int $paymentId, VerifyPayment $verifyPayment): void

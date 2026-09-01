@@ -49,7 +49,7 @@ class CreateQuotationRevision
             ]);
 
             foreach ($items as $item) {
-                if (!empty($item['name'])) {
+                if (! empty($item['name'])) {
                     $qty = (int) ($item['quantity'] ?? 1);
                     $unitPrice = (float) ($item['unit_price'] ?? 0);
                     $newQuotation->items()->create([

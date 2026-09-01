@@ -2,21 +2,20 @@
 
 namespace Tests\Unit;
 
-use App\Actions\Schedules\CreateSchedule;
 use App\Enums\ScheduleStatus;
 use App\Enums\ScheduleType;
 use App\Models\Order;
 use App\Models\Schedule;
-use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class ScheduleModelTest extends TestCase
 {
     use RefreshDatabase;
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function schedule_scopes_filter_by_relative_dates(): void
     {
         $order = Order::factory()->create();
@@ -52,7 +51,7 @@ class ScheduleModelTest extends TestCase
         $this->assertEquals($upcoming->id, Schedule::upcoming()->first()->id);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function order_schedule_relations_resolve_pickup_and_delivery(): void
     {
         $order = Order::factory()->create();

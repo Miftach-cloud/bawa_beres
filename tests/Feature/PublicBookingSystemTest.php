@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\OrderStatus;
 use App\Livewire\Admin\Orders\Index as OrderIndex;
 use App\Livewire\Public\BookingForm;
 use App\Models\Customer;
@@ -10,6 +11,7 @@ use App\Models\Service;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class PublicBookingSystemTest extends TestCase
@@ -29,7 +31,7 @@ class PublicBookingSystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function public_home_page_renders_booking_form(): void
     {
         $response = $this->get('/');
@@ -39,8 +41,7 @@ class PublicBookingSystemTest extends TestCase
         $response->assertSee('Jasa Pindahan Kost');
     }
 
-
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function booking_form_validates_required_fields(): void
     {
         Livewire::test(BookingForm::class)
@@ -55,7 +56,7 @@ class PublicBookingSystemTest extends TestCase
             ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function customer_can_submit_booking_and_see_confirmation_with_order_code(): void
     {
         $component = Livewire::test(BookingForm::class)
@@ -86,7 +87,7 @@ class PublicBookingSystemTest extends TestCase
         $this->assertEquals('Jl. Bendungan Sigura-gura No. 12', $order->pickupAddress->address);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function admin_can_view_submitted_public_order_in_dashboard(): void
     {
         $admin = User::factory()->admin()->create();
@@ -95,7 +96,7 @@ class PublicBookingSystemTest extends TestCase
             'customer_id' => Customer::factory()->create(['name' => 'Joko Widodo'])->id,
             'service_id' => $this->service->id,
             'order_code' => 'ORD-2026-000999',
-            'status' => \App\Enums\OrderStatus::PENDING_REVIEW,
+            'status' => OrderStatus::PENDING_REVIEW,
         ]);
 
         $this->actingAs($admin);

@@ -4,13 +4,13 @@ namespace Tests\Feature;
 
 use App\Enums\InventoryStatus;
 use App\Livewire\Admin\Inventory\QrLabelModal;
-use App\Livewire\Public\InventoryScan;
 use App\Models\Customer;
 use App\Models\InventoryItem;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class QrInventorySystemTest extends TestCase
@@ -18,8 +18,11 @@ class QrInventorySystemTest extends TestCase
     use RefreshDatabase;
 
     protected User $operation;
+
     protected Customer $customer;
+
     protected Order $order;
+
     protected InventoryItem $item;
 
     protected function setUp(): void
@@ -42,7 +45,7 @@ class QrInventorySystemTest extends TestCase
         ]);
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function public_scan_url_renders_custody_seal_for_visitors(): void
     {
         $response = $this->get($this->item->scan_url);
@@ -54,7 +57,7 @@ class QrInventorySystemTest extends TestCase
         $response->assertDontSee('081234567890'); // Protects customer phone from public
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function authenticated_staff_sees_full_operational_details_and_customer_info_on_scan(): void
     {
         $this->actingAs($this->operation);
@@ -68,7 +71,7 @@ class QrInventorySystemTest extends TestCase
         $response->assertSee('Petugas Aktif');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function printable_label_route_renders_correctly(): void
     {
         $this->actingAs($this->operation);
@@ -81,7 +84,7 @@ class QrInventorySystemTest extends TestCase
         $response->assertSee('BAWABERES');
     }
 
-    #[\PHPUnit\Framework\Attributes\Test]
+    #[Test]
     public function livewire_qr_label_modal_opens_and_previews(): void
     {
         $this->actingAs($this->operation);

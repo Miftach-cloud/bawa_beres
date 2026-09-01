@@ -29,7 +29,7 @@ class QuotationCreatedNotification extends Notification
             'order_code' => $this->quotation->order?->order_code,
             'total_amount' => $this->quotation->total_amount,
             'title' => "Penawaran Resmi Siap: {$this->quotation->quotation_number}",
-            'message' => "Penawaran sebesar Rp " . number_format($this->quotation->total_amount, 0, ',', '.') . " untuk pesanan {$this->quotation->order?->order_code} telah diterbitkan.",
+            'message' => 'Penawaran sebesar Rp '.number_format($this->quotation->total_amount, 0, ',', '.')." untuk pesanan {$this->quotation->order?->order_code} telah diterbitkan.",
             'action_url' => url("/track/{$this->quotation->order?->order_code}"),
         ];
     }
@@ -39,7 +39,7 @@ class QuotationCreatedNotification extends Notification
         return (new MailMessage)
             ->subject("Penawaran Resmi BawaBeres — {$this->quotation->quotation_number}")
             ->line("Penawaran resmi untuk pesanan {$this->quotation->order?->order_code} telah siap.")
-            ->line("Total Biaya: Rp " . number_format($this->quotation->total_amount, 0, ',', '.'))
+            ->line('Total Biaya: Rp '.number_format($this->quotation->total_amount, 0, ',', '.'))
             ->action('Lihat Rincian & Lacak', url("/track/{$this->quotation->order?->order_code}"));
     }
 }

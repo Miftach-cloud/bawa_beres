@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Admin\Auth;
 
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -31,7 +30,7 @@ class Login extends Component
         $input = trim($this->email);
         $resolvedEmail = str_contains($input, '@') ? $input : "{$input}@bawaberes.id";
 
-        $throttleKey = Str::lower($resolvedEmail) . '|' . request()->ip();
+        $throttleKey = Str::lower($resolvedEmail).'|'.request()->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
@@ -43,7 +42,7 @@ class Login extends Component
         // Try with resolved email or exact input
         $credentials = ['email' => $resolvedEmail, 'password' => $this->password];
 
-        if (!Auth::attempt($credentials, $this->remember)) {
+        if (! Auth::attempt($credentials, $this->remember)) {
             // Also fallback attempt with raw input if different
             if ($resolvedEmail !== $input && Auth::attempt(['email' => $input, 'password' => $this->password], $this->remember)) {
                 // Succeeded with raw email

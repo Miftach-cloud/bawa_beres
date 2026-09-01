@@ -25,7 +25,7 @@ class VacateInventoryFromLocation
                 'storage_location_id' => null,
             ]);
 
-            if ($location && $location->status === StorageLocationStatus::OCCUPIED && !$location->fresh()->isFull()) {
+            if ($location && $location->status === StorageLocationStatus::OCCUPIED && ! $location->fresh()->isFull()) {
                 $location->update(['status' => StorageLocationStatus::AVAILABLE]);
             }
 
@@ -45,4 +45,3 @@ class VacateInventoryFromLocation
         });
     }
 }
-

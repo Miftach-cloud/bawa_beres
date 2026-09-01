@@ -6,7 +6,6 @@ use App\Actions\Schedules\CancelSchedule;
 use App\Actions\Schedules\CompleteSchedule;
 use App\Actions\Schedules\CreateSchedule;
 use App\Actions\Schedules\StartSchedule;
-use App\Enums\ScheduleStatus;
 use App\Enums\ScheduleType;
 use App\Models\Order;
 use App\Models\Schedule;
@@ -20,12 +19,19 @@ class Manager extends Component
 
     // Modal state
     public bool $showCreateModal = false;
+
     public string $type = 'PICKUP';
+
     public string $scheduledDate = '';
+
     public string $startTime = '09:00';
+
     public string $endTime = '12:00';
+
     public string $assignedTeam = 'Tim Lapangan 1 (Budi & Eko)';
+
     public string $vehicle = 'Daihatsu GranMax Pick-up N 1234 AB';
+
     public string $notes = '';
 
     protected function rules(): array
@@ -120,7 +126,7 @@ class Manager extends Component
         $cancelSchedule->execute($schedule, 'Dibatalkan oleh admin');
 
         $this->order->refresh();
-        session()->flash('schedule_message', "Jadwal telah dibatalkan.");
+        session()->flash('schedule_message', 'Jadwal telah dibatalkan.');
     }
 
     public function render()

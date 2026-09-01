@@ -14,11 +14,15 @@ use Livewire\Component;
 class Show extends Component
 {
     public Customer $customer;
+
     public bool $showEditModal = false;
 
     public string $name = '';
+
     public string $phone = '';
+
     public string $email = '';
+
     public string $notes = '';
 
     protected function rules(): array
