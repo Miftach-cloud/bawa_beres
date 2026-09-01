@@ -28,41 +28,7 @@
 
     <!-- Schema.org LocalBusiness / MovingCompany JSON-LD -->
     @php
-        $localBusinessSchema = [
-            '@context' => 'https://schema.org',
-            '@type' => 'MovingCompany',
-            'name' => 'Bawa Beres',
-            'url' => url('/'),
-            'telephone' => '+6281234567890',
-            'description' => 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code di Kota Malang.',
-            'address' => [
-                '@type' => 'PostalAddress',
-                'streetAddress' => 'Jl. Soekarno Hatta No. 88, Lowokwaru',
-                'addressLocality' => 'Kota Malang',
-                'addressRegion' => 'Jawa Timur',
-                'postalCode' => '65141',
-                'addressCountry' => 'ID',
-            ],
-            'geo' => [
-                '@type' => 'GeoCoordinates',
-                'latitude' => -7.9467,
-                'longitude' => 112.6157,
-            ],
-            'areaServed' => [
-                'Kota Malang',
-                'Kota Batu',
-                'Kabupaten Malang',
-            ],
-            'openingHoursSpecification' => [
-                '@type' => 'OpeningHoursSpecification',
-                'dayOfWeek' => [
-                    'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',
-                ],
-                'opens' => '07:00',
-                'closes' => '21:00',
-            ],
-            'priceRange' => 'Rp',
-        ];
+        $localBusinessSchema = \App\Support\BusinessProfile::localBusinessSchema($metaDescription ?? null);
     @endphp
     <script type="application/ld+json">
     {!! json_encode($localBusinessSchema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) !!}
@@ -130,7 +96,7 @@
                         Platform logistik, jasa pindahan terpercaya, dan penitipan barang mahasiswa/umum ber-QR Code di Malang Raya.
                     </p>
                     <div class="text-[11px] text-slate-400 font-mono">
-                        Hub: Jl. Soekarno Hatta No. 88, Lowokwaru, Kota Malang
+                        Hub: {{ \App\Support\BusinessProfile::displayAddress() }}
                     </div>
                 </div>
 
@@ -170,24 +136,24 @@
                         Butuh respon cepat atau konsultasi estimasi pindahan armada?
                     </p>
                     <a 
-                        href="https://wa.me/6281234567890" 
+                        href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya butuh informasi layanan') }}" 
                         target="_blank"
                         class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-2.5 font-bold text-white shadow-xs transition"
                     >
                         <x-icon name="chat" class="w-4 h-4 text-white" />
-                        <span>WhatsApp +62 812-3456-7890</span>
+                        <span>WhatsApp {{ \App\Support\BusinessProfile::displayPhone() }}</span>
                     </a>
                 </div>
             </div>
 
             <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-                <p>© {{ date('Y') }} {{ config('app.name', 'Bawa Beres') }} — Moving, Storage & Delivery Kota Malang. All rights reserved.</p>
+                <p>© {{ date('Y') }} {{ config('business.name', 'Bawa Beres') }} — Moving, Storage & Delivery Kota Malang. All rights reserved.</p>
                 <div class="flex items-center gap-4">
                     <a href="{{ route('public.faq') }}" class="hover:text-slate-600">Syarat & Ketentuan</a>
                     <span>•</span>
                     <a href="{{ route('public.storage-security') }}" class="hover:text-slate-600">Kebijakan Privasi</a>
                     <span>•</span>
-                    <a href="https://wa.me/6281234567890" target="_blank" class="hover:text-slate-600">WhatsApp Support</a>
+                    <a href="{{ \App\Support\BusinessProfile::whatsappUrl() }}" target="_blank" class="hover:text-slate-600">WhatsApp Support</a>
                 </div>
             </div>
         </div>

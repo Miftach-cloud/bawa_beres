@@ -90,7 +90,7 @@
                 </p>
             </div>
             <a 
-                href="https://wa.me/6281234567890?text=Halo%20Admin%20BawaBeres,%20saya%20ingin%20konsultasi%20layanan%20khusus" 
+                href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin konsultasi layanan khusus') }}" 
                 target="_blank"
                 class="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 px-6 py-4 text-xs font-bold text-slate-950 shadow-lg shadow-emerald-500/20 transition cursor-pointer whitespace-nowrap"
             >

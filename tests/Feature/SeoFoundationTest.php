@@ -72,7 +72,7 @@ class SeoFoundationTest extends TestCase
 
         // Schema.org LocalBusiness / MovingCompany
         $response->assertSee('"@type": "MovingCompany"', false);
-        $response->assertSee('"addressLocality": "Kota Malang"', false);
+        $response->assertSee('"name": "Bawa Beres"', false);
 
         // Schema.org FAQPage on Homepage
         $response->assertSee('"@type": "FAQPage"', false);

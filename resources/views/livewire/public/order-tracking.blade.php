@@ -176,13 +176,12 @@
                     </div>
                 </div>
 
-                <!-- WhatsApp Support CTA -->
                 @php
-                    $waHelpMessage = rawurlencode("Halo Admin BawaBeres, saya ingin menanyakan perkembangan pesanan saya dengan nomor {$order->order_code}.");
+                    $waHelpMessage = "Halo Admin BawaBeres, saya ingin menanyakan perkembangan pesanan saya dengan nomor {$order->order_code}.";
                 @endphp
                 <div class="pt-2">
                     <a 
-                        href="https://wa.me/6281234567890?text={{ $waHelpMessage }}" 
+                        href="{{ \App\Support\BusinessProfile::whatsappUrl($waHelpMessage) }}" 
                         target="_blank"
                         class="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-6 py-3.5 text-xs font-bold text-white shadow-md shadow-emerald-600/10 transition cursor-pointer"
                     >

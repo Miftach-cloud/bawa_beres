@@ -61,7 +61,7 @@
                         <span>Mulai Pesan Sekarang</span>
                         <x-icon name="arrow-right" class="w-5 h-5 text-slate-950" />
                     </a>
-                    <a href="https://wa.me/6281234567890" target="_blank" class="rounded-2xl bg-white border border-slate-300 px-7 py-4 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-xs flex items-center gap-2">
+                    <a href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin konsultasi layanan') }}" target="_blank" class="rounded-2xl bg-white border border-slate-300 px-7 py-4 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-xs flex items-center gap-2">
                         <x-icon name="chat" class="w-5 h-5 text-emerald-600" />
                         <span>Konsultasi WhatsApp</span>
                     </a>
@@ -313,7 +313,7 @@
                     <span>Buat Pesanan Sekarang</span>
                     <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
                 </a>
-                <a href="https://wa.me/6281234567890" target="_blank" class="rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-8 py-4 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition cursor-pointer flex items-center gap-2">
+                <a href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin konsultasi estimasi pesanan') }}" target="_blank" class="rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-8 py-4 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition cursor-pointer flex items-center gap-2">
                     <x-icon name="chat" class="w-4 h-4 text-white" />
                     <span>Chat WhatsApp</span>
                 </a>

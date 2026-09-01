@@ -120,7 +120,7 @@
         <div class="rounded-3xl bg-amber-50 border border-amber-200 p-8 text-center space-y-4">
             <h3 class="text-lg font-black text-slate-900">Punya Pertanyaan Lain yang Belum Terjawab?</h3>
             <a 
-                href="https://wa.me/6281234567890?text=Halo%20Admin%20BawaBeres,%20saya%20ingin%20tanya%20seputar%20layanan" 
+                href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin tanya seputar layanan') }}" 
                 target="_blank"
                 class="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3.5 shadow-md shadow-emerald-600/10 transition"
             >

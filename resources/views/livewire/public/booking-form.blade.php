@@ -43,13 +43,12 @@
                 </div>
             </div>
 
-            <!-- WhatsApp Direct Confirmation CTA -->
             @php
-                $waMessage = rawurlencode("Halo Admin BawaBeres, saya sudah membuat pesanan {$createdOrder->order_code} untuk layanan {$createdOrder->service->name} a.n {$createdOrder->customer->name}. Mohon info estimasi penawaran/jadwalnya.");
+                $waMessage = "Halo Admin BawaBeres, saya sudah membuat pesanan {$createdOrder->order_code} untuk layanan {$createdOrder->service->name} a.n {$createdOrder->customer->name}. Mohon info estimasi penawaran/jadwalnya.";
             @endphp
             <div class="space-y-3 pt-2">
                 <a 
-                    href="https://wa.me/6281234567890?text={{ $waMessage }}" 
+                    href="{{ \App\Support\BusinessProfile::whatsappUrl($waMessage) }}" 
                     target="_blank"
                     class="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition cursor-pointer"
                 >

@@ -28,9 +28,9 @@
                 </div>
                 <h3 class="text-base font-extrabold text-slate-900">WhatsApp Resmi</h3>
                 <p class="text-xs text-slate-500">Respon cepat setiap hari:</p>
-                <p class="font-mono font-bold text-slate-900 text-sm">+62 812-3456-7890</p>
+                <p class="font-mono font-bold text-slate-900 text-sm">{{ \App\Support\BusinessProfile::displayPhone() }}</p>
                 <a 
-                    href="https://wa.me/6281234567890" 
+                    href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin konsultasi layanan') }}" 
                     target="_blank"
                     class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-emerald-600 hover:text-emerald-700"
                 >
@@ -45,7 +45,7 @@
                 </div>
                 <h3 class="text-base font-extrabold text-slate-900">Hub Storage Malang</h3>
                 <p class="text-xs text-slate-500">Lokasi fasilitas gudang:</p>
-                <p class="text-xs font-semibold text-slate-800">Jl. Soekarno Hatta No. 88, Lowokwaru, Kota Malang</p>
+                <p class="text-xs font-semibold text-slate-800">{{ \App\Support\BusinessProfile::displayAddress() }}</p>
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md space-y-3 text-center">
@@ -54,7 +54,7 @@
                 </div>
                 <h3 class="text-base font-extrabold text-slate-900">Jam Operasional</h3>
                 <p class="text-xs text-slate-500">Penjemputan & Layanan:</p>
-                <p class="text-xs font-semibold text-slate-800">Senin – Minggu<br>07.00 – 21.00 WIB</p>
+                <p class="text-xs font-semibold text-slate-800">{{ config('business.operating_hours.display', 'Senin – Minggu: 07.00 – 21.00 WIB') }}</p>
             </div>
         </div>
 

@@ -78,7 +78,7 @@
                 Kami juga melayani pengiriman pindahan jarak jauh (antar kota Jawa Timur & Jawa-Bali) via rute khusus.
             </p>
             <a 
-                href="https://wa.me/6281234567890?text=Halo%20Admin%20BawaBeres,%20saya%20ingin%20tanya%20layanan%20luar%20kota" 
+                href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin tanya layanan luar kota') }}" 
                 target="_blank"
                 class="inline-flex items-center gap-2 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3.5 transition"
             >

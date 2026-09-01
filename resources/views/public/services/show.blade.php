@@ -148,7 +148,7 @@
                     <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
                 </a>
                 <a 
-                    href="https://wa.me/6281234567890?text={{ rawurlencode('Halo Admin BawaBeres, saya ingin tanya detail layanan ' . $service->name) }}" 
+                    href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin tanya detail layanan ' . $service->name) }}" 
                     target="_blank"
                     class="flex-1 rounded-2xl border border-slate-300 hover:bg-slate-50 py-4 text-center text-sm font-bold text-slate-700 transition cursor-pointer flex items-center justify-center gap-2"
                 >
