@@ -111,7 +111,7 @@ class AdminAuthAndDashboardTest extends TestCase
 
     public function test_authenticated_user_can_logout(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->admin()->create();
 
         $response = $this->actingAs($user)->post('/admin/logout');
 
