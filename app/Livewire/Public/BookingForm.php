@@ -154,9 +154,7 @@ class BookingForm extends Component
         // 3. Process uploaded photos if any
         if (! empty($this->photos)) {
             foreach ($this->photos as $photo) {
-                $path = $photo->store("orders/{$order->id}/estimation", 'public');
-                // Store photo reference in inventory photos if inventory exists or order notes
-                // For MVP estimation photos, saved in public storage
+                $path = $photo->store("orders/{$order->id}/estimation", 'local');
             }
         }
 

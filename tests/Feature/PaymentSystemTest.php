@@ -71,7 +71,7 @@ class PaymentSystemTest extends TestCase
     #[Test]
     public function admin_can_record_payment_with_proof_via_manager(): void
     {
-        Storage::fake('public');
+        Storage::fake('local');
         $this->actingAs($this->admin);
 
         $file = UploadedFile::fake()->image('bukti_tf.png');

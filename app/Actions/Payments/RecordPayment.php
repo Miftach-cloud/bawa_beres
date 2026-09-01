@@ -19,7 +19,7 @@ class RecordPayment
         return DB::transaction(function () use ($order, $data, $proofFile) {
             $proofPath = null;
             if ($proofFile) {
-                $proofPath = $proofFile->store('payment-proofs', 'public');
+                $proofPath = $proofFile->store('payment-proofs', 'local');
             }
 
             $method = $data['method'] instanceof PaymentMethod ? $data['method'] : PaymentMethod::from($data['method']);

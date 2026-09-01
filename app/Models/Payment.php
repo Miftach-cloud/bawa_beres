@@ -7,7 +7,6 @@ use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
 
 class Payment extends Model
 {
@@ -67,7 +66,7 @@ class Payment extends Model
             return null;
         }
 
-        return Storage::disk('public')->url($this->proof_path);
+        return route('admin.media.payment-proof', $this);
     }
 
     public function isVerified(): bool

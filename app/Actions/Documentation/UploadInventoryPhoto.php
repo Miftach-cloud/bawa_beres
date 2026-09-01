@@ -22,7 +22,7 @@ class UploadInventoryPhoto
     ): InventoryPhoto {
         $photoType = ($type instanceof PhotoType) ? $type : PhotoType::from($type);
 
-        $path = $file->store('inventory-photos', 'public');
+        $path = $file->store('inventory-photos', 'local');
 
         return InventoryPhoto::create([
             'inventory_item_id' => $item->id,

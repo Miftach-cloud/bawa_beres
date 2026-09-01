@@ -39,7 +39,7 @@ class InventoryPhotoModelTest extends TestCase
         $this->assertEquals(PhotoType::DAMAGE, $photo->type);
         $this->assertEquals('2 MB', $photo->formatted_size);
         $this->assertNotNull($photo->url);
-        $this->assertStringContainsString('test_damage.jpg', $photo->url);
+        $this->assertStringContainsString('admin/media/inventory-photo', $photo->url);
 
         $this->assertCount(1, $item->damagePhotos);
         $this->assertCount(1, $item->photos);

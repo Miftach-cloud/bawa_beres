@@ -6,7 +6,6 @@ use App\Enums\PhotoType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Facades\Storage;
 
 class InventoryPhoto extends Model
 {
@@ -42,7 +41,7 @@ class InventoryPhoto extends Model
     }
 
     /**
-     * Get accessible public URL of the photo
+     * Get secure authorized URL of the photo
      */
     public function getUrlAttribute(): ?string
     {
@@ -50,7 +49,7 @@ class InventoryPhoto extends Model
             return null;
         }
 
-        return Storage::disk('public')->url($this->file_path);
+        return route('admin.media.inventory-photo', $this);
     }
 
     /**

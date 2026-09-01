@@ -71,7 +71,7 @@ class PaymentModelTest extends TestCase
     #[Test]
     public function record_payment_stores_proof_file_and_generates_url(): void
     {
-        Storage::fake('public');
+        Storage::fake('local');
 
         $order = Order::factory()->create();
         $file = UploadedFile::fake()->image('transfer_receipt.jpg');
@@ -85,7 +85,7 @@ class PaymentModelTest extends TestCase
         ], $file);
 
         $this->assertNotNull($payment->proof_path);
-        Storage::disk('public')->assertExists($payment->proof_path);
+        Storage::disk('local')->assertExists($payment->proof_path);
         $this->assertNotNull($payment->proof_url);
         $this->assertEquals(PaymentStatus::WAITING_VERIFICATION, $payment->status);
     }

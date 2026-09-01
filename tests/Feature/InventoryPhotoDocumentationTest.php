@@ -43,7 +43,7 @@ class InventoryPhotoDocumentationTest extends TestCase
     #[Test]
     public function action_uploads_photo_with_extracted_metadata(): void
     {
-        Storage::fake('public');
+        Storage::fake('local');
 
         $file = UploadedFile::fake()->image('sofa_pickup.jpg', 800, 600)->size(1500); // 1500 KB
 
@@ -65,31 +65,31 @@ class InventoryPhotoDocumentationTest extends TestCase
             'uploaded_by' => $this->operation->id,
         ]);
 
-        Storage::disk('public')->assertExists($photo->file_path);
+        Storage::disk('local')->assertExists($photo->file_path);
     }
 
     #[Test]
     public function action_deletes_photo_and_cleans_up_storage(): void
     {
-        Storage::fake('public');
+        Storage::fake('local');
 
         $file = UploadedFile::fake()->image('sofa_kondisi.jpg');
         $action = app(UploadInventoryPhoto::class);
         $photo = $action->execute($this->item, $file, PhotoType::CONDITION);
 
-        Storage::disk('public')->assertExists($photo->file_path);
+        Storage::disk('local')->assertExists($photo->file_path);
 
         $deleteAction = app(DeleteInventoryPhoto::class);
         $deleteAction->execute($photo);
 
         $this->assertDatabaseMissing('inventory_photos', ['id' => $photo->id]);
-        Storage::disk('public')->assertMissing($photo->file_path);
+        Storage::disk('local')->assertMissing($photo->file_path);
     }
 
     #[Test]
     public function livewire_photos_modal_uploads_multiple_photos_and_filters(): void
     {
-        Storage::fake('public');
+        Storage::fake('local');
         $this->actingAs($this->operation);
 
         $file1 = UploadedFile::fake()->image('damage1.jpg');

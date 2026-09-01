@@ -247,7 +247,7 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
             'inventory_item_id' => $item1->id,
             'caption' => 'Kondisi kardus tersegel lakban rapat',
         ]);
-        Storage::disk('public')->assertExists($photo->file_path);
+        Storage::disk('local')->assertExists($photo->file_path);
 
         // -------------------------------------------------------------
         // STEP 8: Storage Location Rack Allocation
