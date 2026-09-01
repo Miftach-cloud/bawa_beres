@@ -20,7 +20,6 @@ class OrderTracking extends Component
 
     protected $queryString = [
         'orderCode' => ['except' => '', 'as' => 'code'],
-        'phone' => ['except' => ''],
     ];
 
     public function mount(?string $order_code = null): void
@@ -69,17 +68,9 @@ class OrderTracking extends Component
             return;
         }
 
-        // Verify Phone (match last 4 digits or normalized full phone)
+        // Verify the complete normalized phone number.
         $customerPhone = preg_replace('/[^0-9]/', '', $order->customer->phone ?? '');
-        $isPhoneMatched = false;
-
-        if ($customerPhone && $cleanPhone) {
-            if ($customerPhone === $cleanPhone) {
-                $isPhoneMatched = true;
-            } elseif (str_ends_with($customerPhone, $cleanPhone) || str_ends_with($cleanPhone, $customerPhone)) {
-                $isPhoneMatched = true;
-            }
-        }
+        $isPhoneMatched = $customerPhone !== '' && hash_equals($customerPhone, $cleanPhone);
 
         if (! $isPhoneMatched) {
             $this->errorMessage = "Nomor WhatsApp/HP tidak sesuai dengan data pemesan nomor order {$cleanCode}.";

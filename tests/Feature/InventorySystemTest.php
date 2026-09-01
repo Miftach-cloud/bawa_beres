@@ -142,4 +142,21 @@ class InventorySystemTest extends TestCase
             ->assertSee($itemDamaged->inventory_code)
             ->assertDontSee($itemGood->inventory_code);
     }
+
+    #[Test]
+    public function operation_can_generate_inventory_from_the_inventory_register(): void
+    {
+        $this->actingAs($this->operation);
+
+        Livewire::test(InventoryIndex::class)
+            ->set('selectedOrderId', $this->order->id)
+            ->call('generateExpected')
+            ->assertHasNoErrors();
+
+        $this->assertDatabaseHas('inventory_items', [
+            'order_id' => $this->order->id,
+            'name' => 'Kulkas 2 Pintu',
+            'status' => InventoryStatus::EXPECTED->value,
+        ]);
+    }
 }

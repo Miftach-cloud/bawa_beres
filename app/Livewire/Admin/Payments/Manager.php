@@ -49,9 +49,11 @@ class Manager extends Component
 
     protected function rules(): array
     {
+        $remainingBalance = max(0, $this->order->remainingBalance());
+
         return [
             'method' => 'required|string|in:BANK_TRANSFER,QRIS,CASH',
-            'amount' => 'required|numeric|min:1000',
+            'amount' => ['required', 'numeric', 'min:1000', "max:{$remainingBalance}"],
             'bankName' => 'nullable|string|max:100',
             'accountName' => 'nullable|string|max:100',
             'notes' => 'nullable|string|max:500',

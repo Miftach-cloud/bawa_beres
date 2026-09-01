@@ -9,6 +9,7 @@ use App\Enums\InventoryStatus;
 use App\Enums\MovementType;
 use App\Enums\StorageLocationStatus;
 use App\Enums\StorageLocationType;
+use App\Livewire\Admin\Inventory\Index as InventoryIndex;
 use App\Livewire\Admin\Inventory\Manager as InventoryManager;
 use App\Livewire\Admin\Inventory\MovementTimelineModal;
 use App\Models\InventoryItem;
@@ -146,5 +147,21 @@ class InventoryMovementSystemTest extends TestCase
         $this->item->refresh();
         $this->assertEquals($this->locationB->id, $this->item->storage_location_id);
         $this->assertEquals('MLG01-B-R02-L03', $this->item->storage_location);
+    }
+
+    #[Test]
+    public function operation_can_process_stored_inventory_outbound_from_the_register(): void
+    {
+        app(AssignInventoryToLocation::class)->execute($this->item, $this->locationA, $this->operation);
+        $this->actingAs($this->operation);
+
+        Livewire::test(InventoryIndex::class)
+            ->call('outbound', $this->item->id)
+            ->assertHasNoErrors();
+
+        $this->item->refresh();
+        $this->assertSame(InventoryStatus::OUTBOUND, $this->item->status);
+        $this->assertNull($this->item->storage_location_id);
+        $this->assertSame(MovementType::OUTBOUND, $this->item->latestMovement->movement_type);
     }
 }

@@ -8,6 +8,7 @@ use App\Enums\PaymentStatus;
 use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 
 class VerifyPayment
 {
@@ -21,6 +22,15 @@ class VerifyPayment
     public function execute(Payment $payment, User $verifier, ?string $notes = null): Payment
     {
         return DB::transaction(function () use ($payment, $verifier, $notes) {
+            $payment->order()->lockForUpdate()->firstOrFail();
+            $payment->refresh();
+
+            if ((float) $payment->amount > $payment->order->remainingBalance()) {
+                throw ValidationException::withMessages([
+                    'payment' => 'Nominal pembayaran melebihi sisa tagihan order.',
+                ]);
+            }
+
             $payment->update([
                 'status' => PaymentStatus::PAID,
                 'verified_at' => now(),

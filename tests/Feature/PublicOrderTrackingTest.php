@@ -106,14 +106,13 @@ class PublicOrderTrackingTest extends TestCase
     }
 
     #[Test]
-    public function tracking_succeeds_with_last_4_digits_phone_verification(): void
+    public function tracking_rejects_partial_phone_number_verification(): void
     {
         Livewire::test(OrderTracking::class)
             ->set('orderCode', 'ORD-2026-000051')
             ->set('phone', '7890')
             ->call('track')
-            ->assertHasNoErrors()
-            ->assertSee('ORD-2026-000051');
+            ->assertSee('Nomor WhatsApp/HP tidak sesuai');
     }
 
     #[Test]
@@ -122,7 +121,8 @@ class PublicOrderTrackingTest extends TestCase
         $response = $this->get('/track?code=ORD-2026-000051&phone=081234567890');
 
         $response->assertStatus(200);
-        $response->assertSee('ORD-2026-000051');
+        $response->assertSee('Lacak Status Pesanan');
+        $response->assertDontSee('Jl. Ijen No. 1');
         $response->assertDontSee('INTERNAL SECRET');
         $response->assertDontSee('kode pin gudang 9988');
     }

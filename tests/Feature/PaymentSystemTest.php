@@ -150,4 +150,44 @@ class PaymentSystemTest extends TestCase
 
         $this->get('/admin/payments')->assertStatus(403);
     }
+
+    #[Test]
+    public function admin_cannot_record_payment_above_the_remaining_balance(): void
+    {
+        $this->actingAs($this->admin);
+
+        Livewire::test(PaymentManager::class, ['order' => $this->order])
+            ->call('openRecordModal')
+            ->set('amount', 405000)
+            ->call('savePayment')
+            ->assertHasErrors(['amount']);
+
+        $this->assertDatabaseCount('payments', 0);
+    }
+
+    #[Test]
+    public function admin_cannot_verify_a_payment_that_would_overpay_the_order(): void
+    {
+        Payment::create([
+            'order_id' => $this->order->id,
+            'payment_number' => Payment::generateNumber($this->order),
+            'method' => PaymentMethod::CASH,
+            'status' => PaymentStatus::PAID,
+            'amount' => 300000,
+        ]);
+        $pendingPayment = Payment::create([
+            'order_id' => $this->order->id,
+            'payment_number' => Payment::generateNumber($this->order),
+            'method' => PaymentMethod::BANK_TRANSFER,
+            'status' => PaymentStatus::WAITING_VERIFICATION,
+            'amount' => 150000,
+        ]);
+        $this->actingAs($this->admin);
+
+        Livewire::test(PaymentManager::class, ['order' => $this->order])
+            ->call('verify', $pendingPayment->id)
+            ->assertHasErrors(['payment']);
+
+        $this->assertSame(PaymentStatus::WAITING_VERIFICATION, $pendingPayment->fresh()->status);
+    }
 }

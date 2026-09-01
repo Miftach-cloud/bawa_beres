@@ -7,6 +7,26 @@
         </div>
     </div>
 
+    @if ($ordersReadyForInventory->isNotEmpty())
+        <div class="rounded-2xl bg-amber-50 p-4 border border-amber-200 shadow-xs">
+            <div class="flex flex-col sm:flex-row sm:items-end gap-3">
+                <div class="flex-1">
+                    <label class="block text-xs font-bold text-amber-900 mb-1">Buat inventaris dari order yang sudah dijemput</label>
+                    <select wire:model="selectedOrderId" class="w-full rounded-xl border border-amber-300 bg-white px-3 py-2 text-xs text-slate-900">
+                        <option value="">Pilih order</option>
+                        @foreach ($ordersReadyForInventory as $readyOrder)
+                            <option value="{{ $readyOrder->id }}">{{ $readyOrder->order_code }} — {{ $readyOrder->customer->name }}</option>
+                        @endforeach
+                    </select>
+                    @error('selectedOrderId') <p class="text-xs text-rose-600 mt-1">{{ $message }}</p> @enderror
+                </div>
+                <button type="button" wire:click="generateExpected" class="rounded-xl bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 hover:bg-amber-400">
+                    Generate Inventory
+                </button>
+            </div>
+        </div>
+    @endif
+
     <!-- Flash Message -->
     @if (session()->has('message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center gap-3 text-xs font-medium text-emerald-800">
@@ -137,7 +157,7 @@
                                         title="Dokumentasi Foto"
                                     >
                                         <span>📷</span>
-                                        <span>{{ $item->photos->count() }}</span>
+                                        <span>{{ $item->photos_count }}</span>
                                     </button>
 
 
@@ -148,7 +168,7 @@
                                         title="Histori Mutasi Perpindahan"
                                     >
                                         <span>⏱️</span>
-                                        <span>{{ $item->movements->count() }}</span>
+                                        <span>{{ $item->movements_count }}</span>
                                     </button>
 
                                     @if ($item->status->value === 'EXPECTED')
@@ -183,6 +203,14 @@
                                             title="Pindahkan ke Rak Lain"
                                         >
                                             <span>🔁 Pindah</span>
+                                        </button>
+                                        <button
+                                            type="button"
+                                            wire:click="outbound({{ $item->id }})"
+                                            wire:confirm="Pindahkan barang ini ke area outbound?"
+                                            class="inline-flex items-center rounded-lg bg-amber-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-amber-500 cursor-pointer"
+                                        >
+                                            <span>🚚 Outbound</span>
                                         </button>
                                         <button 
                                             type="button" 
@@ -370,6 +398,5 @@
     <!-- Embedded QR Label Modal -->
     <livewire:admin.inventory.qr-label-modal />
 </div>
-
 
 

@@ -3,6 +3,8 @@
 namespace App\Livewire\Admin\Inventory;
 
 use App\Actions\Inventory\CheckInventoryItem;
+use App\Actions\Inventory\GenerateExpectedInventory;
+use App\Actions\Inventory\OutboundInventoryItem;
 use App\Actions\Inventory\ReceiveInventoryItem;
 use App\Actions\Inventory\ReleaseInventoryItem;
 use App\Actions\Inventory\StoreInventoryItem;
@@ -11,7 +13,9 @@ use App\Actions\Storage\AssignInventoryToLocation;
 use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
+use App\Enums\OrderStatus;
 use App\Models\InventoryItem;
+use App\Models\Order;
 use App\Models\StorageLocation;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -31,6 +35,8 @@ class Index extends Component
     public string $statusFilter = '';
 
     public string $conditionFilter = '';
+
+    public ?int $selectedOrderId = null;
 
     // Quick Store Modal
     public bool $showStoreModal = false;
@@ -83,6 +89,21 @@ class Index extends Component
         $action->execute($item, Auth::user());
 
         session()->flash('message', "Barang #{$item->inventory_code} telah ditandai Diterima (RECEIVED).");
+    }
+
+    public function generateExpected(GenerateExpectedInventory $action): void
+    {
+        Gate::authorize('manage-inventory');
+
+        $this->validate([
+            'selectedOrderId' => ['required', 'integer', 'exists:orders,id'],
+        ]);
+
+        $order = Order::query()->findOrFail($this->selectedOrderId);
+        $items = $action->execute($order);
+
+        $this->selectedOrderId = null;
+        session()->flash('message', "{$items->count()} barang fisik untuk {$order->order_code} berhasil dibuat.");
     }
 
     public function openCheckModal(int $itemId): void
@@ -194,6 +215,16 @@ class Index extends Component
         session()->flash('message', "Barang #{$item->inventory_code} berhasil diserahterimakan (RELEASED).");
     }
 
+    public function outbound(int $itemId, OutboundInventoryItem $action): void
+    {
+        Gate::authorize('manage-inventory');
+
+        $item = InventoryItem::query()->findOrFail($itemId);
+        $action->execute($item, Auth::user());
+
+        session()->flash('message', "Barang #{$item->inventory_code} dipindahkan ke area outbound.");
+    }
+
     public function resetFilters(): void
     {
         $this->reset(['search', 'statusFilter', 'conditionFilter']);
@@ -203,7 +234,8 @@ class Index extends Component
     public function render()
     {
         $query = InventoryItem::query()
-            ->with(['order.customer', 'receiver']);
+            ->with(['order.customer', 'receiver'])
+            ->withCount(['photos', 'movements']);
 
         if ($this->search) {
             $query->where(function ($q) {
@@ -230,12 +262,20 @@ class Index extends Component
 
         $items = $query->latest('id')->paginate(15);
         $availableLocations = StorageLocation::available()->get();
+        $ordersReadyForInventory = Order::query()
+            ->whereIn('status', [OrderStatus::PICKED_UP->value, OrderStatus::PROCESSING->value])
+            ->whereHas('items')
+            ->whereDoesntHave('inventoryItems')
+            ->with('customer:id,name')
+            ->orderBy('created_at')
+            ->get(['id', 'order_code', 'customer_id']);
 
         return view('livewire.admin.inventory.index', [
             'items' => $items,
             'availableLocations' => $availableLocations,
             'statuses' => InventoryStatus::cases(),
             'conditions' => ItemCondition::cases(),
+            'ordersReadyForInventory' => $ordersReadyForInventory,
         ]);
     }
 }
