@@ -114,4 +114,26 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/admin/orders')->assertRedirect('/admin/login');
         $this->get('/admin/inventory')->assertRedirect('/admin/login');
     }
+
+    #[Test]
+    public function non_internal_user_is_forbidden_from_all_admin_routes(): void
+    {
+        $nonInternal = User::factory()->create([
+            'name' => 'Non Internal User',
+            'email' => 'user@example.com',
+        ]);
+        $nonInternal->role = null;
+
+        $this->actingAs($nonInternal);
+
+        $this->get('/admin')->assertStatus(403);
+        $this->get('/admin/orders')->assertStatus(403);
+        $this->get('/admin/inventory')->assertStatus(403);
+        $this->get('/admin/storage')->assertStatus(403);
+        $this->get('/admin/payments')->assertStatus(403);
+        $this->get('/admin/schedule')->assertStatus(403);
+        $this->get('/admin/customers')->assertStatus(403);
+        $this->get('/admin/services')->assertStatus(403);
+        $this->get('/admin/settings')->assertStatus(403);
+    }
 }

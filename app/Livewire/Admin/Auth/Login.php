@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Auth;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -53,6 +54,19 @@ class Login extends Component
                     'email' => 'Kombinasi akun dan password tidak sesuai.',
                 ]);
             }
+        }
+
+        $user = Auth::user();
+        if (! $user || Gate::forUser($user)->denies('access-admin')) {
+            Auth::logout();
+            session()->invalidate();
+            session()->regenerateToken();
+
+            RateLimiter::hit($throttleKey);
+
+            throw ValidationException::withMessages([
+                'email' => 'Akun tidak memiliki izin akses ke sistem internal.',
+            ]);
         }
 
         RateLimiter::clear($throttleKey);

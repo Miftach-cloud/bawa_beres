@@ -10,6 +10,7 @@ use App\Models\Order;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -152,6 +153,63 @@ class AdminAuthAndDashboardTest extends TestCase
 
         $this->actingAs($operation)->get('/admin/orders')->assertStatus(403);
         $this->actingAs($operation)->get('/admin/settings')->assertStatus(403);
+    }
+
+    public function test_owner_can_access_admin_dashboard(): void
+    {
+        $owner = User::factory()->owner()->create();
+
+        $response = $this->actingAs($owner)->get('/admin');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_admin_can_access_admin_dashboard(): void
+    {
+        $admin = User::factory()->admin()->create();
+
+        $response = $this->actingAs($admin)->get('/admin');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_operation_can_access_admin_dashboard(): void
+    {
+        $operation = User::factory()->operation()->create();
+
+        $response = $this->actingAs($operation)->get('/admin');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_non_internal_user_cannot_access_admin_dashboard(): void
+    {
+        $nonInternalUser = User::factory()->create();
+        $nonInternalUser->role = null;
+
+        $response = $this->actingAs($nonInternalUser)->get('/admin');
+
+        $response->assertStatus(403);
+    }
+
+    public function test_non_internal_user_cannot_login_to_admin(): void
+    {
+        User::factory()->create([
+            'email' => 'staff@bawaberes.id',
+            'password' => bcrypt('secret123'),
+        ]);
+
+        // Simulate a scenario where the authenticated user does not have access-admin gate
+        Gate::before(fn () => null);
+        Gate::define('access-admin', fn () => false);
+
+        Livewire::test(Login::class)
+            ->set('email', 'staff@bawaberes.id')
+            ->set('password', 'secret123')
+            ->call('login')
+            ->assertHasErrors(['email']);
+
+        $this->assertGuest();
     }
 
     public function test_dashboard_renders_metrics_correctly(): void

@@ -125,7 +125,7 @@ Route::middleware(['guest', 'throttle:login'])->prefix('admin')->group(function 
 });
 
 // Admin Protected Routes
-Route::middleware('auth')->prefix('admin')->group(function () {
+Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
