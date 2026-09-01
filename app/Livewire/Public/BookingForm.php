@@ -95,9 +95,10 @@ class BookingForm extends Component
             'items.*.quantity' => 'required|integer|min:1',
             'preferredDate' => 'required|date|after_or_equal:today',
             'customerNotes' => 'nullable|string|max:500',
-            'photos.*' => 'nullable|image|max:10240', // 10MB max
+            'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:5120',
         ];
     }
+
 
     protected function messages(): array
     {

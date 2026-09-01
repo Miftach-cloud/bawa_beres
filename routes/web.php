@@ -105,21 +105,18 @@ Route::get('/robots.txt', function () {
     return response($content, 200)->header('Content-Type', 'text/plain');
 });
 
-// Phase 15: Public Order Tracking
-Route::get('/track', \App\Livewire\Public\OrderTracking::class)->name('public.track');
+// Phase 15: Public Order Tracking (Rate Limited)
+Route::middleware('throttle:tracking')->group(function () {
+    Route::get('/track', \App\Livewire\Public\OrderTracking::class)->name('public.track');
+    Route::get('/track/{order_code}', \App\Livewire\Public\OrderTracking::class)->name('public.track.order');
+    Route::get('/i/{code}', \App\Livewire\Public\InventoryScan::class)->name('inventory.scan');
+});
 
-Route::get('/track/{order_code}', \App\Livewire\Public\OrderTracking::class)->name('public.track.order');
-
-// Phase 13: Public / Field Staff QR Scanner Landing
-Route::get('/i/{code}', \App\Livewire\Public\InventoryScan::class)->name('inventory.scan');
-
-
-
-
-// Admin Guest Routes
-Route::middleware('guest')->prefix('admin')->group(function () {
+// Admin Guest Routes (Rate Limited)
+Route::middleware(['guest', 'throttle:login'])->prefix('admin')->group(function () {
     Route::get('/login', Login::class)->name('admin.login');
 });
+
 
 // Admin Protected Routes
 Route::middleware('auth')->prefix('admin')->group(function () {

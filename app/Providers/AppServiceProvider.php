@@ -3,10 +3,14 @@
 namespace App\Providers;
 
 use App\Enums\UserRole;
+
 use App\Listeners\SendOrderNotifications;
 use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -24,8 +28,22 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Rate Limiters
+        RateLimiter::for('booking', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip() ?: 'global');
+        });
+
+        RateLimiter::for('tracking', function (Request $request) {
+            return Limit::perMinute(15)->by($request->ip() ?: 'global');
+        });
+
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip() ?: 'global');
+        });
+
         // Register Event Subscribers
         Event::subscribe(SendOrderNotifications::class);
+
 
         // Superadmin bypass for Owner
 
