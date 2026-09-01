@@ -58,6 +58,17 @@ class QrInventorySystemTest extends TestCase
     }
 
     #[Test]
+    public function qr_alias_route_renders_custody_seal_for_visitors(): void
+    {
+        $response = $this->get("/qr/{$this->item->qr_code}");
+
+        $response->assertStatus(200);
+        $response->assertSee($this->item->inventory_code);
+        $response->assertSee('Sofa Bed 3 Seater');
+        $response->assertSee('Segel Keaslian Fisik BawaBeres');
+    }
+
+    #[Test]
     public function authenticated_staff_sees_full_operational_details_and_customer_info_on_scan(): void
     {
         $this->actingAs($this->operation);

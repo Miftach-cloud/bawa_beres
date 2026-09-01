@@ -116,6 +116,7 @@ Route::middleware('throttle:tracking')->group(function () {
     Route::get('/track', OrderTracking::class)->name('public.track');
     Route::get('/track/{order_code}', OrderTracking::class)->name('public.track.order');
     Route::get('/i/{code}', InventoryScan::class)->name('inventory.scan');
+    Route::get('/qr/{code}', InventoryScan::class)->name('inventory.qr');
 });
 
 // Admin Guest Routes (Rate Limited)
