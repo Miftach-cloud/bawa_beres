@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\InventoryPhoto;
 use App\Models\Order;
+use App\Models\OrderAttachment;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -55,6 +56,30 @@ class SecureFileController extends Controller
         }
 
         return Storage::disk($disk)->response($path, $inventoryPhoto->file_name ?: basename($path), [
+            'Cache-Control' => 'private, no-cache, no-store, must-revalidate',
+            'Pragma' => 'no-cache',
+            'Expires' => '0',
+        ]);
+    }
+
+    /**
+     * Securely deliver order attachment to authorized staff.
+     */
+    public function showOrderAttachment(OrderAttachment $attachment): BinaryFileResponse|StreamedResponse
+    {
+        Gate::authorize('manage-orders');
+
+        $path = $attachment->file_path;
+        if (! $path) {
+            abort(404, 'Lampiran pesanan tidak ditemukan.');
+        }
+
+        $disk = Storage::disk('local')->exists($path) ? 'local' : (Storage::disk('public')->exists($path) ? 'public' : null);
+        if (! $disk) {
+            abort(404, 'File lampiran tidak ditemukan pada disk penyimpanan.');
+        }
+
+        return Storage::disk($disk)->response($path, $attachment->original_name ?: basename($path), [
             'Cache-Control' => 'private, no-cache, no-store, must-revalidate',
             'Pragma' => 'no-cache',
             'Expires' => '0',

@@ -168,6 +168,7 @@ Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->group(function
     // Secure Media Access for Operational Evidence
     Route::get('/media/payment-proof/{payment}', [SecureFileController::class, 'showPaymentProof'])->name('admin.media.payment-proof');
     Route::get('/media/inventory-photo/{inventoryPhoto}', [SecureFileController::class, 'showInventoryPhoto'])->name('admin.media.inventory-photo');
+    Route::get('/media/order-attachment/{attachment}', [SecureFileController::class, 'showOrderAttachment'])->name('admin.media.order-attachment');
     Route::get('/media/order-photo/{order}/{filename}', [SecureFileController::class, 'showOrderPhoto'])->name('admin.media.order-photo');
 });
 

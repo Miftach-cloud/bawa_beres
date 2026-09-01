@@ -6,6 +6,7 @@ use App\Actions\Orders\CreateOrder;
 use App\Enums\OrderStatus;
 use App\Models\Order;
 use App\Models\Service;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -151,10 +152,26 @@ class BookingForm extends Component
         // 2. Execute Order Creation Action
         $order = $createOrderAction->execute($payload);
 
-        // 3. Process uploaded photos if any
+        // 3. Process uploaded photos if any into private storage with persistent metadata
         if (! empty($this->photos)) {
             foreach ($this->photos as $photo) {
+                $originalName = $photo->getClientOriginalName();
+                $mimeType = $photo->getMimeType();
+                $fileSize = $photo->getSize();
                 $path = $photo->store("orders/{$order->id}/estimation", 'local');
+
+                try {
+                    $order->attachments()->create([
+                        'type' => 'ESTIMATION_PHOTO',
+                        'file_path' => $path,
+                        'original_name' => $originalName,
+                        'mime_type' => $mimeType,
+                        'file_size' => $fileSize,
+                    ]);
+                } catch (\Throwable $e) {
+                    Storage::disk('local')->delete($path);
+                    throw $e;
+                }
             }
         }
 

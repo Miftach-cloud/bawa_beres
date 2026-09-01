@@ -232,6 +232,29 @@
                 </div>
             </div>
 
+            <!-- 3.5 Attachments & Booking Photos Gallery -->
+            @if ($order->attachments->isNotEmpty())
+                <div class="rounded-2xl bg-white p-6 border border-slate-200 shadow-xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                            <x-icon name="image" class="w-4 h-4 text-amber-600" />
+                            <span>Foto Estimasi & Dokumen Booking ({{ $order->attachments->count() }})</span>
+                        </h3>
+                    </div>
+
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        @foreach ($order->attachments as $attachment)
+                            <a href="{{ $attachment->url }}" target="_blank" class="group relative rounded-xl overflow-hidden aspect-square bg-slate-900 border border-slate-200 hover:border-amber-500 transition block">
+                                <img src="{{ $attachment->url }}" alt="{{ $attachment->original_name }}" class="w-full h-full object-cover">
+                                <span class="absolute bottom-1 left-1 bg-slate-900/80 text-[10px] text-white px-2 py-0.5 rounded font-mono truncate max-w-[90%]">
+                                    {{ $attachment->original_name ?: basename($attachment->file_path) }}
+                                </span>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
             <!-- 4. Notes & Pricing Admin Editor -->
             <div class="rounded-2xl bg-white p-6 border border-slate-200 shadow-xs space-y-4">
                 <h3 class="font-bold text-slate-900 text-sm border-b border-slate-100 pb-3 flex items-center gap-2">

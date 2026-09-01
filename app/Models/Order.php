@@ -199,4 +199,14 @@ class Order extends Model
     {
         return $this->hasMany(InventoryItem::class)->where('status', InventoryStatus::STORED->value);
     }
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(OrderAttachment::class)->latest('id');
+    }
+
+    public function estimationPhotos(): HasMany
+    {
+        return $this->hasMany(OrderAttachment::class)->where('type', 'ESTIMATION_PHOTO')->latest('id');
+    }
 }
