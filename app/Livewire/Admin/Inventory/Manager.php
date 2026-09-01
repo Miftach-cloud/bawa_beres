@@ -6,12 +6,12 @@ use App\Actions\Inventory\CheckInventoryItem;
 use App\Actions\Inventory\GenerateExpectedInventory;
 use App\Actions\Inventory\ReceiveInventoryItem;
 use App\Actions\Inventory\ReleaseInventoryItem;
-use App\Actions\Inventory\StoreInventoryItem;
 use App\Actions\Movements\RelocateInventoryItem;
 use App\Actions\Storage\AssignInventoryToLocation;
 use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
+use App\Enums\StorageLocationType;
 use App\Models\InventoryItem;
 use App\Models\Order;
 use App\Models\StorageLocation;
@@ -130,7 +130,7 @@ class Manager extends Component
         $this->selectedLocationId = null;
     }
 
-    public function confirmStore(StoreInventoryItem $action, AssignInventoryToLocation $assignAction): void
+    public function confirmStore(AssignInventoryToLocation $assignAction): void
     {
         Gate::authorize('manage-inventory');
 
@@ -138,14 +138,34 @@ class Manager extends Component
 
         if ($this->selectedLocationId) {
             $location = StorageLocation::findOrFail($this->selectedLocationId);
-            $assignAction->execute($item, $location, Auth::user());
+        } elseif (! empty($this->storageLocation)) {
+            $location = StorageLocation::where('code', $this->storageLocation)->first()
+                ?? StorageLocation::firstOrCreate(
+                    ['code' => $this->storageLocation],
+                    [
+                        'warehouse' => 'Gudang Utama Malang',
+                        'zone' => 'Zone A',
+                        'rack' => 'R01',
+                        'level' => 'L01',
+                        'type' => StorageLocationType::STANDARD_RACK,
+                        'capacity' => 10,
+                    ]
+                );
         } else {
-            $action->execute($item, $this->storageLocation ?: 'Rak A-01 (Gudang Dinoyo)', Auth::user());
+            $this->validate([
+                'selectedLocationId' => 'required|exists:storage_locations,id',
+            ]);
+
+            return;
         }
 
+        $assignAction->execute($item, $location, Auth::user());
+
         $this->showStoreModal = false;
+        $this->selectedItemId = null;
+        $this->selectedLocationId = null;
         $this->order->refresh();
-        session()->flash('inventory_message', "Barang #{$item->inventory_code} telah tersimpan di rak gudang.");
+        session()->flash('inventory_message', "Barang #{$item->inventory_code} telah tersimpan di rak {$location->code}.");
     }
 
     public function openRelocateModal(int $itemId): void

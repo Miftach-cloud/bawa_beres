@@ -129,15 +129,18 @@ class InventoryScan extends Component
             return;
         }
 
-        if ($this->selectedLocationId) {
-            $location = StorageLocation::findOrFail($this->selectedLocationId);
-            $assignAction->execute($this->item, $location, Auth::user());
-        }
+        $this->validate([
+            'selectedLocationId' => 'required|exists:storage_locations,id',
+        ]);
+
+        $location = StorageLocation::findOrFail($this->selectedLocationId);
+        $assignAction->execute($this->item, $location, Auth::user());
 
         $this->showStoreModal = false;
+        $this->selectedLocationId = null;
         $this->item->refresh();
 
-        session()->flash('scan_message', 'Barang fisik berhasil disimpan di rak gudang.');
+        session()->flash('scan_message', "Barang fisik berhasil disimpan di rak gudang {$location->code}.");
     }
 
     public function openRelocateModal(): void
