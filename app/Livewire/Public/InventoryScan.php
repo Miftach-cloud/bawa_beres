@@ -44,19 +44,25 @@ class InventoryScan extends Component
     public function mount(string $code): void
     {
         $this->code = $code;
-        $this->item = InventoryItem::with([
+
+        $query = InventoryItem::with([
             'order.customer',
             'storageLocation',
             'photos',
             'movements.fromLocation',
             'movements.toLocation',
             'movements.performer',
-        ])
-            ->where('qr_code', $code)
-            ->orWhere('inventory_code', $code)
-            ->first();
+        ]);
 
-        if ($this->item) {
+        if (Auth::check()) {
+            $this->item = $query->where('qr_code', $code)
+                ->orWhere('inventory_code', $code)
+                ->first();
+        } else {
+            $this->item = $query->where('qr_code', $code)->first();
+        }
+
+        if ($this->item && Auth::check()) {
             $this->condition = $this->item->condition->value;
             $this->checkNotes = $this->item->notes ?? '';
             $this->storageLocation = $this->item->storage_location ?? '';

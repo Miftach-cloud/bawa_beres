@@ -84,7 +84,7 @@ class InventoryItem extends Model
 
     public function getScanUrlAttribute(): string
     {
-        return route('inventory.scan', ['code' => $this->qr_code ?: $this->inventory_code]);
+        return route('inventory.scan', ['code' => $this->qr_code]);
     }
 
     public function getQrSvg(int $size = 180): string

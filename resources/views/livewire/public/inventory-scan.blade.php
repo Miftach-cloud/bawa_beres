@@ -78,17 +78,28 @@
 
                 <!-- Location & Custody Box -->
                 <div class="grid grid-cols-2 gap-3 p-3.5 bg-slate-900/80 rounded-2xl border border-slate-700/50 text-xs">
-                    <div>
-                        <span class="text-[10px] uppercase font-bold text-slate-500 block">Posisi Rak Penyimpanan</span>
-                        <span class="font-mono font-bold text-amber-400 text-sm mt-0.5 inline-flex items-center gap-1 truncate">
-                            <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-400" />
-                            <span>{{ $item->storage_location ?: 'Area Transit / Belum di Rak' }}</span>
-                        </span>
-                    </div>
+                    @if ($isInternalStaff)
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-500 block">Posisi Rak Penyimpanan</span>
+                            <span class="font-mono font-bold text-amber-400 text-sm mt-0.5 inline-flex items-center gap-1 truncate">
+                                <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-400" />
+                                <span>{{ $item->storage_location ?: 'Area Transit / Belum di Rak' }}</span>
+                            </span>
+                        </div>
+                    @else
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-slate-500 block">Lokasi Fasilitas</span>
+                            <span class="font-bold text-slate-200 text-xs mt-0.5 inline-flex items-center gap-1">
+                                <x-icon name="map-pin" class="w-3.5 h-3.5 text-emerald-400" />
+                                <span>Gudang Resmi BawaBeres</span>
+                            </span>
+                        </div>
+                    @endif
                     <div class="text-right">
-                        <span class="text-[10px] uppercase font-bold text-slate-500 block">Status Kepemilikan</span>
-                        <span class="font-semibold text-slate-200 mt-0.5 block">
-                            Custody Terverifikasi
+                        <span class="text-[10px] uppercase font-bold text-slate-500 block">Status Keaslian</span>
+                        <span class="font-semibold text-emerald-400 mt-0.5 inline-flex items-center gap-1">
+                            <x-icon name="check-circle" class="w-3.5 h-3.5 text-emerald-400" />
+                            <span>Terverifikasi</span>
                         </span>
                     </div>
                 </div>
