@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
-                <span>⚡</span>
+                <x-icon name="sparkles" class="w-4 h-4 text-amber-600" />
                 <span>Alur Praktis 4 Langkah</span>
             </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">

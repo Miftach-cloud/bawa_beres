@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
-                <span>📦</span>
+                <x-icon name="box" class="w-4 h-4 text-amber-700" />
                 <span>Katalog Layanan Resmi</span>
             </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
@@ -25,13 +25,13 @@
             @forelse ($services as $service)
                 <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg flex flex-col justify-between hover:border-amber-400 hover:shadow-xl transition-all duration-200">
                     <div class="space-y-4">
-                        <div class="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-3xl font-black shadow-xs">
+                        <div class="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center shadow-xs">
                             @if (str_contains(strtolower($service->name), 'pindah'))
-                                🚚
+                                <x-icon name="truck" class="w-7 h-7 text-amber-600" />
                             @elseif (str_contains(strtolower($service->name), 'titip') || str_contains(strtolower($service->name), 'storage'))
-                                🏢
+                                <x-icon name="warehouse" class="w-7 h-7 text-blue-600" />
                             @else
-                                📍
+                                <x-icon name="map-pin" class="w-7 h-7 text-emerald-600" />
                             @endif
                         </div>
 
@@ -50,15 +50,15 @@
 
                         <ul class="space-y-2.5 pt-3 text-xs text-slate-600">
                             <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
+                                <x-icon name="check-circle" class="w-4 h-4 text-emerald-500" />
                                 <span>Label QR Code identitas unik per item</span>
                             </li>
                             <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
+                                <x-icon name="check-circle" class="w-4 h-4 text-emerald-500" />
                                 <span>Dokumentasi foto serah terima</span>
                             </li>
                             <li class="flex items-center gap-2">
-                                <span class="text-emerald-500 font-bold">✓</span>
+                                <x-icon name="check-circle" class="w-4 h-4 text-emerald-500" />
                                 <span>Pelacakan status realtime</span>
                             </li>
                         </ul>
@@ -91,9 +91,10 @@
             <a 
                 href="https://wa.me/6281234567890?text=Halo%20Admin%20BawaBeres,%20saya%20ingin%20konsultasi%20layanan%20khusus" 
                 target="_blank"
-                class="rounded-2xl bg-emerald-500 hover:bg-emerald-400 px-6 py-4 text-xs font-bold text-slate-950 shadow-lg shadow-emerald-500/20 transition cursor-pointer whitespace-nowrap"
+                class="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 px-6 py-4 text-xs font-bold text-slate-950 shadow-lg shadow-emerald-500/20 transition cursor-pointer whitespace-nowrap"
             >
-                💬 Hubungi WhatsApp CS
+                <x-icon name="chat" class="w-4 h-4 text-slate-950" />
+                <span>Hubungi WhatsApp CS</span>
             </a>
         </div>
     </div>

@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-blue-100/80 px-3 py-1 text-xs font-bold text-blue-800">
-                <span>📍</span>
+                <x-icon name="map-pin" class="w-4 h-4 text-blue-600" />
                 <span>Cakupan Wilayah Operasional</span>
             </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
@@ -23,8 +23,8 @@
         <!-- Coverage Zones Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
-                <div class="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl font-black">
-                    🏛️
+                <div class="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                    <x-icon name="warehouse" class="w-6 h-6 text-amber-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Kota Malang (Zona Utama)</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -40,8 +40,8 @@
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
-                <div class="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-2xl font-black">
-                    🌄
+                <div class="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                    <x-icon name="truck" class="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Kota Batu</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -55,8 +55,8 @@
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
-                <div class="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-2xl font-black">
-                    🌾
+                <div class="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+                    <x-icon name="map-pin" class="w-6 h-6 text-emerald-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Kabupaten Malang</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -80,9 +80,10 @@
             <a 
                 href="https://wa.me/6281234567890?text=Halo%20Admin%20BawaBeres,%20saya%20ingin%20tanya%20layanan%20luar%20kota" 
                 target="_blank"
-                class="inline-block rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3.5 transition"
+                class="inline-flex items-center gap-2 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3.5 transition"
             >
-                💬 Konsultasi Pindahan Antar Kota
+                <x-icon name="chat" class="w-4 h-4 text-emerald-400" />
+                <span>Konsultasi Pindahan Antar Kota</span>
             </a>
         </div>
     </div>

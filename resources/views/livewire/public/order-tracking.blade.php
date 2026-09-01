@@ -2,7 +2,7 @@
     <!-- Header Section -->
     <div class="text-center space-y-2 max-w-xl mx-auto">
         <div class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 border border-amber-200">
-            <span>📍</span>
+            <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
             <span>Realtime Order Tracking</span>
         </div>
         <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
@@ -45,14 +45,20 @@
                 wire:loading.attr="disabled"
                 class="w-full rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold text-sm py-3.5 shadow-lg shadow-amber-500/20 transition cursor-pointer flex items-center justify-center gap-2"
             >
-                <span wire:loading.remove>🔍 Lacak Pesanan Saya</span>
-                <span wire:loading>⏳ Mencari Data Pesanan...</span>
+                <span wire:loading.remove class="inline-flex items-center gap-2">
+                    <x-icon name="search" class="w-4 h-4 text-slate-950" />
+                    <span>Lacak Pesanan Saya</span>
+                </span>
+                <span wire:loading class="inline-flex items-center gap-2">
+                    <x-icon name="refresh" class="w-4 h-4 animate-spin text-slate-950" />
+                    <span>Mencari Data Pesanan...</span>
+                </span>
             </button>
         </form>
 
         @if ($errorMessage)
             <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-center gap-2 animate-fade-in">
-                <span>⚠️</span>
+                <x-icon name="alert-circle" class="w-4 h-4 text-rose-600 shrink-0" />
                 <span>{{ $errorMessage }}</span>
             </div>
         @endif
@@ -84,7 +90,7 @@
                     </span>
                     @if ($order->preferred_date)
                         <span class="block text-xs text-amber-300 font-semibold mt-1.5">
-                            📅 Target: {{ $order->preferred_date->translatedFormat('d F Y') }}
+                            Target: {{ $order->preferred_date->translatedFormat('d F Y') }}
                         </span>
                     @endif
                 </div>
@@ -105,8 +111,8 @@
                                 @endif
 
                                 <div class="relative flex items-start space-x-4">
-                                    <div class="relative flex h-10 w-10 flex-none items-center justify-center rounded-2xl {{ $m['is_completed'] ? 'bg-amber-500 text-white shadow-md shadow-amber-500/20' : ($m['is_active'] ? 'bg-amber-100 text-amber-800 ring-4 ring-amber-200 animate-pulse' : 'bg-slate-100 text-slate-400 border border-slate-200') }}">
-                                        <span class="text-base">{{ $m['icon'] }}</span>
+                                    <div class="relative flex h-10 w-10 flex-none items-center justify-center rounded-2xl {{ $m['is_completed'] ? 'bg-amber-500 text-slate-950 shadow-md shadow-amber-500/20' : ($m['is_active'] ? 'bg-amber-100 text-amber-800 ring-4 ring-amber-200 animate-pulse' : 'bg-slate-100 text-slate-400 border border-slate-200') }}">
+                                        <x-icon :name="$m['icon']" class="w-5 h-5 {{ $m['is_completed'] ? 'text-slate-950' : ($m['is_active'] ? 'text-amber-700' : 'text-slate-400') }}" />
                                     </div>
 
                                     <div class="min-w-0 flex-1 pt-1.5">
@@ -119,8 +125,9 @@
                                                     Sedang Berlangsung
                                                 </span>
                                             @elseif ($m['is_completed'])
-                                                <span class="text-emerald-600 text-xs font-bold">
-                                                    ✓ Selesai
+                                                <span class="inline-flex items-center gap-1 text-emerald-600 text-xs font-bold">
+                                                    <x-icon name="check" class="w-3.5 h-3.5 text-emerald-600" />
+                                                    <span>Selesai</span>
                                                 </span>
                                             @endif
                                         </div>
@@ -179,7 +186,7 @@
                         target="_blank"
                         class="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-6 py-3.5 text-xs font-bold text-white shadow-md shadow-emerald-600/10 transition cursor-pointer"
                     >
-                        <span>💬</span>
+                        <x-icon name="chat" class="w-4 h-4 text-white" />
                         <span>Tanya Admin via WhatsApp (Ref: {{ $order->order_code }})</span>
                     </a>
                 </div>

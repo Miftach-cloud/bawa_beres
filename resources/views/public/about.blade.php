@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="text-center space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
-                <span>🏢</span>
+                <x-icon name="warehouse" class="w-4 h-4 text-amber-600" />
                 <span>Tentang Platform Kami</span>
             </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
@@ -23,8 +23,8 @@
         <!-- Vision & Mission Card -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md space-y-3">
-                <div class="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl font-bold">
-                    🎯
+                <div class="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                    <x-icon name="sparkles" class="w-6 h-6 text-amber-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Visi Kami</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -33,8 +33,8 @@
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md space-y-3">
-                <div class="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-2xl font-bold">
-                    🚀
+                <div class="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+                    <x-icon name="truck" class="w-6 h-6 text-emerald-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Misi Kami</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -48,17 +48,23 @@
             <h2 class="text-2xl font-black text-slate-900">Nilai Inti BawaBeres (Core Values)</h2>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-2">
                 <div class="space-y-2">
-                    <span class="text-2xl block">🤝</span>
+                    <div class="h-10 w-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                        <x-icon name="users" class="w-5 h-5 text-amber-600" />
+                    </div>
                     <h4 class="font-bold text-slate-900 text-sm">Integritas & Amanah</h4>
                     <p class="text-xs text-slate-500 leading-relaxed">Menjaga setiap barang pelanggan seperti menjaga milik sendiri.</p>
                 </div>
                 <div class="space-y-2">
-                    <span class="text-2xl block">⚡</span>
+                    <div class="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                        <x-icon name="sparkles" class="w-5 h-5 text-emerald-600" />
+                    </div>
                     <h4 class="font-bold text-slate-900 text-sm">Praktis & Cepat</h4>
                     <p class="text-xs text-slate-500 leading-relaxed">Alur pemesanan tanpa registrasi ribet, respon CS dalam hitungan menit.</p>
                 </div>
                 <div class="space-y-2">
-                    <span class="text-2xl block">🛡️</span>
+                    <div class="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <x-icon name="shield" class="w-5 h-5 text-blue-600" />
+                    </div>
                     <h4 class="font-bold text-slate-900 text-sm">Keamanan Terjamin</h4>
                     <p class="text-xs text-slate-500 leading-relaxed">Pengawasan CCTV, foto dokumentasi serah terima, dan pelacakan QR Code.</p>
                 </div>

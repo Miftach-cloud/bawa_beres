@@ -44,7 +44,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto space-y-6">
                 <div class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-1.5 text-xs font-bold text-amber-900 border border-amber-300/60 shadow-xs">
-                    <span>🚀</span>
+                    <x-icon name="sparkles" class="w-4 h-4 text-amber-600" />
                     <span>Layanan Pindahan, Storage & Logistik #1 Kota Malang</span>
                 </div>
                 
@@ -57,11 +57,12 @@
                 </p>
 
                 <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
-                    <a href="#booking" class="rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-sm font-black text-slate-950 shadow-xl shadow-amber-500/25 active:scale-98 transition-all cursor-pointer">
-                        🚀 Mulai Pesan Sekarang
+                    <a href="#booking" class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-sm font-black text-slate-950 shadow-xl shadow-amber-500/25 active:scale-98 transition-all cursor-pointer">
+                        <x-icon name="sparkles" class="w-5 h-5 text-slate-950" />
+                        <span>Mulai Pesan Sekarang</span>
                     </a>
                     <a href="https://wa.me/6281234567890" target="_blank" class="rounded-2xl bg-white border border-slate-300 px-7 py-4 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-xs flex items-center gap-2">
-                        <span>💬</span>
+                        <x-icon name="chat" class="w-5 h-5 text-emerald-600" />
                         <span>Konsultasi WhatsApp</span>
                     </a>
                 </div>
@@ -84,7 +85,9 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div class="p-6 rounded-3xl bg-rose-50/50 border border-rose-100 space-y-3">
-                    <span class="text-3xl block">😫</span>
+                    <div class="h-12 w-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                        <x-icon name="truck" class="w-6 h-6 text-rose-600" />
+                    </div>
                     <h3 class="font-extrabold text-slate-900 text-base">Capek Angkat & Armada Tidak Pasti</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">
                         Harus cari mobil pick-up manual di pinggir jalan, harga berubah-ubah tanpa kesepakatan tertulis, dan tenaga angkut tidak terlatih.
@@ -92,7 +95,9 @@
                 </div>
 
                 <div class="p-6 rounded-3xl bg-rose-50/50 border border-rose-100 space-y-3">
-                    <span class="text-3xl block">📦</span>
+                    <div class="h-12 w-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                        <x-icon name="box" class="w-6 h-6 text-rose-600" />
+                    </div>
                     <h3 class="font-extrabold text-slate-900 text-base">Barang Rusak atau Tertukar</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">
                         Penitipan barang konvensional menumpuk kardus di lantai lembap tanpa label identitas jelas, rentan basah dan tercecer.
@@ -100,7 +105,9 @@
                 </div>
 
                 <div class="p-6 rounded-3xl bg-rose-50/50 border border-rose-100 space-y-3">
-                    <span class="text-3xl block">❓</span>
+                    <div class="h-12 w-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
+                        <x-icon name="alert-circle" class="w-6 h-6 text-rose-600" />
+                    </div>
                     <h3 class="font-extrabold text-slate-900 text-base">Status Pengiriman Buta</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">
                         Tidak tahu posisi kurir/driver, kapan barang dijemput, atau bukti serah terima yang tidak tercatat secara sistematis.
@@ -115,7 +122,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center max-w-2xl mx-auto space-y-3">
                 <div class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
-                    <span>✨</span>
+                    <x-icon name="sparkles" class="w-4 h-4 text-amber-600" />
                     <span>Layanan Utama BawaBeres</span>
                 </div>
                 <h2 class="text-3xl font-black text-slate-900 sm:text-4xl">Solusi Lengkap untuk Malang Raya</h2>
@@ -125,8 +132,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-200 flex flex-col justify-between">
                     <div class="space-y-4">
-                        <div class="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-3xl font-black">
-                            🚚
+                        <div class="h-14 w-14 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                            <x-icon name="truck" class="w-7 h-7 text-amber-600" />
                         </div>
                         <h3 class="text-xl font-black text-slate-900">Jasa Pindahan Kost & Rumah</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
@@ -140,8 +147,8 @@
 
                 <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-200 flex flex-col justify-between">
                     <div class="space-y-4">
-                        <div class="h-14 w-14 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-3xl font-black">
-                            🏢
+                        <div class="h-14 w-14 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
+                            <x-icon name="warehouse" class="w-7 h-7 text-blue-600" />
                         </div>
                         <h3 class="text-xl font-black text-slate-900">Storage & Penitipan Barang</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
@@ -155,8 +162,8 @@
 
                 <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-200 flex flex-col justify-between">
                     <div class="space-y-4">
-                        <div class="h-14 w-14 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-3xl font-black">
-                            📍
+                        <div class="h-14 w-14 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+                            <x-icon name="map-pin" class="w-7 h-7 text-emerald-600" />
                         </div>
                         <h3 class="text-xl font-black text-slate-900">Delivery & Logistik Instan</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
@@ -176,7 +183,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center max-w-2xl mx-auto space-y-3">
                 <div class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
-                    <span>🔄</span>
+                    <x-icon name="refresh" class="w-4 h-4 text-amber-600" />
                     <span>Alur Pemesanan</span>
                 </div>
                 <h2 class="text-3xl font-black text-slate-900 sm:text-4xl">Cara Kerja yang Super Simpel</h2>
@@ -212,7 +219,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center max-w-2xl mx-auto space-y-3">
                 <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
-                    <span>⭐</span>
+                    <x-icon name="sparkles" class="w-4 h-4 text-emerald-600" />
                     <span>Mengapa BawaBeres?</span>
                 </div>
                 <h2 class="text-3xl font-black text-slate-900 sm:text-4xl">Keunggulan Standar Layanan Kami</h2>
@@ -220,25 +227,33 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-2xl block">🏷️</span>
+                    <div class="h-10 w-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center">
+                        <x-icon name="qr" class="w-6 h-6 text-purple-600" />
+                    </div>
                     <h4 class="font-bold text-slate-900 text-sm">QR Code Anti Tertukar</h4>
                     <p class="text-xs text-slate-600">Setiap barang memiliki kode unik dan foto dokumentasi serah terima.</p>
                 </div>
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-2xl block">💎</span>
+                    <div class="h-10 w-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                        <x-icon name="tag" class="w-6 h-6 text-amber-600" />
+                    </div>
                     <h4 class="font-bold text-slate-900 text-sm">Harga Transparan</h4>
                     <p class="text-xs text-slate-600">Semua estimasi harga disetujui di awal tanpa biaya siluman.</p>
                 </div>
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-2xl block">🛡️</span>
+                    <div class="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                        <x-icon name="shield" class="w-6 h-6 text-emerald-600" />
+                    </div>
                     <h4 class="font-bold text-slate-900 text-sm">Gudang CCTV 24 Jam</h4>
                     <p class="text-xs text-slate-600">Fasilitas penyimpanan bersih, bebas banjir, dan terpantau terus-menerus.</p>
                 </div>
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
-                    <span class="text-2xl block">📱</span>
+                    <div class="h-10 w-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                        <x-icon name="map-pin" class="w-6 h-6 text-blue-600" />
+                    </div>
                     <h4 class="font-bold text-slate-900 text-sm">Tracking Realtime</h4>
                     <p class="text-xs text-slate-600">Cek status pesanan secara mandiri kapan saja tanpa login.</p>
                 </div>
@@ -287,11 +302,12 @@
                 Dapatkan estimasi penawaran cepat dari tim kami dalam hitungan menit.
             </p>
             <div class="flex flex-wrap items-center justify-center gap-4">
-                <a href="#booking" class="rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-xs font-black text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer">
-                    🚀 Buat Pesanan Sekarang
+                <a href="#booking" class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-xs font-black text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer">
+                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
+                    <span>Buat Pesanan Sekarang</span>
                 </a>
                 <a href="https://wa.me/6281234567890" target="_blank" class="rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-8 py-4 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition cursor-pointer flex items-center gap-2">
-                    <span>💬</span>
+                    <x-icon name="chat" class="w-4 h-4 text-white" />
                     <span>Chat WhatsApp</span>
                 </a>
             </div>

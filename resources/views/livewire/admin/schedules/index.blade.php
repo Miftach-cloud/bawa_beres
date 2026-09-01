@@ -11,14 +11,15 @@
             wire:click="openCreateModal"
             class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-slate-950 shadow-sm shadow-amber-500/20 hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
         >
-            <span>➕ Atur Jadwal Misi Baru</span>
+            <x-icon name="plus" class="w-4 h-4 text-slate-950" />
+            <span>Atur Jadwal Misi Baru</span>
         </button>
     </div>
 
     <!-- Flash Message -->
     @if (session()->has('message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center gap-3 text-xs font-medium text-emerald-800">
-            <span class="text-base">✅</span>
+            <x-icon name="check-circle" class="w-5 h-5 text-emerald-600" />
             <span>{{ session('message') }}</span>
         </div>
     @endif
@@ -30,7 +31,8 @@
             wire:click="setTab('today')"
             class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer {{ $activeTab === 'today' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' }}"
         >
-            <span>☀️ Hari Ini</span>
+            <x-icon name="calendar" class="w-3.5 h-3.5 {{ $activeTab === 'today' ? 'text-slate-950' : 'text-amber-500' }}" />
+            <span>Hari Ini</span>
             <span class="rounded-full px-2 py-0.5 text-[10px] {{ $activeTab === 'today' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700' }}">
                 {{ $counts['today'] }}
             </span>
@@ -41,7 +43,8 @@
             wire:click="setTab('tomorrow')"
             class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer {{ $activeTab === 'tomorrow' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' }}"
         >
-            <span>🌅 Besok</span>
+            <x-icon name="clock" class="w-3.5 h-3.5 {{ $activeTab === 'tomorrow' ? 'text-slate-950' : 'text-blue-500' }}" />
+            <span>Besok</span>
             <span class="rounded-full px-2 py-0.5 text-[10px] {{ $activeTab === 'tomorrow' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700' }}">
                 {{ $counts['tomorrow'] }}
             </span>
@@ -52,7 +55,8 @@
             wire:click="setTab('upcoming')"
             class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer {{ $activeTab === 'upcoming' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' }}"
         >
-            <span>🗓️ Mendatang</span>
+            <x-icon name="calendar" class="w-3.5 h-3.5 {{ $activeTab === 'upcoming' ? 'text-slate-950' : 'text-purple-500' }}" />
+            <span>Mendatang</span>
             <span class="rounded-full px-2 py-0.5 text-[10px] {{ $activeTab === 'upcoming' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700' }}">
                 {{ $counts['upcoming'] }}
             </span>
@@ -63,7 +67,8 @@
             wire:click="setTab('all')"
             class="inline-flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all cursor-pointer {{ $activeTab === 'all' ? 'bg-amber-500 text-slate-950 shadow-xs' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50' }}"
         >
-            <span>📋 Semua / Riwayat</span>
+            <x-icon name="clipboard" class="w-3.5 h-3.5 {{ $activeTab === 'all' ? 'text-slate-950' : 'text-slate-500' }}" />
+            <span>Semua / Riwayat</span>
             <span class="rounded-full px-2 py-0.5 text-[10px] {{ $activeTab === 'all' ? 'bg-slate-950 text-white' : 'bg-slate-100 text-slate-700' }}">
                 {{ $counts['all'] }}
             </span>
@@ -78,16 +83,18 @@
                 type="text" 
                 wire:model.live.debounce.300ms="search" 
                 placeholder="Cari order, customer, tim, armada..."
-                class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 pl-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 pl-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
-            <span class="absolute left-3 top-2.5 text-xs text-slate-400">🔍</span>
+            <span class="absolute left-3 top-2.5 text-xs text-slate-400">
+                <x-icon name="search" class="w-3.5 h-3.5 text-slate-400" />
+            </span>
         </div>
 
         <!-- Type Filter -->
         <div>
             <select 
                 wire:model.live="typeFilter"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
                 <option value="">Semua Tipe Operasi</option>
                 @foreach ($types as $t)
@@ -100,7 +107,7 @@
         <div>
             <select 
                 wire:model.live="statusFilter"
-                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-xs text-slate-800 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
             >
                 <option value="">Semua Status Operasi</option>
                 @foreach ($statuses as $st)
@@ -117,8 +124,8 @@
                 <div class="space-y-3">
                     <!-- Top Card Bar -->
                     <div class="flex items-center justify-between gap-2">
-                        <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold border {{ $sch->type->badgeColor() }}">
-                            <span>{{ $sch->type->icon() }}</span>
+                        <span class="inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-bold border {{ $sch->type->badgeColor() }}">
+                            <x-icon name="truck" class="w-3.5 h-3.5" />
                             <span>{{ $sch->type->label() }}</span>
                         </span>
                         <span class="inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border {{ $sch->status->badgeColor() }}">
@@ -130,14 +137,16 @@
                     <div class="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-between">
                         <div>
                             <span class="text-[10px] uppercase font-bold text-slate-400 block">Jadwal Misi</span>
-                            <span class="font-bold text-slate-900 text-xs mt-0.5 block">
-                                📅 {{ $sch->scheduled_date->translatedFormat('d M Y') }}
+                            <span class="font-bold text-slate-900 text-xs mt-0.5 inline-flex items-center gap-1">
+                                <x-icon name="calendar" class="w-3.5 h-3.5 text-amber-600" />
+                                <span>{{ $sch->scheduled_date->translatedFormat('d M Y') }}</span>
                             </span>
                         </div>
                         <div class="text-right">
                             <span class="text-[10px] uppercase font-bold text-slate-400 block">Jam Operasi</span>
-                            <span class="font-mono font-semibold text-slate-800 text-xs mt-0.5 block">
-                                ⏰ {{ $sch->start_time ? substr($sch->start_time, 0, 5) . ' - ' . substr($sch->end_time, 0, 5) : 'Fleksibel' }}
+                            <span class="font-mono font-semibold text-slate-800 text-xs mt-0.5 inline-flex items-center gap-1 justify-end">
+                                <x-icon name="clock" class="w-3.5 h-3.5 text-slate-500" />
+                                <span>{{ $sch->start_time ? substr($sch->start_time, 0, 5) . ' - ' . substr($sch->end_time, 0, 5) : 'Fleksibel' }}</span>
                             </span>
                         </div>
                     </div>
@@ -153,22 +162,23 @@
                         <div class="text-xs font-bold text-slate-900 mt-1">
                             {{ $sch->order->customer->name }}
                         </div>
-                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $sch->order->customer->phone) }}" target="_blank" class="text-xs text-slate-500 font-mono hover:text-amber-600 block">
-                            📞 {{ $sch->order->customer->phone }}
+                        <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $sch->order->customer->phone) }}" target="_blank" class="inline-flex items-center gap-1 text-xs text-slate-500 font-mono hover:text-amber-600 mt-0.5">
+                            <x-icon name="phone" class="w-3 h-3 text-emerald-600" />
+                            <span>{{ $sch->order->customer->phone }}</span>
                         </a>
                     </div>
 
                     <!-- Location info -->
                     <div class="text-xs text-slate-600 space-y-1">
                         <div class="flex items-start gap-1.5">
-                            <span class="text-amber-600">📍</span>
+                            <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
                             <span class="text-[11px] leading-tight line-clamp-2">
                                 {{ $sch->order->pickupAddress?->address ?? 'Alamat pickup belum diisi' }}
                             </span>
                         </div>
                         @if ($sch->type->value !== 'PICKUP' && $sch->order->destinationAddress)
                             <div class="flex items-start gap-1.5 pt-1">
-                                <span class="text-blue-600">🏁</span>
+                                <x-icon name="map-pin" class="w-3.5 h-3.5 text-blue-600 shrink-0 mt-0.5" />
                                 <span class="text-[11px] leading-tight line-clamp-2">
                                     {{ $sch->order->destinationAddress->address }}
                                 </span>
@@ -178,8 +188,14 @@
 
                     <!-- Team & Vehicle -->
                     <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-500 space-y-0.5">
-                        <div>👥 Petugas: <span class="font-semibold text-slate-800">{{ $sch->assigned_team ?: '-' }}</span></div>
-                        <div>🚛 Armada: <span class="font-semibold text-slate-800">{{ $sch->vehicle ?: '-' }}</span></div>
+                        <div class="flex items-center gap-1.5">
+                            <x-icon name="users" class="w-3 h-3 text-slate-400" />
+                            <span>Petugas: <strong class="font-semibold text-slate-800">{{ $sch->assigned_team ?: '-' }}</strong></span>
+                        </div>
+                        <div class="flex items-center gap-1.5">
+                            <x-icon name="truck" class="w-3 h-3 text-slate-400" />
+                            <span>Armada: <strong class="font-semibold text-slate-800">{{ $sch->vehicle ?: '-' }}</strong></span>
+                        </div>
                     </div>
                 </div>
 
@@ -193,24 +209,26 @@
                         <button 
                             type="button" 
                             wire:click="startMission({{ $sch->id }})"
-                            class="inline-flex items-center gap-1 rounded-xl bg-amber-500 px-3 py-1.5 text-xs font-bold text-slate-950 hover:bg-amber-400 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 rounded-xl bg-amber-500 px-3 py-1.5 text-xs font-bold text-slate-950 hover:bg-amber-400 cursor-pointer shadow-xs"
                         >
-                            <span>🚀 Mulai Pengerjaan</span>
+                            <x-icon name="truck" class="w-3.5 h-3.5 text-slate-950" />
+                            <span>Mulai Pengerjaan</span>
                         </button>
                     @elseif ($sch->status->value === 'IN_PROGRESS')
                         <button 
                             type="button" 
                             wire:click="completeMission({{ $sch->id }})"
-                            class="inline-flex items-center gap-1 rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-emerald-500 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-emerald-500 cursor-pointer shadow-xs"
                         >
-                            <span>✅ Selesai</span>
+                            <x-icon name="check" class="w-3.5 h-3.5 text-white" />
+                            <span>Selesai</span>
                         </button>
                     @endif
                 </div>
             </div>
         @empty
             <div class="col-span-full rounded-2xl bg-white border border-slate-200 p-12 text-center text-slate-400 space-y-2">
-                <span class="text-3xl block">🚚</span>
+                <x-icon name="truck" class="w-10 h-10 text-slate-300 mx-auto mb-2" />
                 <p class="text-sm font-semibold text-slate-700">Tidak ada jadwal operasional pada kategori ini.</p>
                 <p class="text-xs text-slate-400">Silakan pilih tab lain atau atur jadwal misi baru untuk order aktif.</p>
             </div>
@@ -231,8 +249,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Atur Jadwal Misi Operasional Baru
                     </h3>
-                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 

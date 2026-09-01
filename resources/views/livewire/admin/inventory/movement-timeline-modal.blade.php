@@ -7,7 +7,7 @@
                     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                         <div>
                             <div class="flex items-center gap-2">
-                                <span class="text-base">⏱️</span>
+                                <x-icon name="clock" class="w-5 h-5 text-purple-600" />
                                 <h3 class="font-bold text-slate-900 text-base">
                                     Histori Perpindahan (Movement Audit Trail)
                                 </h3>
@@ -24,7 +24,7 @@
                         </div>
 
                         <button type="button" wire:click="close" class="text-slate-400 hover:text-slate-600 font-bold p-1 cursor-pointer">
-                            ✕
+                            <x-icon name="x" class="w-5 h-5 text-slate-500" />
                         </button>
                     </div>
 
@@ -32,8 +32,9 @@
                     <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs flex items-center justify-between">
                         <div>
                             <span class="text-[10px] uppercase font-bold text-slate-400 block">Posisi Saat Ini:</span>
-                            <span class="font-mono font-bold text-slate-900 mt-0.5 block">
-                                📍 {{ $item->storage_location ?: 'Belum di rak / Transit' }}
+                            <span class="font-mono font-bold text-slate-900 mt-0.5 inline-flex items-center gap-1">
+                                <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
+                                <span>{{ $item->storage_location ?: 'Belum di rak / Transit' }}</span>
                             </span>
                         </div>
                         <div class="text-right">
@@ -61,7 +62,7 @@
                                         <div class="flex-auto rounded-xl bg-slate-50 p-3.5 text-xs border border-slate-200 space-y-2">
                                             <div class="flex items-center justify-between">
                                                 <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-bold border {{ $m->movement_type->badgeColor() }}">
-                                                    <span>{{ $m->movement_type->icon() }}</span>
+                                                    <x-icon name="refresh" class="w-3 h-3" />
                                                     <span>{{ $m->movement_type->label() }}</span>
                                                 </span>
                                                 <span class="font-mono text-[10px] text-slate-400">
@@ -91,7 +92,7 @@
                                     </li>
                                 @empty
                                     <li class="rounded-xl border border-dashed border-slate-200 p-8 text-center text-slate-400 text-xs">
-                                        <span class="text-2xl block mb-1">⏱️</span>
+                                        <x-icon name="clock" class="w-8 h-8 text-slate-300 mx-auto mb-1.5" />
                                         Belum ada riwayat perpindahan tercatat untuk barang ini.
                                     </li>
                                 @endforelse

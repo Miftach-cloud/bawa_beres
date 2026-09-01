@@ -28,9 +28,10 @@
         <button 
             type="button" 
             wire:click="increment" 
-            class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-white shadow-md shadow-amber-500/20 hover:bg-amber-600 active:scale-95 transition-all cursor-pointer"
+            class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-semibold text-slate-950 shadow-md shadow-amber-500/20 hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
         >
-            <span>⚡ Klik Test Livewire</span>
+            <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
+            <span>Klik Test Livewire</span>
         </button>
     </div>
 </div>

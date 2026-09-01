@@ -38,9 +38,10 @@
                 <button 
                     type="button" 
                     wire:click="openCancelModal"
-                    class="inline-flex items-center gap-1 rounded-xl bg-rose-50 border border-rose-200 px-3.5 py-2 text-xs font-bold text-rose-700 hover:bg-rose-100 transition-all cursor-pointer"
+                    class="inline-flex items-center gap-1.5 rounded-xl bg-rose-50 border border-rose-200 px-3.5 py-2 text-xs font-bold text-rose-700 hover:bg-rose-100 transition-all cursor-pointer"
                 >
-                    <span>✕ Batalkan Pesanan</span>
+                    <x-icon name="x" class="w-3.5 h-3.5 text-rose-600" />
+                    <span>Batalkan Pesanan</span>
                 </button>
             @else
                 <span class="text-xs font-medium text-slate-400 bg-slate-100 px-3 py-1.5 rounded-xl">
@@ -53,14 +54,14 @@
     <!-- Flash Alerts -->
     @if (session()->has('message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center gap-3 text-xs font-medium text-emerald-800">
-            <span class="text-base">✅</span>
+            <x-icon name="check-circle" class="w-5 h-5 text-emerald-600" />
             <span>{{ session('message') }}</span>
         </div>
     @endif
 
     @if (session()->has('error'))
         <div class="rounded-xl bg-rose-50 border border-rose-200 p-4 flex items-center gap-3 text-xs font-medium text-rose-800">
-            <span class="text-base">⚠️</span>
+            <x-icon name="alert-circle" class="w-5 h-5 text-rose-600" />
             <span>{{ session('error') }}</span>
         </div>
     @endif
@@ -74,7 +75,10 @@
                 <!-- Customer Card -->
                 <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-3">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">👤 Pelanggan</span>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <x-icon name="user" class="w-3.5 h-3.5 text-slate-400" />
+                            <span>Pelanggan</span>
+                        </span>
                         <a href="{{ route('admin.customers.show', $order->customer) }}" class="text-[11px] text-amber-600 hover:underline font-semibold">
                             Buka Profil ➔
                         </a>
@@ -84,14 +88,14 @@
                         <div class="font-mono text-xs text-amber-600 mt-0.5">{{ $order->customer->customer_code }}</div>
                         <div class="mt-2 text-xs text-slate-600 space-y-1">
                             <div class="flex items-center gap-2">
-                                <span>📞</span>
+                                <x-icon name="phone" class="w-3.5 h-3.5 text-emerald-600" />
                                 <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $order->customer->phone) }}" target="_blank" class="font-mono hover:text-amber-600 underline">
                                     {{ $order->customer->phone }}
                                 </a>
                             </div>
                             @if ($order->customer->email)
                                 <div class="flex items-center gap-2">
-                                    <span>✉️</span>
+                                    <x-icon name="mail" class="w-3.5 h-3.5 text-blue-600" />
                                     <span>{{ $order->customer->email }}</span>
                                 </div>
                             @endif
@@ -102,7 +106,10 @@
                 <!-- Service Card -->
                 <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-3">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">🛠️ Layanan Terpilih</span>
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                            <x-icon name="tag" class="w-3.5 h-3.5 text-slate-400" />
+                            <span>Layanan Terpilih</span>
+                        </span>
                         <span class="inline-flex items-center rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-700">
                             {{ $order->service->pricing_type->label() }}
                         </span>
@@ -122,7 +129,8 @@
                 <!-- Pickup Address -->
                 <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-2">
                     <span class="text-xs font-bold text-amber-600 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>📍</span> Lokasi Penjemputan (Pickup)
+                        <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
+                        <span>Lokasi Penjemputan (Pickup)</span>
                     </span>
                     @if ($order->pickupAddress)
                         <div class="text-xs text-slate-900 font-medium leading-relaxed">
@@ -144,7 +152,8 @@
                 <!-- Destination Address -->
                 <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-2">
                     <span class="text-xs font-bold text-blue-600 uppercase tracking-wider flex items-center gap-1.5">
-                        <span>🏁</span> Lokasi Tujuan / Pengantaran
+                        <x-icon name="map-pin" class="w-3.5 h-3.5 text-blue-600" />
+                        <span>Lokasi Tujuan / Pengantaran</span>
                     </span>
                     @if ($order->destinationAddress)
                         <div class="text-xs text-slate-900 font-medium leading-relaxed">
@@ -170,7 +179,8 @@
             <div class="rounded-2xl bg-white border border-slate-200 shadow-xs overflow-hidden">
                 <div class="px-6 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
                     <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                        <span>📦</span> Daftar Barang Deklarasi Customer
+                        <x-icon name="box" class="w-4 h-4 text-amber-600" />
+                        <span>Daftar Barang Deklarasi Customer</span>
                     </h3>
                     <span class="text-xs font-semibold text-slate-600 bg-white px-2.5 py-1 rounded-lg border border-slate-200">
                         {{ $order->items->count() }} Macam Barang
@@ -222,8 +232,9 @@
 
             <!-- 4. Notes & Pricing Admin Editor -->
             <div class="rounded-2xl bg-white p-6 border border-slate-200 shadow-xs space-y-4">
-                <h3 class="font-bold text-slate-900 text-sm border-b border-slate-100 pb-3">
-                    📝 Catatan & Penetapan Biaya Order
+                <h3 class="font-bold text-slate-900 text-sm border-b border-slate-100 pb-3 flex items-center gap-2">
+                    <x-icon name="clipboard" class="w-4 h-4 text-amber-600" />
+                    <span>Catatan & Penetapan Biaya Order</span>
                 </h3>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
@@ -260,9 +271,10 @@
                     <button 
                         type="button" 
                         wire:click="saveAdminNotes" 
-                        class="rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white hover:bg-slate-800 transition-all cursor-pointer"
+                        class="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white hover:bg-slate-800 transition-all cursor-pointer"
                     >
-                        💾 Simpan Catatan & Tarif
+                        <x-icon name="check" class="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Simpan Catatan & Tarif</span>
                     </button>
                 </div>
             </div>
@@ -273,8 +285,9 @@
             <!-- 1. Audit History Log (Section 5.2 & 2.7) -->
             <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h3 class="font-bold text-slate-900 text-sm">
-                        ⏱️ Riwayat Perubahan Status
+                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
+                        <x-icon name="clock" class="w-4 h-4 text-amber-600" />
+                        <span>Riwayat Perubahan Status</span>
                     </h3>
                     <span class="text-[11px] text-slate-400">
                         {{ $order->statusHistories->count() }} log
@@ -353,8 +366,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Konfirmasi Perubahan Status
                     </h3>
-                    <button type="button" wire:click="closeTransitionModal" class="text-slate-400 hover:text-slate-600 font-bold">
-                        ✕
+                    <button type="button" wire:click="closeTransitionModal" class="text-slate-400 hover:text-slate-600 font-bold p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 
@@ -397,10 +410,11 @@
             <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-slate-200 space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                     <h3 class="font-bold text-rose-700 text-base flex items-center gap-2">
-                        <span>⚠️</span> Batalkan Pesanan
+                        <x-icon name="alert-circle" class="w-5 h-5 text-rose-600" />
+                        <span>Batalkan Pesanan</span>
                     </h3>
-                    <button type="button" wire:click="closeCancelModal" class="text-slate-400 hover:text-slate-600 font-bold">
-                        ✕
+                    <button type="button" wire:click="closeCancelModal" class="text-slate-400 hover:text-slate-600 font-bold p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 

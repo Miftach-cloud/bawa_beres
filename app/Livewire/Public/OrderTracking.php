@@ -101,7 +101,7 @@ class OrderTracking extends Component
                 'description' => 'Pesanan Anda telah masuk dan menunggu peninjauan armada oleh tim kami.',
                 'is_completed' => true,
                 'is_active' => in_array($status, [OrderStatus::DRAFT, OrderStatus::PENDING_REVIEW], true),
-                'icon' => '📝',
+                'icon' => 'clipboard',
             ],
             [
                 'key' => 'QUOTATION',
@@ -121,7 +121,7 @@ class OrderTracking extends Component
                     OrderStatus::COMPLETED,
                 ], true),
                 'is_active' => $status === OrderStatus::QUOTED,
-                'icon' => '🏷️',
+                'icon' => 'tag',
             ],
             [
                 'key' => 'CONFIRMED',
@@ -140,7 +140,7 @@ class OrderTracking extends Component
                     OrderStatus::COMPLETED,
                 ], true),
                 'is_active' => in_array($status, [OrderStatus::CONFIRMED, OrderStatus::PAID], true),
-                'icon' => '✓',
+                'icon' => 'check-circle',
             ],
 
             [
@@ -156,7 +156,7 @@ class OrderTracking extends Component
                     OrderStatus::COMPLETED,
                 ], true),
                 'is_active' => in_array($status, [OrderStatus::SCHEDULED, OrderStatus::IN_TRANSIT], true),
-                'icon' => '🚚',
+                'icon' => 'truck',
             ],
             [
                 'key' => 'PROCESSING_STORAGE',
@@ -169,7 +169,7 @@ class OrderTracking extends Component
                     OrderStatus::PROCESSING,
                     OrderStatus::OUTBOUND_REQUESTED,
                 ], true),
-                'icon' => '🏢',
+                'icon' => 'warehouse',
             ],
 
             [
@@ -178,7 +178,7 @@ class OrderTracking extends Component
                 'description' => 'Seluruh rangkaian layanan telah selesai dilaksanakan.',
                 'is_completed' => $status === OrderStatus::COMPLETED,
                 'is_active' => $status === OrderStatus::COMPLETED,
-                'icon' => '🎉',
+                'icon' => 'sparkles',
             ],
         ];
     }

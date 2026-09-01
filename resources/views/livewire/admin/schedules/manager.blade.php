@@ -3,7 +3,8 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div>
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <span>🚚</span> Jadwal Operasi (Pickup & Delivery)
+                <x-icon name="truck" class="w-4 h-4 text-amber-600" />
+                <span>Jadwal Operasi (Pickup & Delivery)</span>
             </h3>
             <p class="text-xs text-slate-500">Penugasan jadwal armada, driver, dan tim angkut</p>
         </div>
@@ -13,14 +14,15 @@
             wire:click="openCreateModal('PICKUP')"
             class="inline-flex items-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-sm hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
         >
-            <span>➕ Atur Jadwal Operasional</span>
+            <x-icon name="plus" class="w-3.5 h-3.5 text-slate-950" />
+            <span>Atur Jadwal Operasional</span>
         </button>
     </div>
 
     <!-- Flash message -->
     @if (session()->has('schedule_message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-3 flex items-center gap-2 text-xs font-medium text-emerald-800">
-            <span>✅</span>
+            <x-icon name="check-circle" class="w-4 h-4 text-emerald-600" />
             <span>{{ session('schedule_message') }}</span>
         </div>
     @endif
@@ -31,8 +33,8 @@
             <div class="rounded-xl border {{ $sch->isCompleted() ? 'border-emerald-200 bg-emerald-50/10' : ($sch->status->value === 'IN_PROGRESS' ? 'border-amber-300 bg-amber-50/20 ring-1 ring-amber-200' : 'border-slate-200 bg-white') }} p-4 shadow-xs space-y-3">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-2">
                     <div class="flex items-center gap-2">
-                        <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-bold border {{ $sch->type->badgeColor() }}">
-                            <span>{{ $sch->type->icon() }}</span>
+                        <span class="inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-bold border {{ $sch->type->badgeColor() }}">
+                            <x-icon name="truck" class="w-3.5 h-3.5" />
                             <span>{{ $sch->type->label() }}</span>
                         </span>
                         <span class="inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border {{ $sch->status->badgeColor() }}">
@@ -41,7 +43,8 @@
                     </div>
 
                     <div class="text-xs font-bold font-mono text-slate-900 flex items-center gap-1.5">
-                        <span>📅 {{ $sch->scheduled_date->translatedFormat('d F Y') }}</span>
+                        <x-icon name="calendar" class="w-3.5 h-3.5 text-amber-600" />
+                        <span>{{ $sch->scheduled_date->translatedFormat('d F Y') }}</span>
                         @if ($sch->start_time)
                             <span class="text-slate-500 font-normal">({{ substr($sch->start_time, 0, 5) }} - {{ substr($sch->end_time, 0, 5) }} WIB)</span>
                         @endif
@@ -51,12 +54,18 @@
                 <!-- Assignment details -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100">
                     <div>
-                        <span class="text-[10px] text-slate-400 uppercase font-bold block mb-0.5">👥 Tim Petugas Lapangan:</span>
+                        <span class="text-[10px] text-slate-400 uppercase font-bold flex items-center gap-1 mb-0.5">
+                            <x-icon name="users" class="w-3 h-3 text-slate-400" />
+                            <span>Tim Petugas Lapangan:</span>
+                        </span>
                         <span class="font-semibold text-slate-800">{{ $sch->assigned_team ?: 'Belum ditentukan' }}</span>
                     </div>
 
                     <div>
-                        <span class="text-[10px] text-slate-400 uppercase font-bold block mb-0.5">🚛 Armada Kendaraan:</span>
+                        <span class="text-[10px] text-slate-400 uppercase font-bold flex items-center gap-1 mb-0.5">
+                            <x-icon name="truck" class="w-3 h-3 text-slate-400" />
+                            <span>Armada Kendaraan:</span>
+                        </span>
                         <span class="font-semibold text-slate-800">{{ $sch->vehicle ?: 'Belum ditentukan' }}</span>
                     </div>
 
@@ -73,16 +82,18 @@
                         <button 
                             type="button" 
                             wire:click="startMission({{ $sch->id }})"
-                            class="inline-flex items-center gap-1 rounded-lg bg-amber-500 px-3 py-1 text-xs font-semibold text-slate-950 hover:bg-amber-400 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-1 text-xs font-semibold text-slate-950 hover:bg-amber-400 cursor-pointer shadow-xs"
                         >
-                            <span>🚀 Mulai Pengerjaan (On The Way)</span>
+                            <x-icon name="truck" class="w-3.5 h-3.5 text-slate-950" />
+                            <span>Mulai Pengerjaan (On The Way)</span>
                         </button>
                         <button 
                             type="button" 
                             wire:click="cancelMission({{ $sch->id }})"
                             class="inline-flex items-center gap-1 rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-600 hover:bg-slate-100 cursor-pointer"
                         >
-                            <span>✕ Batalkan</span>
+                            <x-icon name="x" class="w-3 h-3 text-slate-500" />
+                            <span>Batalkan</span>
                         </button>
                     </div>
                 @elseif ($sch->status->value === 'IN_PROGRESS')
@@ -90,16 +101,17 @@
                         <button 
                             type="button" 
                             wire:click="completeMission({{ $sch->id }})"
-                            class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-500 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-sm hover:bg-emerald-500 cursor-pointer"
                         >
-                            <span>✅ Tandai Misi Selesai</span>
+                            <x-icon name="check" class="w-3.5 h-3.5 text-white" />
+                            <span>Tandai Misi Selesai</span>
                         </button>
                     </div>
                 @endif
             </div>
         @empty
             <div class="rounded-xl border border-dashed border-slate-200 p-6 text-center text-slate-400 text-xs">
-                <span class="text-2xl block mb-1">🚚</span>
+                <x-icon name="truck" class="w-8 h-8 text-slate-300 mx-auto mb-1.5" />
                 Belum ada jadwal penjemputan atau pengantaran yang diatur.
             </div>
         @endforelse
@@ -113,8 +125,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Atur Jadwal Operasional
                     </h3>
-                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 

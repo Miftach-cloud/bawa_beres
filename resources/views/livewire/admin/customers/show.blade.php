@@ -21,14 +21,15 @@
             wire:click="openEditModal"
             class="inline-flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer"
         >
-            <span>✏️ Edit Data Pelanggan</span>
+            <x-icon name="clipboard" class="w-3.5 h-3.5 text-slate-700" />
+            <span>Edit Data Pelanggan</span>
         </button>
     </div>
 
     <!-- Flash Message -->
     @if (session()->has('message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center gap-3 text-xs font-medium text-emerald-800">
-            <span class="text-base">✅</span>
+            <x-icon name="check-circle" class="w-5 h-5 text-emerald-600" />
             <span>{{ session('message') }}</span>
         </div>
     @endif
@@ -45,7 +46,8 @@
                 <div>
                     <span class="text-slate-400 block mb-0.5">Nomor Telepon / WA:</span>
                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $customer->phone) }}" target="_blank" class="font-semibold text-slate-900 hover:text-amber-600 flex items-center gap-1">
-                        <span>📞 {{ $customer->phone }}</span>
+                        <x-icon name="phone" class="w-3.5 h-3.5 text-emerald-600" />
+                        <span>{{ $customer->phone }}</span>
                         <span class="text-[10px] text-emerald-600 font-normal">(Hubungi WA)</span>
                     </a>
                 </div>
@@ -99,7 +101,7 @@
                             Rp {{ number_format($stats['total_spent'], 0, ',', '.') }}
                         </div>
                     </div>
-                    <span class="text-3xl">💳</span>
+                    <x-icon name="credit-card" class="w-8 h-8 text-amber-400" />
                 </div>
             </div>
         </div>
@@ -156,7 +158,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-6 py-12 text-center text-slate-400">
-                                <div class="text-3xl mb-2">📦</div>
+                                <x-icon name="box" class="w-10 h-10 text-slate-300 mx-auto mb-2" />
                                 <p class="text-sm">Pelanggan ini belum memiliki riwayat transaksi order.</p>
                             </td>
                         </tr>
@@ -174,8 +176,8 @@
                     <h3 class="font-bold text-slate-900 text-lg">
                         Edit Data Pelanggan
                     </h3>
-                    <button type="button" wire:click="closeModal" class="text-slate-400 hover:text-slate-600 font-bold text-lg">
-                        ✕
+                    <button type="button" wire:click="closeModal" class="text-slate-400 hover:text-slate-600 font-bold text-lg cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 

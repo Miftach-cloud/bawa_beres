@@ -11,14 +11,15 @@
             wire:click="openCreateModal"
             class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-slate-950 shadow-sm shadow-amber-500/20 hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
         >
-            <span>➕ Tambah Slot Rak Baru</span>
+            <x-icon name="plus" class="w-4 h-4 text-slate-950" />
+            <span>Tambah Slot Rak Baru</span>
         </button>
     </div>
 
     <!-- Flash Message -->
     @if (session()->has('message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center gap-3 text-xs font-medium text-emerald-800">
-            <span class="text-base">✅</span>
+            <x-icon name="check-circle" class="w-5 h-5 text-emerald-600" />
             <span>{{ session('message') }}</span>
         </div>
     @endif
@@ -32,19 +33,28 @@
         </div>
 
         <div class="rounded-2xl bg-white p-4 border border-slate-200 shadow-xs">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 block">🟢 Slot Tersedia</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 flex items-center gap-1">
+                <x-icon name="check-circle" class="w-3.5 h-3.5 text-emerald-600" />
+                <span>Slot Tersedia</span>
+            </span>
             <div class="text-2xl font-bold text-emerald-700 mt-1">{{ $stats['available_slots'] }}</div>
             <span class="text-[11px] text-slate-500">Siap dialokasikan</span>
         </div>
 
         <div class="rounded-2xl bg-white p-4 border border-slate-200 shadow-xs">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 block">🔵 Slot Terpakai / Penuh</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 flex items-center gap-1">
+                <x-icon name="warehouse" class="w-3.5 h-3.5 text-blue-600" />
+                <span>Slot Terpakai / Penuh</span>
+            </span>
             <div class="text-2xl font-bold text-blue-700 mt-1">{{ $stats['occupied_slots'] }}</div>
             <span class="text-[11px] text-slate-500">Terisi barang</span>
         </div>
 
         <div class="rounded-2xl bg-white p-4 border border-slate-200 shadow-xs">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 block">📦 Barang Fisik Tersimpan</span>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 flex items-center gap-1">
+                <x-icon name="box" class="w-3.5 h-3.5 text-purple-600" />
+                <span>Barang Fisik Tersimpan</span>
+            </span>
             <div class="text-2xl font-bold text-purple-700 mt-1">{{ $stats['stored_items'] }}</div>
             <span class="text-[11px] text-slate-500">Dalam penguasaan gudang</span>
         </div>
@@ -61,7 +71,9 @@
                     placeholder="Cari kode slot (MLG01-A-R01)..."
                     class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 pl-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 >
-                <span class="absolute left-3 top-2.5 text-xs text-slate-400">🔍</span>
+                <span class="absolute left-3 top-2.5 text-xs text-slate-400">
+                    <x-icon name="search" class="w-3.5 h-3.5 text-slate-400" />
+                </span>
             </div>
 
             <!-- Warehouse Filter -->
@@ -112,9 +124,10 @@
                 <button 
                     type="button" 
                     wire:click="resetFilters" 
-                    class="text-amber-600 hover:text-amber-700 font-medium cursor-pointer"
+                    class="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700 font-medium cursor-pointer"
                 >
-                    🔄 Reset Filter
+                    <x-icon name="refresh" class="w-3 h-3 text-amber-600" />
+                    <span>Reset Filter</span>
                 </button>
             @endif
         </div>
@@ -131,7 +144,7 @@
                     <!-- Top Bar: Type Icon & Status Dot -->
                     <div class="flex items-center justify-between">
                         <span class="inline-flex items-center gap-1 text-xs font-semibold text-slate-700">
-                            <span>{{ $loc->type->icon() }}</span>
+                            <x-icon name="warehouse" class="w-3.5 h-3.5 text-slate-600" />
                             <span class="text-[11px] truncate max-w-[140px]">{{ $loc->type->label() }}</span>
                         </span>
 
@@ -176,7 +189,7 @@
             </div>
         @empty
             <div class="col-span-full rounded-2xl bg-white border border-slate-200 p-12 text-center text-slate-400 space-y-2">
-                <span class="text-3xl block">🏢</span>
+                <x-icon name="warehouse" class="w-10 h-10 text-slate-300 mx-auto mb-2" />
                 <p class="text-sm font-semibold text-slate-700">Belum ada lokasi rak yang terdaftar sesuai filter.</p>
                 <p class="text-xs text-slate-400">Klik "Tambah Slot Rak Baru" untuk mulai membuat struktur lokasi rak gudang.</p>
             </div>
@@ -197,8 +210,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Tambah Slot Rak Gudang Baru
                     </h3>
-                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 
@@ -244,7 +257,7 @@
                             <label class="block font-semibold text-slate-700 mb-1">Tipe Slot Rak *</label>
                             <select wire:model="type" class="w-full rounded-xl border border-slate-300 px-3 py-2 text-xs text-slate-900">
                                 @foreach ($types as $t)
-                                    <option value="{{ $t->value }}">{{ $t->icon() }} {{ $t->label() }}</option>
+                                    <option value="{{ $t->value }}">{{ $t->label() }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -293,7 +306,7 @@
                         </div>
 
                         <button type="button" wire:click="closeDetailDrawer" class="text-slate-400 hover:text-slate-600 font-bold p-1 cursor-pointer">
-                            ✕
+                            <x-icon name="x" class="w-5 h-5 text-slate-500" />
                         </button>
                     </div>
 
@@ -311,8 +324,9 @@
 
                     <!-- Stored Items in this Slot -->
                     <div class="space-y-3">
-                        <h4 class="font-bold text-xs text-slate-900 flex items-center justify-between">
-                            <span>📦 Daftar Barang Fisik yang Tersimpan ({{ $selectedLocation->storedItems->count() }})</span>
+                        <h4 class="font-bold text-xs text-slate-900 flex items-center gap-1.5">
+                            <x-icon name="box" class="w-4 h-4 text-amber-600" />
+                            <span>Daftar Barang Fisik yang Tersimpan ({{ $selectedLocation->storedItems->count() }})</span>
                         </h4>
 
                         <div class="space-y-2">
@@ -336,7 +350,7 @@
                                 </div>
                             @empty
                                 <div class="rounded-xl border border-dashed border-slate-200 p-8 text-center text-slate-400 text-xs">
-                                    <span class="text-2xl block mb-1">📭</span>
+                                    <x-icon name="box" class="w-8 h-8 text-slate-300 mx-auto mb-1.5" />
                                     Slot rak ini saat ini kosong (belum ada barang tersimpan).
                                 </div>
                             @endforelse

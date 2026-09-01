@@ -27,7 +27,8 @@
     <!-- Non-print Action Bar -->
     <div class="no-print mb-6 flex items-center gap-3">
         <button onclick="window.print()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow-md cursor-pointer flex items-center gap-2">
-            <span>🖨️ Cetak Label (Print)</span>
+            <x-icon name="printer" class="w-4 h-4 text-slate-950" />
+            <span>Cetak Label (Print)</span>
         </button>
         <button onclick="window.close()" class="px-4 py-2.5 bg-white border border-slate-300 text-slate-700 font-semibold text-xs rounded-xl hover:bg-slate-50 cursor-pointer">
             Tutup
@@ -91,7 +92,8 @@
             <div>
                 <span class="text-[8px] uppercase tracking-wider text-amber-400 block font-bold">LOKASI RAK GUDANG</span>
                 <span class="font-mono font-black text-sm block">
-                    📍 {{ $item->storage_location ?: 'BELUM DI RAK' }}
+                    <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-400 inline mr-1" />
+                    <span>{{ $item->storage_location ?: 'BELUM DI RAK' }}</span>
                 </span>
             </div>
             <div class="text-right">

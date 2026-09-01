@@ -11,14 +11,15 @@
             wire:click="openCreateModal"
             class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-slate-950 shadow-sm shadow-amber-500/20 hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
         >
-            <span>➕ Tambah Layanan Baru</span>
+            <x-icon name="plus" class="w-4 h-4 text-slate-950" />
+            <span>Tambah Layanan Baru</span>
         </button>
     </div>
 
     <!-- Flash Message -->
     @if (session()->has('message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center gap-3 text-xs font-medium text-emerald-800">
-            <span class="text-base">✅</span>
+            <x-icon name="check-circle" class="w-5 h-5 text-emerald-600" />
             <span>{{ session('message') }}</span>
         </div>
     @endif
@@ -34,7 +35,9 @@
                     placeholder="Cari layanan (nama, slug, deskripsi)..."
                     class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 pl-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 >
-                <span class="absolute left-3 top-2.5 text-xs text-slate-400">🔍</span>
+                <span class="absolute left-3 top-2.5 text-xs text-slate-400">
+                    <x-icon name="search" class="w-3.5 h-3.5 text-slate-400" />
+                </span>
             </div>
 
             <div class="text-xs text-slate-500">
@@ -92,14 +95,15 @@
                                     wire:click="openEditModal({{ $service->id }})"
                                     class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer"
                                 >
-                                    <span>✏️ Edit</span>
+                                    <x-icon name="clipboard" class="w-3 h-3 text-slate-600" />
+                                    <span>Edit</span>
                                 </button>
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="6" class="px-6 py-12 text-center text-slate-400">
-                                <div class="text-3xl mb-2">🛠️</div>
+                                <x-icon name="cog" class="w-10 h-10 text-slate-300 mx-auto mb-2" />
                                 <p class="text-sm">Tidak ada layanan yang ditemukan.</p>
                             </td>
                         </tr>
@@ -123,8 +127,8 @@
                     <h3 class="font-bold text-slate-900 text-lg">
                         {{ $editingId ? 'Edit Layanan' : 'Tambah Layanan Baru' }}
                     </h3>
-                    <button type="button" wire:click="closeModal" class="text-slate-400 hover:text-slate-600 font-bold text-lg">
-                        ✕
+                    <button type="button" wire:click="closeModal" class="text-slate-400 hover:text-slate-600 font-bold p-1 cursor-pointer">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 

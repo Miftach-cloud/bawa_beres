@@ -69,7 +69,7 @@
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-12">
         <div class="text-center space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
-                <span>❓</span>
+                <x-icon name="chat" class="w-4 h-4 text-amber-600" />
                 <span>Pusat Bantuan & Tanya Jawab</span>
             </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
@@ -122,9 +122,10 @@
             <a 
                 href="https://wa.me/6281234567890?text=Halo%20Admin%20BawaBeres,%20saya%20ingin%20tanya%20seputar%20layanan" 
                 target="_blank"
-                class="inline-block rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3.5 shadow-md shadow-emerald-600/10 transition"
+                class="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3.5 shadow-md shadow-emerald-600/10 transition"
             >
-                💬 Chat Langsung dengan Admin
+                <x-icon name="chat" class="w-4 h-4 text-white" />
+                <span>Chat Langsung dengan Admin</span>
             </a>
         </div>
     </div>

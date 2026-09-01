@@ -3,8 +3,8 @@
         <!-- Logo -->
         <div class="flex justify-center">
             <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500 text-white font-bold text-xl shadow-lg shadow-amber-500/30">
-                    📦
+                <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500 text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/30">
+                    <x-icon name="box" class="w-6 h-6 text-slate-950" />
                 </span>
             </a>
         </div>

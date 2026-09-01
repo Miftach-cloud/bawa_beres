@@ -11,14 +11,15 @@
             wire:click="openCreateModal"
             class="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-bold text-slate-950 shadow-sm shadow-amber-500/20 hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
         >
-            <span>➕ Buat Pesanan Baru</span>
+            <x-icon name="plus" class="w-4 h-4 text-slate-950" />
+            <span>Buat Pesanan Baru</span>
         </button>
     </div>
 
     <!-- Flash Message -->
     @if (session()->has('message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 flex items-center gap-3 text-xs font-medium text-emerald-800">
-            <span class="text-base">✅</span>
+            <x-icon name="check-circle" class="w-5 h-5 text-emerald-600" />
             <span>{{ session('message') }}</span>
         </div>
     @endif
@@ -34,7 +35,9 @@
                     placeholder="Cari kode order / pelanggan / no HP..."
                     class="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2 pl-9 text-xs text-slate-800 placeholder-slate-400 shadow-xs focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500"
                 >
-                <span class="absolute left-3 top-2.5 text-xs text-slate-400">🔍</span>
+                <span class="absolute left-3 top-2.5 text-xs text-slate-400">
+                    <x-icon name="search" class="w-3.5 h-3.5 text-slate-400" />
+                </span>
             </div>
 
             <!-- Status Filter -->
@@ -96,9 +99,10 @@
                 <button 
                     type="button" 
                     wire:click="resetFilters" 
-                    class="text-amber-600 hover:text-amber-700 font-medium cursor-pointer"
+                    class="inline-flex items-center gap-1 text-amber-600 hover:text-amber-700 font-medium cursor-pointer"
                 >
-                    🔄 Reset Filter
+                    <x-icon name="refresh" class="w-3 h-3 text-amber-600" />
+                    <span>Reset Filter</span>
                 </button>
             @endif
         </div>
@@ -154,16 +158,17 @@
                             <td class="px-6 py-4 text-right">
                                 <a 
                                     href="{{ route('admin.orders.show', $order) }}"
-                                    class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors"
+                                    class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors"
                                 >
-                                    <span>👁️ Buka Order</span>
+                                    <x-icon name="eye" class="w-3.5 h-3.5 text-slate-600" />
+                                    <span>Buka Order</span>
                                 </a>
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="8" class="px-6 py-12 text-center text-slate-400">
-                                <div class="text-3xl mb-2">📦</div>
+                                <x-icon name="box" class="w-8 h-8 text-slate-300 mx-auto mb-2" />
                                 <p class="text-sm">Tidak ada pesanan yang sesuai dengan filter yang dipilih.</p>
                             </td>
                         </tr>
@@ -187,8 +192,8 @@
                     <h3 class="font-bold text-slate-900 text-lg">
                         Buat Pesanan Baru (Create Order)
                     </h3>
-                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold text-lg cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeCreateModal" class="text-slate-400 hover:text-slate-600 font-bold text-lg cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 
@@ -288,8 +293,9 @@
                     <div class="space-y-3 bg-slate-50 p-4 rounded-xl border border-slate-200/80">
                         <div class="flex items-center justify-between">
                             <h4 class="text-xs font-bold text-slate-800 uppercase tracking-wider">4. Deklarasi Barang (Items)</h4>
-                            <button type="button" wire:click="addItemRow" class="text-xs text-amber-600 font-semibold hover:underline cursor-pointer">
-                                ➕ Tambah Baris Barang
+                            <button type="button" wire:click="addItemRow" class="inline-flex items-center gap-1 text-xs text-amber-600 font-semibold hover:underline cursor-pointer">
+                                <x-icon name="plus" class="w-3.5 h-3.5 text-amber-600" />
+                                <span>Tambah Baris Barang</span>
                             </button>
                         </div>
 
@@ -310,8 +316,9 @@
                                     </select>
                                 </div>
                                 <div class="sm:col-span-2 text-right">
-                                    <button type="button" wire:click="removeItemRow({{ $index }})" class="text-rose-500 hover:text-rose-700 text-xs font-semibold cursor-pointer">
-                                        🗑️ Hapus
+                                    <button type="button" wire:click="removeItemRow({{ $index }})" class="inline-flex items-center gap-1 text-rose-500 hover:text-rose-700 text-xs font-semibold cursor-pointer">
+                                        <x-icon name="trash" class="w-3.5 h-3.5 text-rose-500" />
+                                        <span>Hapus</span>
                                     </button>
                                 </div>
                             </div>

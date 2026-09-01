@@ -97,28 +97,40 @@
                 <h3 class="text-lg font-black text-slate-900 tracking-tight">Keunggulan & Fasilitas Layanan:</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
-                        <div class="text-amber-600 text-xl font-bold">🏷️ Label QR Inventaris</div>
+                        <div class="flex items-center gap-2 text-purple-700 text-sm font-bold">
+                            <x-icon name="qr" class="w-5 h-5 text-purple-600" />
+                            <span>Label QR Inventaris</span>
+                        </div>
                         <p class="text-xs text-slate-600 leading-relaxed">
                             Setiap kardus dan perabot diberi label token QR anti-rusak untuk memastikan zero item loss selama proses handling.
                         </p>
                     </div>
 
                     <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
-                        <div class="text-amber-600 text-xl font-bold">📸 Foto Dokumentasi Digital</div>
+                        <div class="flex items-center gap-2 text-blue-700 text-sm font-bold">
+                            <x-icon name="camera" class="w-5 h-5 text-blue-600" />
+                            <span>Foto Dokumentasi Digital</span>
+                        </div>
                         <p class="text-xs text-slate-600 leading-relaxed">
                             Kondisi fisik barang difoto saat penjemputan awal sebagai bukti otentik serah terima dan kontrol kualitas.
                         </p>
                     </div>
 
                     <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
-                        <div class="text-amber-600 text-xl font-bold">🚚 Armada Bersih & Siap Angkut</div>
+                        <div class="flex items-center gap-2 text-amber-700 text-sm font-bold">
+                            <x-icon name="truck" class="w-5 h-5 text-amber-600" />
+                            <span>Armada Bersih & Siap Angkut</span>
+                        </div>
                         <p class="text-xs text-slate-600 leading-relaxed">
                             Armada pick-up bak / box dan van tertutup yang bersih dan dilengkapi tali pengaman perabot.
                         </p>
                     </div>
 
                     <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
-                        <div class="text-amber-600 text-xl font-bold">📍 Pelacakan Realtime</div>
+                        <div class="flex items-center gap-2 text-emerald-700 text-sm font-bold">
+                            <x-icon name="map-pin" class="w-5 h-5 text-emerald-600" />
+                            <span>Pelacakan Realtime</span>
+                        </div>
                         <p class="text-xs text-slate-600 leading-relaxed">
                             Cek status pesanan secara mandiri via fitur pelacakan publik tanpa harus login.
                         </p>
@@ -130,16 +142,17 @@
             <div class="pt-8 border-t border-slate-100 flex flex-col sm:flex-row gap-4">
                 <a 
                     href="{{ url('/#booking') }}" 
-                    class="flex-1 rounded-2xl bg-amber-500 hover:bg-amber-400 py-4 text-center text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer"
+                    class="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 py-4 text-center text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer"
                 >
-                    🚀 Pesan Layanan Ini Sekarang
+                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
+                    <span>Pesan Layanan Ini Sekarang</span>
                 </a>
                 <a 
                     href="https://wa.me/6281234567890?text={{ rawurlencode('Halo Admin BawaBeres, saya ingin tanya detail layanan ' . $service->name) }}" 
                     target="_blank"
                     class="flex-1 rounded-2xl border border-slate-300 hover:bg-slate-50 py-4 text-center text-sm font-bold text-slate-700 transition cursor-pointer flex items-center justify-center gap-2"
                 >
-                    <span>💬</span>
+                    <x-icon name="chat" class="w-4 h-4 text-emerald-600" />
                     <span>Tanya Customer Service</span>
                 </a>
             </div>

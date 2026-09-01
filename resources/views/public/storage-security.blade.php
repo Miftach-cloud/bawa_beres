@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100/80 px-3 py-1 text-xs font-bold text-emerald-800">
-                <span>🛡️</span>
+                <x-icon name="shield" class="w-4 h-4 text-emerald-600" />
                 <span>Standar Keamanan Tingkat Tinggi</span>
             </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
@@ -23,8 +23,8 @@
         <!-- Security Features Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
-                <div class="h-14 w-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-3xl font-bold">
-                    📹
+                <div class="h-14 w-14 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                    <x-icon name="cctv" class="w-7 h-7 text-emerald-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">CCTV 24/7 & Pengawasan Akses</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -33,8 +33,8 @@
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
-                <div class="h-14 w-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-3xl font-bold">
-                    🏷️
+                <div class="h-14 w-14 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                    <x-icon name="qr" class="w-7 h-7 text-amber-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">SOP QR Code & Anti Tertukar</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -43,8 +43,8 @@
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
-                <div class="h-14 w-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center text-3xl font-bold">
-                    🔒
+                <div class="h-14 w-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                    <x-icon name="lock" class="w-7 h-7 text-blue-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Gudang Bersih, Kering & Bebas Hama</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -62,15 +62,15 @@
             
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs font-semibold text-slate-700">
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-3">
-                    <span class="text-xl">📦</span>
+                    <x-icon name="box" class="w-5 h-5 text-amber-600" />
                     <span>Rak Khusus Kardus & Box</span>
                 </div>
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-3">
-                    <span class="text-xl">🛏️</span>
+                    <x-icon name="warehouse" class="w-5 h-5 text-blue-600" />
                     <span>Pallet Kasur & Springbed Bersih</span>
                 </div>
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-3">
-                    <span class="text-xl">🏍️</span>
+                    <x-icon name="truck" class="w-5 h-5 text-emerald-600" />
                     <span>Area Parkir Titip Motor Tertutup</span>
                 </div>
             </div>

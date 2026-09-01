@@ -3,7 +3,8 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div>
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <span>🏷️</span> Manajemen Fisik Barang (Physical Inventory)
+                <x-icon name="tag" class="w-4 h-4 text-amber-600" />
+                <span>Manajemen Fisik Barang (Physical Inventory)</span>
             </h3>
             <p class="text-xs text-slate-500">Barang fisik nyata dalam penguasaan perusahaan (Kode unik INV-XXXXXX)</p>
         </div>
@@ -15,16 +16,18 @@
                     wire:click="generateExpected"
                     class="inline-flex items-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-sm hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
                 >
-                    <span>⚡ Generate dari Deklarasi Order</span>
+                    <x-icon name="sparkles" class="w-3.5 h-3.5 text-slate-950" />
+                    <span>Generate dari Deklarasi Order</span>
                 </button>
             @endif
 
             <button 
                 type="button" 
                 wire:click="openAddModal"
-                class="inline-flex items-center gap-1 rounded-xl bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                class="inline-flex items-center gap-1.5 rounded-xl bg-white border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-2xs"
             >
-                <span>➕ Tambah Barang Fisik</span>
+                <x-icon name="plus" class="w-3.5 h-3.5 text-slate-700" />
+                <span>Tambah Barang Fisik</span>
             </button>
         </div>
     </div>
@@ -32,7 +35,7 @@
     <!-- Flash message -->
     @if (session()->has('inventory_message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-3 flex items-center gap-2 text-xs font-medium text-emerald-800">
-            <span>✅</span>
+            <x-icon name="check-circle" class="w-4 h-4 text-emerald-600" />
             <span>{{ session('inventory_message') }}</span>
         </div>
     @endif
@@ -81,31 +84,30 @@
                                     <button 
                                         type="button" 
                                         wire:click="$dispatch('openQrLabel', { itemId: {{ $item->id }} })"
-                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-2xs"
                                         title="QR Code & Cetak Label"
                                     >
-                                        <span>🏷️</span>
+                                        <x-icon name="qr" class="w-3 h-3 text-amber-600" />
                                         <span>QR</span>
                                     </button>
 
                                     <button 
                                         type="button" 
                                         wire:click="$dispatch('openPhotoGallery', { itemId: {{ $item->id }} })"
-                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-2xs"
                                         title="Dokumentasi Foto"
                                     >
-                                        <span>📷</span>
+                                        <x-icon name="camera" class="w-3 h-3 text-blue-600" />
                                         <span>{{ $item->photos->count() }}</span>
                                     </button>
-
 
                                     <button 
                                         type="button" 
                                         wire:click="$dispatch('openMovementTimeline', { itemId: {{ $item->id }} })"
-                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer shadow-2xs"
                                         title="Histori Mutasi / Perpindahan"
                                     >
-                                        <span>⏱️</span>
+                                        <x-icon name="clock" class="w-3 h-3 text-purple-600" />
                                         <span>{{ $item->movements->count() }}</span>
                                     </button>
 
@@ -113,57 +115,61 @@
                                         <button 
                                             type="button" 
                                             wire:click="receive({{ $item->id }})"
-                                            class="inline-flex items-center rounded-lg bg-cyan-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-cyan-500 cursor-pointer"
+                                            class="inline-flex items-center gap-1 rounded-lg bg-cyan-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-cyan-500 cursor-pointer shadow-2xs"
                                         >
-                                            <span>📥 Terima</span>
+                                            <x-icon name="download" class="w-3 h-3 text-white" />
+                                            <span>Terima</span>
                                         </button>
                                     @elseif ($item->status->value === 'RECEIVED')
                                         <button 
                                             type="button" 
                                             wire:click="openCheckModal({{ $item->id }})"
-                                            class="inline-flex items-center rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-blue-500 cursor-pointer"
+                                            class="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-blue-500 cursor-pointer shadow-2xs"
                                         >
-                                            <span>🔍 QC & Cek</span>
+                                            <x-icon name="search" class="w-3 h-3 text-white" />
+                                            <span>QC & Cek</span>
                                         </button>
                                     @elseif ($item->status->value === 'CHECKED')
                                         <button 
                                             type="button" 
                                             wire:click="openStoreModal({{ $item->id }})"
-                                            class="inline-flex items-center rounded-lg bg-purple-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-purple-500 cursor-pointer"
+                                            class="inline-flex items-center gap-1 rounded-lg bg-purple-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-purple-500 cursor-pointer shadow-2xs"
                                         >
-                                            <span>🏢 Simpan ke Rak</span>
+                                            <x-icon name="warehouse" class="w-3 h-3 text-white" />
+                                            <span>Simpan ke Rak</span>
                                         </button>
                                     @elseif ($item->status->value === 'STORED')
                                         <button 
                                             type="button" 
                                             wire:click="openRelocateModal({{ $item->id }})"
-                                            class="inline-flex items-center rounded-lg bg-indigo-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-indigo-500 cursor-pointer"
+                                            class="inline-flex items-center gap-1 rounded-lg bg-indigo-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-indigo-500 cursor-pointer shadow-2xs"
                                             title="Pindahkan ke Rak Lain"
                                         >
-                                            <span>🔁 Pindah</span>
+                                            <x-icon name="refresh" class="w-3 h-3 text-white" />
+                                            <span>Pindah</span>
                                         </button>
                                         <button 
                                             type="button" 
                                             wire:click="release({{ $item->id }})"
-                                            class="inline-flex items-center rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer"
+                                            class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <span>🤝 Release</span>
+                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
+                                            <span>Release</span>
                                         </button>
                                     @elseif ($item->status->value === 'OUTBOUND')
                                         <button 
                                             type="button" 
                                             wire:click="release({{ $item->id }})"
-                                            class="inline-flex items-center rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer"
+                                            class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <span>🤝 Release</span>
+                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
+                                            <span>Release</span>
                                         </button>
                                     @else
                                         <span class="text-[11px] text-slate-400 italic">Selesai</span>
                                     @endif
                                 </div>
                             </td>
-
-
                         </tr>
                     @empty
                         <tr>
@@ -185,8 +191,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Quality Control & Pemeriksaan Kondisi
                     </h3>
-                    <button type="button" wire:click="closeCheckModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeCheckModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 
@@ -226,8 +232,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Alokasi Lokasi Rak Storage Gudang
                     </h3>
-                    <button type="button" wire:click="closeStoreModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeStoreModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 
@@ -273,8 +279,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Tambah Barang Fisik di Lokasi
                     </h3>
-                    <button type="button" wire:click="closeAddModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeAddModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 
@@ -327,8 +333,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         Pindahkan Posisi / Rak Barang (Relocate)
                     </h3>
-                    <button type="button" wire:click="closeRelocateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer">
-                        ✕
+                    <button type="button" wire:click="closeRelocateModal" class="text-slate-400 hover:text-slate-600 font-bold cursor-pointer p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 

@@ -3,8 +3,8 @@
         <!-- Booking Success Confirmation Screen -->
         <div class="rounded-3xl bg-white p-8 sm:p-10 border border-slate-200 shadow-xl max-w-3xl mx-auto space-y-6 text-slate-900 animate-fade-in">
             <div class="text-center space-y-3">
-                <div class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 text-3xl shadow-lg shadow-emerald-500/10">
-                    ✓
+                <div class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-600 shadow-lg shadow-emerald-500/10">
+                    <x-icon name="check" class="w-8 h-8 text-emerald-600" />
                 </div>
                 <h2 class="text-2xl font-extrabold text-slate-900 sm:text-3xl">
                     Pesanan Berhasil Diterima!
@@ -53,7 +53,7 @@
                     target="_blank"
                     class="w-full flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-6 py-4 text-sm font-bold text-white shadow-lg shadow-emerald-600/20 transition cursor-pointer"
                 >
-                    <span>💬</span>
+                    <x-icon name="chat" class="w-5 h-5 text-white" />
                     <span>Konfirmasi Cepat via WhatsApp</span>
                 </a>
 
@@ -71,7 +71,7 @@
         <div class="rounded-3xl bg-white p-6 sm:p-10 border border-slate-200 shadow-xl max-w-3xl mx-auto space-y-8 text-slate-900">
             <div>
                 <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800 mb-2">
-                    <span>⚡</span>
+                    <x-icon name="sparkles" class="w-4 h-4 text-amber-600" />
                     <span>Form Pemesanan Instan (Tanpa Ribet Daftar)</span>
                 </div>
                 <h2 class="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
@@ -95,7 +95,9 @@
                                 <div class="flex items-center justify-between">
                                     <span class="font-bold text-sm text-slate-900">{{ $srv->name }}</span>
                                     <span class="h-4 w-4 rounded-full border flex items-center justify-center {{ $serviceId === $srv->id ? 'border-amber-500 bg-amber-500 text-white text-[10px]' : 'border-slate-300' }}">
-                                        @if ($serviceId === $srv->id) ✓ @endif
+                                        @if ($serviceId === $srv->id)
+                                            <x-icon name="check" class="w-2.5 h-2.5 text-slate-950" />
+                                        @endif
                                     </span>
                                 </div>
                                 <p class="text-[11px] text-slate-500 mt-1.5 leading-relaxed">{{ $srv->description }}</p>
@@ -214,9 +216,10 @@
                         <button 
                             type="button" 
                             wire:click="addItem" 
-                            class="inline-flex items-center gap-1 text-xs font-bold text-amber-600 hover:text-amber-700 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 text-xs font-bold text-amber-600 hover:text-amber-700 cursor-pointer"
                         >
-                            <span>+ Tambah Barang</span>
+                            <x-icon name="plus" class="w-3.5 h-3.5 text-amber-600" />
+                            <span>Tambah Barang</span>
                         </button>
                     </div>
 
@@ -250,7 +253,7 @@
                                         class="text-rose-500 hover:text-rose-700 p-1.5 font-bold cursor-pointer"
                                         title="Hapus baris"
                                     >
-                                        ✕
+                                        <x-icon name="trash" class="w-4 h-4 text-rose-500" />
                                     </button>
                                 @endif
                             </div>
@@ -271,8 +274,8 @@
                             id="photo-upload"
                         >
                         <label for="photo-upload" class="cursor-pointer block space-y-1">
-                            <span class="text-2xl block">📸</span>
-                            <span class="font-bold text-amber-600 text-xs">Klik untuk upload foto barang</span>
+                            <x-icon name="camera" class="w-8 h-8 text-amber-500 mx-auto" />
+                            <span class="font-bold text-amber-600 text-xs block">Klik untuk upload foto barang</span>
                             <span class="text-slate-400 text-[11px] block">Mendukung format JPG, PNG hingga 10MB</span>
                         </label>
 
@@ -321,8 +324,14 @@
                         wire:loading.attr="disabled"
                         class="w-full rounded-2xl bg-amber-500 px-6 py-4 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/25 hover:bg-amber-400 active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                     >
-                        <span wire:loading.remove>🚀 Kirim Pesanan Sekarang</span>
-                        <span wire:loading>⏳ Sedang Memproses Pesanan...</span>
+                        <span wire:loading.remove class="inline-flex items-center gap-2">
+                            <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
+                            <span>Kirim Pesanan Sekarang</span>
+                        </span>
+                        <span wire:loading class="inline-flex items-center gap-2">
+                            <x-icon name="refresh" class="w-4 h-4 animate-spin text-slate-950" />
+                            <span>Sedang Memproses Pesanan...</span>
+                        </span>
                     </button>
                     <p class="text-center text-slate-400 text-[11px] mt-2">
                         Tanpa perlu bayar sekarang. Tim BawaBeres akan mengecek ketersediaan armada dan mengirim penawaran harga resmi.

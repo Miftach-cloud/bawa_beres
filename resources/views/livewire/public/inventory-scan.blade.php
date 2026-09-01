@@ -26,21 +26,26 @@
 
         @if (session()->has('scan_message'))
             <div class="p-3.5 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center justify-between">
-                <span>✓ {{ session('scan_message') }}</span>
+                <span class="inline-flex items-center gap-2">
+                    <x-icon name="check-circle" class="w-4 h-4 text-emerald-400" />
+                    <span>{{ session('scan_message') }}</span>
+                </span>
             </div>
         @endif
 
         @if (!$item)
             <!-- Item Not Found Card -->
             <div class="bg-slate-800/60 rounded-3xl p-8 text-center border border-slate-700/80 shadow-2xl space-y-3">
-                <div class="text-4xl">❌</div>
+                <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-500/10 text-rose-500 mx-auto">
+                    <x-icon name="x-circle" class="w-8 h-8 text-rose-500" />
+                </div>
                 <h2 class="text-base font-bold text-white">Barang Fisik Tidak Ditemukan</h2>
                 <p class="text-xs text-slate-400 max-w-xs mx-auto">
                     Kode QR <code class="font-mono text-amber-400 bg-slate-900 px-2 py-0.5 rounded border border-slate-700">{{ $code }}</code> tidak terdaftar di sistem BawaBeres.
                 </p>
                 <div class="pt-4">
-                    <a href="{{ route('home') }}" class="inline-flex rounded-xl bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 hover:bg-amber-400">
-                        Kembali ke Beranda
+                    <a href="{{ route('home') }}" class="inline-flex items-center gap-1.5 rounded-xl bg-amber-500 px-4 py-2 text-xs font-bold text-slate-950 hover:bg-amber-400">
+                        <span>Kembali ke Beranda</span>
                     </a>
                 </div>
             </div>
@@ -75,8 +80,9 @@
                 <div class="grid grid-cols-2 gap-3 p-3.5 bg-slate-900/80 rounded-2xl border border-slate-700/50 text-xs">
                     <div>
                         <span class="text-[10px] uppercase font-bold text-slate-500 block">Posisi Rak Penyimpanan</span>
-                        <span class="font-mono font-bold text-amber-400 text-sm mt-0.5 block truncate">
-                            📍 {{ $item->storage_location ?: 'Area Transit / Belum di Rak' }}
+                        <span class="font-mono font-bold text-amber-400 text-sm mt-0.5 inline-flex items-center gap-1 truncate">
+                            <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-400" />
+                            <span>{{ $item->storage_location ?: 'Area Transit / Belum di Rak' }}</span>
                         </span>
                     </div>
                     <div class="text-right">
@@ -93,28 +99,33 @@
                         <span class="text-[10px] uppercase font-bold text-slate-400 block">Aksi Cepat Petugas:</span>
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
                             @if ($item->status->value === 'EXPECTED')
-                                <button type="button" wire:click="receive" class="rounded-xl bg-cyan-600 px-3 py-2 text-xs font-bold text-white hover:bg-cyan-500 cursor-pointer shadow-sm">
-                                    📥 Terima Fisik
+                                <button type="button" wire:click="receive" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-cyan-600 px-3 py-2 text-xs font-bold text-white hover:bg-cyan-500 cursor-pointer shadow-sm">
+                                    <x-icon name="download" class="w-3.5 h-3.5 text-white" />
+                                    <span>Terima Fisik</span>
                                 </button>
                             @endif
 
-                            <button type="button" wire:click="openCheckModal" class="rounded-xl bg-blue-600 px-3 py-2 text-xs font-bold text-white hover:bg-blue-500 cursor-pointer shadow-sm">
-                                🔍 QC & Cek
+                            <button type="button" wire:click="openCheckModal" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-blue-600 px-3 py-2 text-xs font-bold text-white hover:bg-blue-500 cursor-pointer shadow-sm">
+                                <x-icon name="search" class="w-3.5 h-3.5 text-white" />
+                                <span>QC & Cek</span>
                             </button>
 
                             @if ($item->status->value === 'CHECKED')
-                                <button type="button" wire:click="openStoreModal" class="rounded-xl bg-purple-600 px-3 py-2 text-xs font-bold text-white hover:bg-purple-500 cursor-pointer shadow-sm">
-                                    🏢 Simpan Rak
+                                <button type="button" wire:click="openStoreModal" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-purple-600 px-3 py-2 text-xs font-bold text-white hover:bg-purple-500 cursor-pointer shadow-sm">
+                                    <x-icon name="warehouse" class="w-3.5 h-3.5 text-white" />
+                                    <span>Simpan Rak</span>
                                 </button>
                             @elseif ($item->status->value === 'STORED')
-                                <button type="button" wire:click="openRelocateModal" class="rounded-xl bg-indigo-600 px-3 py-2 text-xs font-bold text-white hover:bg-indigo-500 cursor-pointer shadow-sm">
-                                    🔁 Pindah Rak
+                                <button type="button" wire:click="openRelocateModal" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-indigo-600 px-3 py-2 text-xs font-bold text-white hover:bg-indigo-500 cursor-pointer shadow-sm">
+                                    <x-icon name="refresh" class="w-3.5 h-3.5 text-white" />
+                                    <span>Pindah Rak</span>
                                 </button>
                             @endif
 
                             @if (in_array($item->status->value, ['STORED', 'OUTBOUND'], true))
-                                <button type="button" wire:click="release" class="rounded-xl bg-emerald-600 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-500 cursor-pointer shadow-sm">
-                                    🤝 Serah Terima
+                                <button type="button" wire:click="release" class="inline-flex items-center justify-center gap-1.5 rounded-xl bg-emerald-600 px-3 py-2 text-xs font-bold text-white hover:bg-emerald-500 cursor-pointer shadow-sm">
+                                    <x-icon name="check-circle" class="w-3.5 h-3.5 text-white" />
+                                    <span>Serah Terima</span>
                                 </button>
                             @endif
                         </div>
@@ -192,7 +203,9 @@
             @else
                 <!-- Public Visitor Authenticity Card -->
                 <div class="bg-slate-800/60 rounded-3xl p-6 text-center border border-slate-700/80 shadow-2xl space-y-3 text-xs">
-                    <div class="text-3xl">🛡️</div>
+                    <div class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500/10 text-amber-400 mx-auto">
+                        <x-icon name="shield" class="w-8 h-8 text-amber-400" />
+                    </div>
                     <h3 class="font-bold text-white text-sm">Segel Keaslian Fisik BawaBeres</h3>
                     <p class="text-slate-400 max-w-sm mx-auto text-[11px] leading-relaxed">
                         Barang fisik ini terdaftar dan tersimpan di jaringan pergudangan resmi BawaBeres. Untuk melihat informasi lengkap dan melakukan pergerakan barang, silakan login dengan akun staf operasional.

@@ -3,7 +3,8 @@
     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <span>📑</span> Sistem Penawaran Harga (Quotations)
+                <x-icon name="credit-card" class="w-4 h-4 text-amber-600" />
+                <span>Sistem Penawaran Harga (Quotations)</span>
             </h3>
             <p class="text-xs text-slate-500">Rincian biaya resmi dan riwayat revisi penawaran</p>
         </div>
@@ -13,14 +14,15 @@
             wire:click="openCreateModal"
             class="inline-flex items-center gap-1.5 rounded-xl bg-amber-500 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-sm hover:bg-amber-400 active:scale-95 transition-all cursor-pointer"
         >
-            <span>➕ Buat Penawaran Baru</span>
+            <x-icon name="plus" class="w-3.5 h-3.5 text-slate-950" />
+            <span>Buat Penawaran Baru</span>
         </button>
     </div>
 
     <!-- Flash message -->
     @if (session()->has('quotation_message'))
         <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-3 flex items-center gap-2 text-xs font-medium text-emerald-800">
-            <span>✅</span>
+            <x-icon name="check-circle" class="w-4 h-4 text-emerald-600" />
             <span>{{ session('quotation_message') }}</span>
         </div>
     @endif
@@ -112,9 +114,10 @@
                         <button 
                             type="button" 
                             wire:click="send({{ $quo->id }})"
-                            class="inline-flex items-center gap-1 rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-500 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1 text-xs font-semibold text-white hover:bg-blue-500 cursor-pointer"
                         >
-                            <span>📤 Kirim ke Customer</span>
+                            <x-icon name="external-link" class="w-3.5 h-3.5 text-white" />
+                            <span>Kirim ke Customer</span>
                         </button>
                     @endif
 
@@ -122,17 +125,19 @@
                         <button 
                             type="button" 
                             wire:click="accept({{ $quo->id }})"
-                            class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 rounded-lg bg-emerald-600 px-3 py-1 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer"
                         >
-                            <span>✅ Setujui (Accept)</span>
+                            <x-icon name="check-circle" class="w-3.5 h-3.5 text-white" />
+                            <span>Setujui (Accept)</span>
                         </button>
 
                         <button 
                             type="button" 
                             wire:click="openRejectModal({{ $quo->id }})"
-                            class="inline-flex items-center gap-1 rounded-lg bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-semibold text-rose-700 hover:bg-rose-100 cursor-pointer"
+                            class="inline-flex items-center gap-1.5 rounded-lg bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-semibold text-rose-700 hover:bg-rose-100 cursor-pointer"
                         >
-                            <span>✕ Tolak / Butuh Revisi</span>
+                            <x-icon name="x" class="w-3.5 h-3.5 text-rose-600" />
+                            <span>Tolak / Butuh Revisi</span>
                         </button>
                     @endif
 
@@ -140,15 +145,16 @@
                     <button 
                         type="button" 
                         wire:click="openRevisionModal({{ $quo->id }})"
-                        class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                        class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50 cursor-pointer"
                     >
-                        <span>🔄 Buat Revisi Baru</span>
+                        <x-icon name="refresh" class="w-3.5 h-3.5 text-slate-600" />
+                        <span>Buat Revisi Baru</span>
                     </button>
                 </div>
             </div>
         @empty
             <div class="rounded-xl border border-dashed border-slate-200 p-6 text-center text-slate-400 text-xs">
-                <span class="text-2xl block mb-1">📑</span>
+                <x-icon name="credit-card" class="w-8 h-8 text-slate-300 mx-auto mb-1.5" />
                 Belum ada penawaran harga (quotation) yang dibuat untuk pesanan ini.
             </div>
         @endforelse
@@ -162,8 +168,8 @@
                     <h3 class="font-bold text-slate-900 text-base">
                         {{ $isRevision ? 'Buat Revisi Penawaran Harga' : 'Buat Penawaran Harga Baru' }}
                     </h3>
-                    <button type="button" wire:click="closeModal" class="text-slate-400 hover:text-slate-600 font-bold">
-                        ✕
+                    <button type="button" wire:click="closeModal" class="text-slate-400 hover:text-slate-600 font-bold p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 
@@ -174,8 +180,9 @@
                             <label class="text-xs font-bold text-slate-800 uppercase tracking-wider">
                                 Rincian Komponen Biaya (Items)
                             </label>
-                            <button type="button" wire:click="addItemRow" class="text-xs text-amber-600 font-semibold hover:underline cursor-pointer">
-                                ➕ Tambah Komponen Biaya
+                            <button type="button" wire:click="addItemRow" class="inline-flex items-center gap-1 text-xs text-amber-600 font-semibold hover:underline cursor-pointer">
+                                <x-icon name="plus" class="w-3.5 h-3.5 text-amber-600" />
+                                <span>Tambah Komponen Biaya</span>
                             </button>
                         </div>
 
@@ -192,8 +199,9 @@
                                         <input type="number" wire:model.live="items.{{ $idx }}.unit_price" min="0" step="5000" placeholder="Tarif Satuan (Rp)" class="w-full rounded-lg border border-slate-300 bg-white px-2.5 py-1.5 text-xs text-slate-900 font-mono">
                                     </div>
                                     <div class="sm:col-span-2 text-right">
-                                        <button type="button" wire:click="removeItemRow({{ $idx }})" class="text-rose-500 hover:text-rose-700 text-xs font-semibold cursor-pointer">
-                                            🗑️ Hapus
+                                        <button type="button" wire:click="removeItemRow({{ $idx }})" class="inline-flex items-center gap-1 text-rose-500 hover:text-rose-700 text-xs font-semibold cursor-pointer">
+                                            <x-icon name="trash" class="w-3.5 h-3.5 text-rose-500" />
+                                            <span>Hapus</span>
                                         </button>
                                     </div>
                                 </div>
@@ -261,10 +269,11 @@
             <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl border border-slate-200 space-y-4">
                 <div class="flex items-center justify-between border-b border-slate-100 pb-3">
                     <h3 class="font-bold text-rose-700 text-base flex items-center gap-2">
-                        <span>⚠️</span> Tolak / Permintaan Revisi Penawaran
+                        <x-icon name="alert-circle" class="w-5 h-5 text-rose-600" />
+                        <span>Tolak / Permintaan Revisi Penawaran</span>
                     </h3>
-                    <button type="button" wire:click="closeRejectModal" class="text-slate-400 hover:text-slate-600 font-bold">
-                        ✕
+                    <button type="button" wire:click="closeRejectModal" class="text-slate-400 hover:text-slate-600 font-bold p-1">
+                        <x-icon name="x" class="w-5 h-5 text-slate-500" />
                     </button>
                 </div>
 

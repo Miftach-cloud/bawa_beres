@@ -85,8 +85,8 @@
         <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
             <div class="flex items-center gap-8">
                 <a href="{{ url('/') }}" class="flex items-center gap-2 font-black text-xl tracking-tight text-slate-900">
-                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-amber-500 text-slate-950 font-black shadow-sm shadow-amber-500/30">
-                        📦
+                    <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950 font-black shadow-sm shadow-amber-500/30">
+                        <x-icon name="box" class="w-5 h-5 text-slate-950" />
                     </span>
                     <span>Bawa<span class="text-amber-600">Beres</span></span>
                 </a>
@@ -98,13 +98,17 @@
                     <a href="{{ route('public.storage-security') }}" class="hover:text-slate-900 transition-colors">Keamanan Storage</a>
                     <a href="{{ route('public.coverage') }}" class="hover:text-slate-900 transition-colors">Area Layanan</a>
                     <a href="{{ route('public.faq') }}" class="hover:text-slate-900 transition-colors">FAQ</a>
-                    <a href="{{ route('public.track') }}" class="text-amber-700 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/80 hover:bg-amber-100 transition-colors">📍 Cek Resi / Order</a>
+                    <a href="{{ route('public.track') }}" class="inline-flex items-center gap-1.5 text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/80 hover:bg-amber-100 transition-colors">
+                        <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
+                        <span>Cek Resi / Order</span>
+                    </a>
                 </nav>
             </div>
 
             <div class="flex items-center gap-3">
-                <a href="{{ url('/#booking') }}" class="inline-flex items-center justify-center rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-black text-slate-950 shadow-sm hover:bg-amber-400 active:scale-98 transition-all">
-                    🚀 Pesan Sekarang
+                <a href="{{ url('/#booking') }}" class="inline-flex items-center gap-2 justify-center rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-black text-slate-950 shadow-sm hover:bg-amber-400 active:scale-98 transition-all">
+                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
+                    <span>Pesan Sekarang</span>
                 </a>
             </div>
         </div>
@@ -123,7 +127,9 @@
                 <!-- Brand Info -->
                 <div class="space-y-3 md:col-span-1">
                     <div class="flex items-center gap-2 font-black text-lg text-slate-900">
-                        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-amber-500 text-slate-950">📦</span>
+                        <span class="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-tr from-amber-600 to-amber-400 text-slate-950">
+                            <x-icon name="box" class="w-4 h-4 text-slate-950" />
+                        </span>
                         <span>Bawa<span class="text-amber-600">Beres</span></span>
                     </div>
                     <p class="text-slate-500 leading-relaxed">
@@ -150,7 +156,12 @@
                 <div class="space-y-3">
                     <h4 class="font-extrabold text-slate-900 uppercase tracking-wider text-[11px]">Bantuan & Fitur</h4>
                     <ul class="space-y-2 text-slate-600 font-medium">
-                        <li><a href="{{ route('public.track') }}" class="hover:text-amber-600 font-bold text-amber-700">📍 Lacak Status Pesanan</a></li>
+                        <li>
+                            <a href="{{ route('public.track') }}" class="inline-flex items-center gap-1.5 hover:text-amber-600 font-bold text-amber-700">
+                                <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
+                                <span>Lacak Status Pesanan</span>
+                            </a>
+                        </li>
                         <li><a href="{{ route('public.faq') }}" class="hover:text-amber-600">Tanya Jawab (FAQ)</a></li>
                         <li><a href="{{ route('public.about') }}" class="hover:text-amber-600">Tentang BawaBeres</a></li>
                         <li><a href="{{ route('public.contact') }}" class="hover:text-amber-600">Kontak & Lokasi Hub</a></li>
@@ -169,7 +180,7 @@
                         target="_blank"
                         class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 px-4 py-2.5 font-bold text-white shadow-xs transition"
                     >
-                        <span>💬</span>
+                        <x-icon name="chat" class="w-4 h-4 text-white" />
                         <span>WhatsApp +62 812-3456-7890</span>
                     </a>
                 </div>

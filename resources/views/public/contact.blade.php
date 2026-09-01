@@ -9,7 +9,7 @@
         <!-- Header -->
         <div class="text-center space-y-4">
             <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100/80 px-3 py-1 text-xs font-bold text-emerald-800">
-                <span>💬</span>
+                <x-icon name="chat" class="w-4 h-4 text-emerald-600" />
                 <span>Layanan Pelanggan & Hub Gudang</span>
             </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
@@ -23,8 +23,8 @@
         <!-- Contact Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md space-y-3 text-center">
-                <div class="h-12 w-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-2xl font-bold mx-auto">
-                    💬
+                <div class="h-12 w-12 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+                    <x-icon name="chat" class="w-6 h-6 text-emerald-600" />
                 </div>
                 <h3 class="text-base font-extrabold text-slate-900">WhatsApp Resmi</h3>
                 <p class="text-xs text-slate-500">Respon cepat setiap hari:</p>
@@ -39,8 +39,8 @@
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md space-y-3 text-center">
-                <div class="h-12 w-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold mx-auto">
-                    🏢
+                <div class="h-12 w-12 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                    <x-icon name="warehouse" class="w-6 h-6 text-amber-600" />
                 </div>
                 <h3 class="text-base font-extrabold text-slate-900">Hub Storage Malang</h3>
                 <p class="text-xs text-slate-500">Lokasi fasilitas gudang:</p>
@@ -48,8 +48,8 @@
             </div>
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md space-y-3 text-center">
-                <div class="h-12 w-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold mx-auto">
-                    ⏰
+                <div class="h-12 w-12 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mx-auto">
+                    <x-icon name="clock" class="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 class="text-base font-extrabold text-slate-900">Jam Operasional</h3>
                 <p class="text-xs text-slate-500">Penjemputan & Layanan:</p>
@@ -66,9 +66,10 @@
             <div class="pt-2">
                 <a 
                     href="{{ url('/#booking') }}" 
-                    class="inline-block rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-xs font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer"
+                    class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-xs font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer"
                 >
-                    🚀 Buka Form Booking Online
+                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
+                    <span>Buka Form Booking Online</span>
                 </a>
             </div>
         </div>
