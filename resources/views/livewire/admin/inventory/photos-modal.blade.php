@@ -71,8 +71,9 @@
 
                             <!-- Upload Button with Loading Indicator -->
                             <div class="flex items-center justify-between pt-1">
-                                <div wire:loading wire:target="photos" class="text-xs text-amber-600 font-medium">
-                                    ⏳ Memproses file foto...
+                                <div wire:loading wire:target="photos" class="text-xs text-amber-600 font-medium flex items-center gap-1">
+                                    <x-icon name="refresh" class="w-3.5 h-3.5 text-amber-600 animate-spin" />
+                                    <span>Memproses file foto...</span>
                                 </div>
                                 <div wire:loading.remove wire:target="photos"></div>
 
@@ -81,7 +82,7 @@
                                     wire:loading.attr="disabled"
                                     class="inline-flex items-center gap-1.5 rounded-xl bg-slate-900 px-4 py-2 text-xs font-bold text-white hover:bg-slate-800 active:scale-95 transition-all cursor-pointer"
                                 >
-                                    <x-icon name="download" class="w-3.5 h-3.5 text-white" />
+                                    <x-icon name="upload" class="w-3.5 h-3.5 text-white" />
                                     <span>Unggah Foto</span>
                                 </button>
                             </div>

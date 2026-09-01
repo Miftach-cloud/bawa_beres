@@ -179,7 +179,7 @@
                                             wire:click="receive({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-cyan-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-cyan-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="download" class="w-3 h-3 text-white" />
+                                            <x-icon name="box" class="w-3 h-3 text-white" />
                                             <span>Terima</span>
                                         </button>
                                     @elseif ($item->status->value === 'RECEIVED')
@@ -197,7 +197,7 @@
                                             wire:click="openStoreModal({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-purple-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-purple-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="warehouse" class="w-3 h-3 text-white" />
+                                            <x-icon name="layers" class="w-3 h-3 text-white" />
                                             <span>Rak</span>
                                         </button>
                                     @elseif ($item->status->value === 'STORED')
@@ -224,7 +224,7 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
+                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @elseif ($item->status->value === 'OUTBOUND')
@@ -233,13 +233,13 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
+                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @endif
 
-                                    <a href="{{ route('admin.orders.show', $item->order) }}" class="text-xs text-slate-400 hover:text-slate-700">
-                                        ➔
+                                    <a href="{{ route('admin.orders.show', $item->order) }}" class="inline-flex items-center text-slate-400 hover:text-slate-700 p-1" title="Lihat Detail Order">
+                                        <x-icon name="arrow-right" class="w-3.5 h-3.5 text-slate-400" />
                                     </a>
                                 </div>
                             </td>

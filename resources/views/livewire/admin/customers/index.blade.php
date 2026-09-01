@@ -102,7 +102,7 @@
                                         wire:click="openEditModal({{ $customer->id }})"
                                         class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer"
                                     >
-                                        <x-icon name="clipboard" class="w-3 h-3 text-slate-600" />
+                                        <x-icon name="pencil" class="w-3 h-3 text-slate-600" />
                                         <span>Edit</span>
                                     </button>
                                 </div>

@@ -3,7 +3,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
             <h2 class="text-xl font-bold text-slate-900">Manajemen Gudang & Lokasi Rak Storage</h2>
-            <p class="text-xs text-slate-500 mt-0.5">Struktur hierarki lokasi: Warehouse ➔ Zone ➔ Rack ➔ Level (MLG01-A-R02-L03)</p>
+            <p class="text-xs text-slate-500 mt-0.5">Struktur hierarki lokasi: Warehouse &rsaquo; Zone &rsaquo; Rack &rsaquo; Level (e.g. MLG01-A-R02-L03)</p>
         </div>
 
         <button 
@@ -184,7 +184,10 @@
                 <!-- Footer Card -->
                 <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
                     <span>Rack: <strong class="text-slate-700">{{ $loc->rack }}</strong> • Lvl: <strong class="text-slate-700">{{ $loc->level }}</strong></span>
-                    <span class="text-amber-600 font-bold group-hover:translate-x-0.5 transition-transform">Detail ➔</span>
+                    <span class="inline-flex items-center gap-0.5 text-amber-600 font-bold group-hover:translate-x-0.5 transition-transform">
+                        <span>Detail</span>
+                        <x-icon name="arrow-right" class="w-3 h-3 text-amber-600" />
+                    </span>
                 </div>
             </div>
         @empty

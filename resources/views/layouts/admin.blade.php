@@ -176,8 +176,8 @@
         <!-- Top Navbar -->
         <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 sm:px-6 z-10 flex-shrink-0">
             <div class="flex items-center gap-3">
-                <button @click="sidebarOpen = true" class="md:hidden text-slate-600 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100">
-                    <x-icon name="chart-bar" class="w-5 h-5" />
+                <button @click="sidebarOpen = true" class="md:hidden text-slate-600 hover:text-slate-900 p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
+                    <x-icon name="menu" class="w-5 h-5 text-slate-700" />
                 </button>
                 <h1 class="font-bold text-slate-900 text-lg">
                     {{ $title ?? 'Admin Dashboard' }}

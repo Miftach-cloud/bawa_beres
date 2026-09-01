@@ -117,7 +117,7 @@
                                             wire:click="receive({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-cyan-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-cyan-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="download" class="w-3 h-3 text-white" />
+                                            <x-icon name="box" class="w-3 h-3 text-white" />
                                             <span>Terima</span>
                                         </button>
                                     @elseif ($item->status->value === 'RECEIVED')
@@ -135,7 +135,7 @@
                                             wire:click="openStoreModal({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-purple-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-purple-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="warehouse" class="w-3 h-3 text-white" />
+                                            <x-icon name="layers" class="w-3 h-3 text-white" />
                                             <span>Simpan ke Rak</span>
                                         </button>
                                     @elseif ($item->status->value === 'STORED')
@@ -153,7 +153,7 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
+                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @elseif ($item->status->value === 'OUTBOUND')
@@ -162,7 +162,7 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
+                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @else

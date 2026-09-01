@@ -96,8 +96,9 @@
 
         <!-- Back to website link -->
         <div class="text-center mt-6">
-            <a href="{{ url('/') }}" class="text-xs text-slate-400 hover:text-amber-400 transition-colors">
-                ← Kembali ke Halaman Utama
+            <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-amber-400 transition-colors">
+                <x-icon name="arrow-left" class="w-3.5 h-3.5" />
+                <span>Kembali ke Halaman Utama</span>
             </a>
         </div>
     </div>

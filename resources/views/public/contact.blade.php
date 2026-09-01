@@ -32,9 +32,10 @@
                 <a 
                     href="https://wa.me/6281234567890" 
                     target="_blank"
-                    class="inline-block mt-2 text-xs font-bold text-emerald-600 hover:text-emerald-700"
+                    class="inline-flex items-center gap-1 mt-2 text-xs font-bold text-emerald-600 hover:text-emerald-700"
                 >
-                    Chat Sekarang →
+                    <span>Chat Sekarang</span>
+                    <x-icon name="arrow-right" class="w-3.5 h-3.5 text-emerald-600" />
                 </a>
             </div>
 

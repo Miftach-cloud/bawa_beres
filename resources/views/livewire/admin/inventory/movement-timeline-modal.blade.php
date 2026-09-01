@@ -73,7 +73,7 @@
                                             <!-- From -> To Route -->
                                             <div class="flex items-center gap-2 font-mono font-bold text-xs bg-white p-2 rounded-lg border border-slate-100">
                                                 <span class="text-slate-600 truncate max-w-[140px]">{{ $m->from_location_code ?: 'Receiving' }}</span>
-                                                <span class="text-amber-500">➔</span>
+                                                <x-icon name="arrow-right" class="w-3.5 h-3.5 text-amber-500 shrink-0" />
                                                 <span class="text-slate-900 truncate max-w-[140px]">{{ $m->to_location_code ?: 'Outbound' }}</span>
                                             </div>
 

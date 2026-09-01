@@ -138,8 +138,9 @@
                 <div class="bg-slate-800/90 rounded-3xl p-5 border border-slate-700/80 shadow-2xl space-y-3 text-xs">
                     <h3 class="font-bold text-white text-sm flex items-center justify-between">
                         <span>Informasi Order & Customer</span>
-                        <a href="{{ route('admin.orders.show', $item->order) }}" class="text-xs text-amber-400 hover:text-amber-300">
-                            Buka Order #{{ $item->order->order_code }} ➔
+                        <a href="{{ route('admin.orders.show', $item->order) }}" class="inline-flex items-center gap-1 text-xs text-amber-400 hover:text-amber-300">
+                            <span>Buka Order #{{ $item->order->order_code }}</span>
+                            <x-icon name="arrow-right" class="w-3.5 h-3.5 text-amber-400" />
                         </a>
                     </h3>
 
@@ -188,8 +189,10 @@
                                     <span class="font-bold text-slate-200">{{ $m->movement_type->label() }}</span>
                                     <span class="font-mono text-[10px] text-slate-400">{{ $m->moved_at->format('d M Y, H:i') }}</span>
                                 </div>
-                                <div class="font-mono font-bold text-amber-400 text-xs">
-                                    {{ $m->from_location_code ?: 'Receiving' }} ➔ {{ $m->to_location_code ?: 'Outbound' }}
+                                <div class="font-mono font-bold text-amber-400 text-xs inline-flex items-center gap-1.5">
+                                    <span>{{ $m->from_location_code ?: 'Receiving' }}</span>
+                                    <x-icon name="arrow-right" class="w-3 h-3 text-amber-400" />
+                                    <span>{{ $m->to_location_code ?: 'Outbound' }}</span>
                                 </div>
                                 @if ($m->notes)
                                     <p class="text-slate-400 italic text-[10px]">"{{ $m->notes }}"</p>

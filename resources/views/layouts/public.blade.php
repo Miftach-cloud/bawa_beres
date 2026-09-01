@@ -99,7 +99,7 @@
                     <a href="{{ route('public.coverage') }}" class="hover:text-slate-900 transition-colors">Area Layanan</a>
                     <a href="{{ route('public.faq') }}" class="hover:text-slate-900 transition-colors">FAQ</a>
                     <a href="{{ route('public.track') }}" class="inline-flex items-center gap-1.5 text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/80 hover:bg-amber-100 transition-colors">
-                        <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
+                        <x-icon name="search" class="w-3.5 h-3.5 text-amber-600" />
                         <span>Cek Resi / Order</span>
                     </a>
                 </nav>
@@ -107,8 +107,8 @@
 
             <div class="flex items-center gap-3">
                 <a href="{{ url('/#booking') }}" class="inline-flex items-center gap-2 justify-center rounded-xl bg-amber-500 px-4 py-2.5 text-xs font-black text-slate-950 shadow-sm hover:bg-amber-400 active:scale-98 transition-all">
-                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
                     <span>Pesan Sekarang</span>
+                    <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
                 </a>
             </div>
         </div>
@@ -158,7 +158,7 @@
                     <ul class="space-y-2 text-slate-600 font-medium">
                         <li>
                             <a href="{{ route('public.track') }}" class="inline-flex items-center gap-1.5 hover:text-amber-600 font-bold text-amber-700">
-                                <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
+                                <x-icon name="search" class="w-3.5 h-3.5 text-amber-600" />
                                 <span>Lacak Status Pesanan</span>
                             </a>
                         </li>

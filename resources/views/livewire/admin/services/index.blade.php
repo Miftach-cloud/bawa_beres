@@ -93,9 +93,9 @@
                                 <button 
                                     type="button" 
                                     wire:click="openEditModal({{ $service->id }})"
-                                    class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer"
+                                    class="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer"
                                 >
-                                    <x-icon name="clipboard" class="w-3 h-3 text-slate-600" />
+                                    <x-icon name="pencil" class="w-3.5 h-3.5 text-slate-600" />
                                     <span>Edit</span>
                                 </button>
                             </td>
@@ -103,7 +103,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-6 py-12 text-center text-slate-400">
-                                <x-icon name="cog" class="w-10 h-10 text-slate-300 mx-auto mb-2" />
+                                <x-icon name="archive" class="w-10 h-10 text-slate-300 mx-auto mb-2" />
                                 <p class="text-sm">Tidak ada layanan yang ditemukan.</p>
                             </td>
                         </tr>

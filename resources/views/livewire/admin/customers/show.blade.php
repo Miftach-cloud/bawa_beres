@@ -3,7 +3,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
             <a href="{{ route('admin.customers') }}" class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-900 shadow-xs transition-colors">
-                ←
+                <x-icon name="arrow-left" class="w-4 h-4 text-slate-700" />
             </a>
             <div>
                 <div class="flex items-center gap-2">
@@ -21,7 +21,7 @@
             wire:click="openEditModal"
             class="inline-flex items-center gap-2 rounded-xl bg-white border border-slate-200 px-4 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer"
         >
-            <x-icon name="clipboard" class="w-3.5 h-3.5 text-slate-700" />
+            <x-icon name="pencil" class="w-3.5 h-3.5 text-slate-700" />
             <span>Edit Data Pelanggan</span>
         </button>
     </div>

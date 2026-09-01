@@ -74,7 +74,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-8 border-b border-slate-100">
                 <div class="space-y-2">
                     <div class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
-                        <span>⭐</span>
+                        <x-icon name="shield-check" class="w-3.5 h-3.5 text-amber-700" />
                         <span>Layanan Terverifikasi BawaBeres</span>
                     </div>
                     <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-4xl">
@@ -144,8 +144,8 @@
                     href="{{ url('/#booking') }}" 
                     class="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 py-4 text-center text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer"
                 >
-                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
                     <span>Pesan Layanan Ini Sekarang</span>
+                    <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
                 </a>
                 <a 
                     href="https://wa.me/6281234567890?text={{ rawurlencode('Halo Admin BawaBeres, saya ingin tanya detail layanan ' . $service->name) }}" 

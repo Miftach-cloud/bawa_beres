@@ -200,9 +200,10 @@
                                 @else
                                     <a 
                                         href="{{ route('admin.orders.show', $payment->order) }}" 
-                                        class="text-xs text-slate-500 hover:text-slate-800 font-medium"
+                                        class="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 font-medium"
                                     >
-                                        Buka Order ➔
+                                        <span>Buka Order</span>
+                                        <x-icon name="arrow-right" class="w-3 h-3 text-slate-400" />
                                     </a>
                                 @endif
                             </td>

@@ -58,8 +58,8 @@
 
                 <div class="flex flex-wrap items-center justify-center gap-4 pt-2">
                     <a href="#booking" class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-sm font-black text-slate-950 shadow-xl shadow-amber-500/25 active:scale-98 transition-all cursor-pointer">
-                        <x-icon name="sparkles" class="w-5 h-5 text-slate-950" />
                         <span>Mulai Pesan Sekarang</span>
+                        <x-icon name="arrow-right" class="w-5 h-5 text-slate-950" />
                     </a>
                     <a href="https://wa.me/6281234567890" target="_blank" class="rounded-2xl bg-white border border-slate-300 px-7 py-4 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-all shadow-xs flex items-center gap-2">
                         <x-icon name="chat" class="w-5 h-5 text-emerald-600" />
@@ -106,7 +106,7 @@
 
                 <div class="p-6 rounded-3xl bg-rose-50/50 border border-rose-100 space-y-3">
                     <div class="h-12 w-12 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center">
-                        <x-icon name="alert-circle" class="w-6 h-6 text-rose-600" />
+                        <x-icon name="alert-triangle" class="w-6 h-6 text-rose-600" />
                     </div>
                     <h3 class="font-extrabold text-slate-900 text-base">Status Pengiriman Buta</h3>
                     <p class="text-xs text-slate-600 leading-relaxed">
@@ -141,7 +141,10 @@
                         </p>
                     </div>
                     <div class="pt-6 border-t border-slate-100 mt-6">
-                        <a href="{{ route('public.services') }}" class="text-xs font-bold text-amber-600 hover:text-amber-700">Pelajari Selengkapnya →</a>
+                        <a href="{{ route('public.services') }}" class="inline-flex items-center text-xs font-bold text-amber-600 hover:text-amber-700">
+                            <span>Pelajari Selengkapnya</span>
+                            <x-icon name="arrow-right" class="w-3.5 h-3.5 ml-1 text-amber-600" />
+                        </a>
                     </div>
                 </div>
 
@@ -156,14 +159,17 @@
                         </p>
                     </div>
                     <div class="pt-6 border-t border-slate-100 mt-6">
-                        <a href="{{ route('public.services') }}" class="text-xs font-bold text-amber-600 hover:text-amber-700">Pelajari Selengkapnya →</a>
+                        <a href="{{ route('public.services') }}" class="inline-flex items-center text-xs font-bold text-amber-600 hover:text-amber-700">
+                            <span>Pelajari Selengkapnya</span>
+                            <x-icon name="arrow-right" class="w-3.5 h-3.5 ml-1 text-amber-600" />
+                        </a>
                     </div>
                 </div>
 
                 <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-200 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="h-14 w-14 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
-                            <x-icon name="map-pin" class="w-7 h-7 text-emerald-600" />
+                            <x-icon name="truck" class="w-7 h-7 text-emerald-600" />
                         </div>
                         <h3 class="text-xl font-black text-slate-900">Delivery & Logistik Instan</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
@@ -171,7 +177,10 @@
                         </p>
                     </div>
                     <div class="pt-6 border-t border-slate-100 mt-6">
-                        <a href="{{ route('public.services') }}" class="text-xs font-bold text-amber-600 hover:text-amber-700">Pelajari Selengkapnya →</a>
+                        <a href="{{ route('public.services') }}" class="inline-flex items-center text-xs font-bold text-amber-600 hover:text-amber-700">
+                            <span>Pelajari Selengkapnya</span>
+                            <x-icon name="arrow-right" class="w-3.5 h-3.5 ml-1 text-amber-600" />
+                        </a>
                     </div>
                 </div>
             </div>
@@ -219,7 +228,7 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center max-w-2xl mx-auto space-y-3">
                 <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
-                    <x-icon name="sparkles" class="w-4 h-4 text-emerald-600" />
+                    <x-icon name="shield-check" class="w-4 h-4 text-emerald-600" />
                     <span>Mengapa BawaBeres?</span>
                 </div>
                 <h2 class="text-3xl font-black text-slate-900 sm:text-4xl">Keunggulan Standar Layanan Kami</h2>
@@ -244,7 +253,7 @@
 
                 <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm space-y-2">
                     <div class="h-10 w-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                        <x-icon name="shield" class="w-6 h-6 text-emerald-600" />
+                        <x-icon name="cctv" class="w-6 h-6 text-emerald-600" />
                     </div>
                     <h4 class="font-bold text-slate-900 text-sm">Gudang CCTV 24 Jam</h4>
                     <p class="text-xs text-slate-600">Fasilitas penyimpanan bersih, bebas banjir, dan terpantau terus-menerus.</p>
@@ -289,7 +298,10 @@
             </div>
 
             <div class="text-center pt-2">
-                <a href="{{ route('public.faq') }}" class="text-xs font-bold text-amber-600 hover:text-amber-700">Lihat Semua FAQ →</a>
+                <a href="{{ route('public.faq') }}" class="inline-flex items-center text-xs font-bold text-amber-600 hover:text-amber-700">
+                    <span>Lihat Semua FAQ</span>
+                    <x-icon name="arrow-right" class="w-3.5 h-3.5 ml-1 text-amber-600" />
+                </a>
             </div>
         </div>
     </section>
@@ -303,8 +315,8 @@
             </p>
             <div class="flex flex-wrap items-center justify-center gap-4">
                 <a href="#booking" class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-xs font-black text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer">
-                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
                     <span>Buat Pesanan Sekarang</span>
+                    <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
                 </a>
                 <a href="https://wa.me/6281234567890" target="_blank" class="rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-8 py-4 text-xs font-bold text-white shadow-lg shadow-emerald-600/20 transition cursor-pointer flex items-center gap-2">
                     <x-icon name="chat" class="w-4 h-4 text-white" />

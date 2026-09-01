@@ -325,8 +325,8 @@
                         class="w-full rounded-2xl bg-amber-500 px-6 py-4 text-sm font-extrabold text-slate-950 shadow-lg shadow-amber-500/25 hover:bg-amber-400 active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50"
                     >
                         <span wire:loading.remove class="inline-flex items-center gap-2">
-                            <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
                             <span>Kirim Pesanan Sekarang</span>
+                            <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
                         </span>
                         <span wire:loading class="inline-flex items-center gap-2">
                             <x-icon name="refresh" class="w-4 h-4 animate-spin text-slate-950" />

@@ -31,7 +31,7 @@
                             @elseif (str_contains(strtolower($service->name), 'titip') || str_contains(strtolower($service->name), 'storage'))
                                 <x-icon name="warehouse" class="w-7 h-7 text-blue-600" />
                             @else
-                                <x-icon name="map-pin" class="w-7 h-7 text-emerald-600" />
+                                <x-icon name="truck" class="w-7 h-7 text-emerald-600" />
                             @endif
                         </div>
 
@@ -67,9 +67,10 @@
                     <div class="pt-6 space-y-2">
                         <a 
                             href="{{ route('public.services.show', $service) }}" 
-                            class="w-full flex items-center justify-center rounded-xl bg-amber-500 hover:bg-amber-400 px-4 py-3 text-xs font-bold text-slate-950 shadow-md shadow-amber-500/20 transition cursor-pointer"
+                            class="w-full flex items-center justify-center gap-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 px-4 py-3 text-xs font-bold text-slate-950 shadow-md shadow-amber-500/20 transition cursor-pointer"
                         >
-                            Detail Layanan & Booking →
+                            <span>Detail Layanan & Booking</span>
+                            <x-icon name="arrow-right" class="w-3.5 h-3.5 text-slate-950" />
                         </a>
                     </div>
                 </div>

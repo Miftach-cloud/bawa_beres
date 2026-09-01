@@ -70,7 +70,7 @@
                 class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-sm font-extrabold text-slate-950 shadow-xl shadow-amber-500/25 transition cursor-pointer"
             >
                 <span>Mulai Booking Sekarang</span>
-                <span>→</span>
+                <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
             </a>
         </div>
     </div>
