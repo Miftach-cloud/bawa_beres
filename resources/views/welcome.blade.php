@@ -67,11 +67,6 @@
                     </a>
                 </div>
             </div>
-
-            <!-- System Foundation Check -->
-            <div class="mt-12 max-w-xl mx-auto">
-                <livewire:public.system-status />
-            </div>
         </div>
     </div>
 
