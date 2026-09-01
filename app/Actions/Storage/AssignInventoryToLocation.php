@@ -52,7 +52,8 @@ class AssignInventoryToLocation
                 notes: "Penempatan barang fisik ke rak {$location->code} ({$location->warehouse})"
             );
 
-            $order = $item->order;
+            $order = $item->order->fresh();
+
 
             // If order has storage requirement and all items are stored, transition order to STORED
             $unstoredCount = $order->inventoryItems()
