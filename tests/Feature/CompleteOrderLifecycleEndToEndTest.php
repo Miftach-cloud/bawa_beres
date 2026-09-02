@@ -3,15 +3,21 @@
 namespace Tests\Feature;
 
 use App\Actions\Documentation\UploadInventoryPhoto;
+use App\Actions\Inventory\CheckInventoryItem;
+use App\Actions\Inventory\GenerateExpectedInventory;
 use App\Actions\Inventory\OutboundInventoryItem;
 use App\Actions\Inventory\ReceiveInventoryItem;
+use App\Actions\Inventory\ReleaseInventoryItem;
 use App\Actions\Movements\RelocateInventoryItem;
 use App\Actions\Orders\ChangeOrderStatus;
+use App\Actions\Payments\RecordPayment;
 use App\Actions\Payments\VerifyPayment;
 use App\Actions\Quotations\CreateQuotation;
 use App\Actions\Schedules\CreateSchedule;
 use App\Actions\Storage\AssignInventoryToLocation;
+use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
+use App\Enums\ItemCondition;
 use App\Enums\MovementType;
 use App\Enums\OrderStatus;
 use App\Enums\PaymentMethod;
@@ -23,12 +29,11 @@ use App\Enums\ScheduleType;
 use App\Enums\StorageLocationStatus;
 use App\Enums\StorageLocationType;
 use App\Enums\UserRole;
+use App\Exceptions\InvalidOrderStateTransitionException;
 use App\Livewire\Public\BookingForm;
-use App\Models\Customer;
-use App\Models\InventoryItem;
+use App\Livewire\Public\OrderTracking;
 use App\Models\Order;
 use App\Models\Payment;
-use App\Models\Quotation;
 use App\Models\Service;
 use App\Models\StorageLocation;
 use App\Models\User;
@@ -59,6 +64,7 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
     {
         parent::setUp();
 
+        Storage::fake('local');
         Storage::fake('public');
 
         $this->owner = User::factory()->create([
@@ -93,8 +99,10 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
     public function full_order_lifecycle_from_public_booking_to_completion(): void
     {
         // -------------------------------------------------------------
-        // STEP 1: Customer Submits Public Booking
+        // STEP 1: Customer Submits Public Booking with Estimation Photo
         // -------------------------------------------------------------
+        $estimationPhoto = UploadedFile::fake()->image('kamar_kost.jpg', 800, 600);
+
         $bookingTest = Livewire::test(BookingForm::class)
             ->set('customerName', 'Ahmad Dani')
             ->set('customerPhone', '081234567890')
@@ -106,6 +114,7 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
                 ['name' => 'Kardus Buku & Skripsi', 'category' => 'Sedang', 'quantity' => 2, 'notes' => 'Hati-hati basah'],
                 ['name' => 'Kulkas 1 Pintu Mini', 'category' => 'Besar', 'quantity' => 1, 'notes' => 'Barang elektronik'],
             ])
+            ->set('photos', [$estimationPhoto])
             ->set('preferredDate', now()->addDays(2)->format('Y-m-d'))
             ->set('customerNotes', 'Mohon jemput pagi hari sekitar jam 9')
             ->call('submit');
@@ -118,6 +127,12 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         $this->assertEquals(2, $order->items()->count());
         $this->assertEquals('Jl. Gajayana No. 50, Lowokwaru', $order->pickupAddress->address);
 
+        // Verify OrderAttachment persisted on private storage
+        $this->assertCount(1, $order->attachments);
+        $attachment = $order->attachments->first();
+        Storage::disk('local')->assertExists($attachment->file_path);
+        Storage::disk('public')->assertMissing($attachment->file_path);
+
         // Verify OrderCreated notification stored
         $this->assertDatabaseHas('notifications', [
             'notifiable_id' => $order->customer->id,
@@ -125,13 +140,26 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         ]);
 
         // -------------------------------------------------------------
-        // STEP 2: Admin Reviews Order
+        // STEP 2: Admin Access Security & Order Review
         // -------------------------------------------------------------
+        // Unauthenticated visitor is redirected to login
+        $this->get("/admin/orders/{$order->id}")->assertRedirect('/admin/login');
+
+        // Non-staff user receives 403 Forbidden
+        $customerUser = User::factory()->create(['role' => null]);
+        $this->actingAs($customerUser)->get("/admin/orders/{$order->id}")->assertStatus(403);
+
+        // Authorized admin reviews order
         $this->actingAs($this->admin);
         $orderShowResponse = $this->get("/admin/orders/{$order->id}");
         $orderShowResponse->assertStatus(200);
         $orderShowResponse->assertSee('Ahmad Dani');
         $orderShowResponse->assertSee($order->order_code);
+
+        // Admin streams private estimation photo
+        $attachmentResponse = $this->get(route('admin.media.order-attachment', $attachment));
+        $attachmentResponse->assertStatus(200);
+        $this->assertStringContainsString('private', $attachmentResponse->headers->get('Cache-Control'));
 
         // -------------------------------------------------------------
         // STEP 3: Admin Issues Official Quotation & Customer Accepts
@@ -162,23 +190,27 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         $this->assertEquals(OrderStatus::CONFIRMED, $order->fresh()->status);
 
         // -------------------------------------------------------------
-        // STEP 4: Record & Verify Payment
+        // STEP 4: Record & Verify Payment via Domain Actions
         // -------------------------------------------------------------
-        $payment = Payment::create([
-            'order_id' => $order->id,
-            'payment_number' => Payment::generateNumber($order),
+        $transferProof = UploadedFile::fake()->image('bukti_transfer_bca.jpg', 600, 800);
+        $recordPayment = app(RecordPayment::class);
+        $payment = $recordPayment->execute($order, [
             'method' => PaymentMethod::BANK_TRANSFER,
             'amount' => 325000,
             'bank_name' => 'BCA',
             'account_name' => 'Ahmad Dani',
             'status' => PaymentStatus::WAITING_VERIFICATION,
-        ]);
+        ], $transferProof);
+
+        // Proof stored on private storage
+        Storage::disk('local')->assertExists($payment->proof_path);
 
         $verifyPayment = app(VerifyPayment::class);
         $verifyPayment->execute($payment, $this->admin, 'Pembayaran lunas via BCA transfer');
 
         $this->assertEquals(PaymentStatus::PAID, $payment->fresh()->status);
         $this->assertEquals(OrderStatus::PAID, $order->fresh()->status);
+        $this->assertTrue($order->fresh()->isFullyPaid());
 
         // -------------------------------------------------------------
         // STEP 5: Operations Schedules Pickup Dispatch & Completes Pickup
@@ -203,38 +235,48 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         ]);
 
         // Driver arrives and picks up items
-        $changeOrderStatus = app(ChangeOrderStatus::class);
+        $order = $order->fresh();
         $changeOrderStatus->execute($order, OrderStatus::PICKED_UP, 'Barang telah dijemput driver dari lokasi customer.', $this->operation);
         $this->assertEquals(OrderStatus::PICKED_UP, $order->fresh()->status);
 
         // -------------------------------------------------------------
-        // STEP 6: Field Team Receives Inventory Physical Items & Assigns QR
+        // STEP 6: Physical Inventory Generation & Receiving
         // -------------------------------------------------------------
+        $generateInventoryAction = app(GenerateExpectedInventory::class);
+        $generatedItems = $generateInventoryAction->execute($order->fresh());
 
-        $item1 = InventoryItem::create([
-            'order_id' => $order->id,
-            'name' => 'Kardus Buku & Skripsi',
-            'qr_code' => 'BB-BOX-2026-0001',
-            'status' => InventoryStatus::EXPECTED,
-        ]);
+        // 2 boxes + 1 fridge = 3 physical inventory items
+        $this->assertCount(3, $generatedItems);
+        $this->assertEquals(3, $order->inventoryItems()->count());
 
-        $item2 = InventoryItem::create([
-            'order_id' => $order->id,
-            'name' => 'Kulkas 1 Pintu Mini',
-            'qr_code' => 'BB-APP-2026-0001',
-            'status' => InventoryStatus::EXPECTED,
-        ]);
+        $item1 = $generatedItems[0];
+        $item2 = $generatedItems[1];
+        $item3 = $generatedItems[2];
+
+        $this->assertEquals(InventoryStatus::EXPECTED, $item1->status);
+        $this->assertStringStartsWith('INV-', $item1->inventory_code);
+        $this->assertNotNull($item1->qr_code);
 
         $receiveAction = app(ReceiveInventoryItem::class);
         $receiveAction->execute($item1, $this->operation);
         $receiveAction->execute($item2, $this->operation);
+        $receiveAction->execute($item3, $this->operation);
 
         $this->assertEquals(InventoryStatus::RECEIVED, $item1->fresh()->status);
         $this->assertEquals(InventoryStatus::RECEIVED, $item2->fresh()->status);
+        $this->assertEquals(InventoryStatus::RECEIVED, $item3->fresh()->status);
 
         // -------------------------------------------------------------
-        // STEP 7: Field Team Uploads Condition Photo Documentation
+        // STEP 7: QC Inspection, Photo Documentation & QR Validation
         // -------------------------------------------------------------
+        $checkAction = app(CheckInventoryItem::class);
+        $checkAction->execute($item1, ItemCondition::GOOD, 'Kardus kokoh aman');
+        $checkAction->execute($item2, ItemCondition::GOOD, 'Kardus kokoh aman');
+        $checkAction->execute($item3, ItemCondition::GOOD, 'Kulkas bersih dan kering');
+
+        $this->assertEquals(InventoryStatus::CHECKED, $item1->fresh()->status);
+
+        // Upload condition photo
         $photoFile = UploadedFile::fake()->image('kardus_buku_depan.jpg', 800, 600);
         $uploadPhotoAction = app(UploadInventoryPhoto::class);
         $photo = $uploadPhotoAction->execute(
@@ -251,9 +293,29 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         ]);
         Storage::disk('local')->assertExists($photo->file_path);
 
+        // Public QR scan checks:
+        auth()->logout();
+
+        // 1. Visitors see custody verification seal
+        $scanResponse = $this->get($item1->scan_url);
+        $scanResponse->assertStatus(200);
+        $scanResponse->assertSee($item1->inventory_code);
+        $scanResponse->assertSee('Gudang Resmi BawaBeres');
+        $scanResponse->assertSee('Terverifikasi');
+        $scanResponse->assertDontSee('081234567890'); // Customer phone concealed
+
+        // 2. Sequential code enumeration is rejected for unauthenticated visitors
+        $this->get("/i/{$item1->inventory_code}")->assertSee('Barang Fisik Tidak Ditemukan');
+
+        // 3. Public tracking output displays current status
+        $trackingResponse = $this->get("/track/{$order->order_code}");
+        $trackingResponse->assertStatus(200);
+        $trackingResponse->assertSee($order->order_code);
+
         // -------------------------------------------------------------
-        // STEP 8: Storage Location Rack Allocation
+        // STEP 8: Storage Location Rack Allocation & Occupancy Sync
         // -------------------------------------------------------------
+        $this->actingAs($this->operation);
         $storageLocation1 = StorageLocation::create([
             'code' => 'WH1-A-R01-L01',
             'warehouse' => 'WH1',
@@ -278,11 +340,24 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
 
         $assignStorageAction = app(AssignInventoryToLocation::class);
         $assignStorageAction->execute($item1, $storageLocation1, $this->operation);
-        $assignStorageAction->execute($item2, $storageLocation2, $this->operation);
+        $assignStorageAction->execute($item2, $storageLocation1, $this->operation);
+        $assignStorageAction->execute($item3, $storageLocation2, $this->operation);
 
         $this->assertEquals(InventoryStatus::STORED, $item1->fresh()->status);
         $this->assertEquals(InventoryStatus::STORED, $item2->fresh()->status);
+        $this->assertEquals(InventoryStatus::STORED, $item3->fresh()->status);
         $this->assertEquals(OrderStatus::STORED, $order->fresh()->status);
+
+        // Rack occupancy is synchronized
+        $this->assertEquals(2, $storageLocation1->fresh()->occupiedCount());
+        $this->assertEquals(1, $storageLocation2->fresh()->occupiedCount());
+
+        // Inbound movement record created
+        $this->assertDatabaseHas('inventory_movements', [
+            'inventory_item_id' => $item1->id,
+            'movement_type' => MovementType::INBOUND->value,
+            'to_location_code' => 'WH1-A-R01-L01',
+        ]);
 
         // -------------------------------------------------------------
         // STEP 9: Inventory Relocation & Movement Audit
@@ -310,8 +385,12 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
             'performed_by' => $this->operation->id,
         ]);
 
+        // Former rack has 1 item remaining, new rack has 1 item
+        $this->assertEquals(1, $storageLocation1->fresh()->occupiedCount());
+        $this->assertEquals(1, $newRackSlot->fresh()->occupiedCount());
+
         // -------------------------------------------------------------
-        // STEP 10: Outbound Staging & Handover
+        // STEP 10: Outbound Staging, Vacate Rack & Custody Handover
         // -------------------------------------------------------------
         $order = $order->fresh();
         $changeOrderStatus->execute($order, OrderStatus::OUTBOUND_REQUESTED, 'Customer mengajukan permintaan pengambilan barang storage.', $this->operation);
@@ -320,12 +399,35 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         $outboundAction = app(OutboundInventoryItem::class);
         $outboundAction->execute($item1, $this->operation);
         $outboundAction->execute($item2, $this->operation);
+        $outboundAction->execute($item3, $this->operation);
 
         $this->assertEquals(InventoryStatus::OUTBOUND, $item1->fresh()->status);
         $this->assertEquals(InventoryStatus::OUTBOUND, $item2->fresh()->status);
+        $this->assertEquals(InventoryStatus::OUTBOUND, $item3->fresh()->status);
+
+        // Vacate racks
+        $vacateAction = app(VacateInventoryFromLocation::class);
+        $vacateAction->execute($item1, $this->operation);
+        $vacateAction->execute($item2, $this->operation);
+        $vacateAction->execute($item3, $this->operation);
+
+        // Racks are now completely free
+        $this->assertEquals(0, $storageLocation1->fresh()->occupiedCount());
+        $this->assertEquals(0, $storageLocation2->fresh()->occupiedCount());
+        $this->assertEquals(0, $newRackSlot->fresh()->occupiedCount());
+
+        // Release custody
+        $releaseAction = app(ReleaseInventoryItem::class);
+        $releaseAction->execute($item1);
+        $releaseAction->execute($item2);
+        $releaseAction->execute($item3);
+
+        $this->assertEquals(InventoryStatus::RELEASED, $item1->fresh()->status);
+        $this->assertEquals(InventoryStatus::RELEASED, $item2->fresh()->status);
+        $this->assertEquals(InventoryStatus::RELEASED, $item3->fresh()->status);
 
         // -------------------------------------------------------------
-        // STEP 11: Complete Order & Audit Verification
+        // STEP 11: Complete Order & Audit History Verification
         // -------------------------------------------------------------
         $order = $order->fresh();
         $changeOrderStatus->execute($order, OrderStatus::DELIVERED, 'Barang diantar kembali ke customer', $this->operation);
@@ -340,10 +442,62 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
             'type' => OrderCompletedNotification::class,
         ]);
 
-        // Verify full order status histories count and sequence
+        // Verify full order status histories count and sequence without illegal jumps
         $histories = $order->statusHistories()->orderBy('id')->get();
-        $this->assertGreaterThanOrEqual(4, $histories->count());
-        $this->assertEquals(OrderStatus::COMPLETED, $histories->last()->to_status);
-        $this->assertEquals($this->admin->id, $histories->last()->changed_by);
+        $expectedSequence = [
+            OrderStatus::PENDING_REVIEW,
+            OrderStatus::CONFIRMED,
+            OrderStatus::PAID,
+            OrderStatus::SCHEDULED,
+            OrderStatus::PICKED_UP,
+            OrderStatus::STORED,
+            OrderStatus::OUTBOUND_REQUESTED,
+            OrderStatus::DELIVERED,
+            OrderStatus::COMPLETED,
+        ];
+
+        $actualSequence = $histories->pluck('to_status')->all();
+        $this->assertEquals($expectedSequence, $actualSequence);
+
+        // Verify public tracking form renders with prefilled code
+        $this->get("/track/{$order->order_code}")
+            ->assertStatus(200)
+            ->assertSee($order->order_code);
+
+        // Verify verified customer tracking renders the final completed state
+        Livewire::test(OrderTracking::class, ['order_code' => $order->order_code])
+            ->set('phone', '081234567890')
+            ->call('track')
+            ->assertSee('Selesai')
+            ->assertSee($order->order_code);
+    }
+
+    #[Test]
+    public function illegal_order_status_transitions_are_strictly_rejected(): void
+    {
+        $order = Order::factory()->create([
+            'status' => OrderStatus::PENDING_REVIEW,
+        ]);
+
+        $changeOrderStatus = app(ChangeOrderStatus::class);
+
+        // Cannot skip directly from PENDING_REVIEW to COMPLETED
+        $this->expectException(InvalidOrderStateTransitionException::class);
+        $changeOrderStatus->execute($order, OrderStatus::COMPLETED, 'Illegal jump test');
+    }
+
+    #[Test]
+    public function non_staff_users_cannot_access_any_internal_endpoints_throughout_lifecycle(): void
+    {
+        $customerUser = User::factory()->create(['role' => null]);
+
+        $this->actingAs($customerUser);
+
+        $this->get('/admin')->assertStatus(403);
+        $this->get('/admin/orders')->assertStatus(403);
+        $this->get('/admin/inventory')->assertStatus(403);
+        $this->get('/admin/storage')->assertStatus(403);
+        $this->get('/admin/schedule')->assertStatus(403);
+        $this->get('/admin/payments')->assertStatus(403);
     }
 }
