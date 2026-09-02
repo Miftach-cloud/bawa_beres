@@ -59,4 +59,40 @@ enum OrderStatus: string
     {
         return in_array($this, [self::COMPLETED, self::CANCELLED], true);
     }
+
+    /**
+     * Get array of permitted next status transitions from current status
+     */
+    public function allowedTransitions(): array
+    {
+        return match ($this) {
+            self::DRAFT => [self::SUBMITTED, self::CANCELLED],
+            self::SUBMITTED => [self::PENDING_REVIEW, self::CANCELLED],
+            self::PENDING_REVIEW => [self::QUOTED, self::CONFIRMED, self::CANCELLED],
+            self::QUOTED => [self::CONFIRMED, self::PENDING_REVIEW, self::CANCELLED],
+            self::CONFIRMED => [self::PAID, self::SCHEDULED, self::CANCELLED],
+            self::PAID => [self::SCHEDULED, self::CONFIRMED, self::CANCELLED],
+            self::SCHEDULED => [self::PICKED_UP, self::CONFIRMED, self::CANCELLED],
+            self::PICKED_UP => [self::PROCESSING, self::IN_TRANSIT, self::STORED, self::CANCELLED],
+            self::PROCESSING => [self::IN_TRANSIT, self::STORED, self::DELIVERED, self::COMPLETED, self::CANCELLED],
+            self::IN_TRANSIT => [self::DELIVERED, self::STORED, self::CANCELLED],
+            self::STORED => [self::OUTBOUND_REQUESTED, self::CANCELLED],
+            self::OUTBOUND_REQUESTED => [self::SCHEDULED, self::IN_TRANSIT, self::DELIVERED, self::CANCELLED],
+            self::DELIVERED => [self::COMPLETED, self::CANCELLED],
+            self::COMPLETED => [],
+            self::CANCELLED => [],
+        };
+    }
+
+    /**
+     * Check if transition to target status is valid
+     */
+    public function canTransitionTo(OrderStatus $target): bool
+    {
+        if ($this === $target) {
+            return false;
+        }
+
+        return in_array($target, $this->allowedTransitions(), true);
+    }
 }

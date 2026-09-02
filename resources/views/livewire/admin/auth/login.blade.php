@@ -2,10 +2,8 @@
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <!-- Logo -->
         <div class="flex justify-center">
-            <a href="{{ url('/') }}" class="flex items-center gap-3">
-                <span class="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-500 text-white font-bold text-xl shadow-lg shadow-amber-500/30">
-                    📦
-                </span>
+            <a href="{{ url('/') }}" class="inline-flex items-center">
+                <x-logo size="lg" theme="dark" :showTagline="false" />
             </a>
         </div>
         <h2 class="mt-4 text-center text-2xl font-bold tracking-tight text-white">
@@ -19,19 +17,19 @@
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0">
         <div class="bg-slate-800/90 backdrop-blur-xl py-8 px-6 shadow-2xl rounded-2xl border border-slate-700 sm:px-10">
             <form wire:submit="login" class="space-y-5">
-                <!-- Email Input -->
+                <!-- Email / Username Input -->
                 <div>
                     <label for="email" class="block text-xs font-semibold text-slate-300 uppercase tracking-wider">
-                        Email Address
+                        Email / Username
                     </label>
                     <div class="mt-1.5">
                         <input 
                             wire:model="email" 
                             id="email" 
-                            type="email" 
-                            autocomplete="email" 
+                            type="text" 
+                            autocomplete="username" 
                             required 
-                            placeholder="admin@bawaberes.id"
+                            placeholder="adminbawaberes atau admin@bawaberes.id"
                             class="block w-full rounded-xl border border-slate-600 bg-slate-900/80 px-4 py-2.5 text-sm text-white placeholder-slate-500 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                         >
                     </div>
@@ -39,6 +37,7 @@
                         <p class="mt-1.5 text-xs text-rose-400">{{ $message }}</p>
                     @enderror
                 </div>
+
 
                 <!-- Password Input -->
                 <div>
@@ -95,8 +94,9 @@
 
         <!-- Back to website link -->
         <div class="text-center mt-6">
-            <a href="{{ url('/') }}" class="text-xs text-slate-400 hover:text-amber-400 transition-colors">
-                ← Kembali ke Halaman Utama
+            <a href="{{ url('/') }}" class="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-amber-400 transition-colors">
+                <x-icon name="arrow-left" class="w-3.5 h-3.5" />
+                <span>Kembali ke Halaman Utama</span>
             </a>
         </div>
     </div>
