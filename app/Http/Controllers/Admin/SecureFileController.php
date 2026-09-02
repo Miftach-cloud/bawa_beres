@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\InventoryPhoto;
-use App\Models\Order;
 use App\Models\OrderAttachment;
 use App\Models\Payment;
 use Illuminate\Support\Facades\Gate;
@@ -26,12 +25,11 @@ class SecureFileController extends Controller
             abort(404, 'Bukti pembayaran tidak ditemukan.');
         }
 
-        $disk = Storage::disk('local')->exists($path) ? 'local' : (Storage::disk('public')->exists($path) ? 'public' : null);
-        if (! $disk) {
+        if (! Storage::disk('local')->exists($path)) {
             abort(404, 'File bukti pembayaran tidak ditemukan pada disk penyimpanan.');
         }
 
-        return Storage::disk($disk)->response($path, basename($path), [
+        return Storage::disk('local')->response($path, basename($path), [
             'Cache-Control' => 'private, no-cache, no-store, must-revalidate',
             'Pragma' => 'no-cache',
             'Expires' => '0',
@@ -50,12 +48,11 @@ class SecureFileController extends Controller
             abort(404, 'Foto dokumentasi tidak ditemukan.');
         }
 
-        $disk = Storage::disk('local')->exists($path) ? 'local' : (Storage::disk('public')->exists($path) ? 'public' : null);
-        if (! $disk) {
+        if (! Storage::disk('local')->exists($path)) {
             abort(404, 'File foto dokumentasi tidak ditemukan pada disk penyimpanan.');
         }
 
-        return Storage::disk($disk)->response($path, $inventoryPhoto->file_name ?: basename($path), [
+        return Storage::disk('local')->response($path, $inventoryPhoto->file_name ?: basename($path), [
             'Cache-Control' => 'private, no-cache, no-store, must-revalidate',
             'Pragma' => 'no-cache',
             'Expires' => '0',
@@ -74,35 +71,11 @@ class SecureFileController extends Controller
             abort(404, 'Lampiran pesanan tidak ditemukan.');
         }
 
-        $disk = Storage::disk('local')->exists($path) ? 'local' : (Storage::disk('public')->exists($path) ? 'public' : null);
-        if (! $disk) {
+        if (! Storage::disk('local')->exists($path)) {
             abort(404, 'File lampiran tidak ditemukan pada disk penyimpanan.');
         }
 
-        return Storage::disk($disk)->response($path, $attachment->original_name ?: basename($path), [
-            'Cache-Control' => 'private, no-cache, no-store, must-revalidate',
-            'Pragma' => 'no-cache',
-            'Expires' => '0',
-        ]);
-    }
-
-    /**
-     * Securely deliver order estimation photos to authorized staff.
-     */
-    public function showOrderPhoto(Order $order, string $filename): BinaryFileResponse|StreamedResponse
-    {
-        Gate::authorize('manage-orders');
-
-        // Sanitize filename to prevent directory traversal
-        $safeFilename = basename($filename);
-        $path = "orders/{$order->id}/estimation/{$safeFilename}";
-
-        $disk = Storage::disk('local')->exists($path) ? 'local' : (Storage::disk('public')->exists($path) ? 'public' : null);
-        if (! $disk) {
-            abort(404, 'File foto estimasi pesanan tidak ditemukan.');
-        }
-
-        return Storage::disk($disk)->response($path, $safeFilename, [
+        return Storage::disk('local')->response($path, $attachment->original_name ?: basename($path), [
             'Cache-Control' => 'private, no-cache, no-store, must-revalidate',
             'Pragma' => 'no-cache',
             'Expires' => '0',

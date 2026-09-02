@@ -91,7 +91,7 @@
                 <span class="text-[8px] uppercase tracking-wider text-amber-400 block font-bold">LOKASI RAK GUDANG</span>
                 <span class="font-mono font-black text-sm block">
                     <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-400 inline mr-1" />
-                    <span>{{ $item->storage_location ?: 'BELUM DI RAK' }}</span>
+                    <span>{{ $item->storageLocation?->code ?? 'BELUM DI RAK' }}</span>
                 </span>
             </div>
             <div class="text-right">

@@ -16,9 +16,6 @@ class DeleteInventoryPhoto
             if (Storage::disk('local')->exists($photo->file_path)) {
                 Storage::disk('local')->delete($photo->file_path);
             }
-            if (Storage::disk('public')->exists($photo->file_path)) {
-                Storage::disk('public')->delete($photo->file_path);
-            }
         }
 
         return (bool) $photo->delete();

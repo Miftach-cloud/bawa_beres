@@ -77,7 +77,7 @@ class StorageLocationSystemTest extends TestCase
 
         $this->assertEquals(InventoryStatus::STORED, $item->status);
         $this->assertEquals($this->location->id, $item->storage_location_id);
-        $this->assertEquals($this->location->code, $item->storage_location);
+        $this->assertEquals($this->location->code, $item->storageLocation->code);
 
         // Location has reached max capacity of 1
         $this->assertEquals(StorageLocationStatus::OCCUPIED, $this->location->status);

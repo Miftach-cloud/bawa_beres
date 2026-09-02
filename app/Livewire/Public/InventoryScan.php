@@ -26,8 +26,6 @@ class InventoryScan extends Component
 
     public ?int $selectedLocationId = null;
 
-    public string $storageLocation = '';
-
     public bool $showRelocateModal = false;
 
     public ?int $relocateLocationId = null;
@@ -67,7 +65,6 @@ class InventoryScan extends Component
         if ($this->item && $isInternalStaff) {
             $this->condition = $this->item->condition->value;
             $this->checkNotes = $this->item->notes ?? '';
-            $this->storageLocation = $this->item->storage_location ?? '';
             $this->selectedLocationId = $this->item->storage_location_id;
         }
     }

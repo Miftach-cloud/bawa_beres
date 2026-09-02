@@ -83,7 +83,7 @@
                             <span class="text-[10px] uppercase font-bold text-slate-500 block">Posisi Rak Penyimpanan</span>
                             <span class="font-mono font-bold text-amber-400 text-sm mt-0.5 inline-flex items-center gap-1 truncate">
                                 <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-400" />
-                                <span>{{ $item->storage_location ?: 'Area Transit / Belum di Rak' }}</span>
+                                <span>{{ $item->storageLocation?->code ?? 'Area Transit / Belum di Rak' }}</span>
                             </span>
                         </div>
                     @else

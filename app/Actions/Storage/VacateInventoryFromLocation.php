@@ -19,11 +19,12 @@ class VacateInventoryFromLocation
     {
         return DB::transaction(function () use ($item, $performer, $notes) {
             $location = $item->storageLocation;
-            $fromCode = $location ? $location->code : ($item->storage_location ?: 'Rak Gudang');
+            $fromCode = $location?->code ?? 'Rak Gudang';
 
             $item->update([
                 'storage_location_id' => null,
             ]);
+            $item->unsetRelation('storageLocation');
 
             if ($location && $location->status === StorageLocationStatus::OCCUPIED && ! $location->fresh()->isFull()) {
                 $location->update(['status' => StorageLocationStatus::AVAILABLE]);

@@ -7,6 +7,7 @@ use App\Livewire\Admin\Inventory\QrLabelModal;
 use App\Models\Customer;
 use App\Models\InventoryItem;
 use App\Models\Order;
+use App\Models\StorageLocation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -24,6 +25,8 @@ class QrInventorySystemTest extends TestCase
     protected Order $order;
 
     protected InventoryItem $item;
+
+    protected StorageLocation $location;
 
     protected function setUp(): void
     {
@@ -43,12 +46,20 @@ class QrInventorySystemTest extends TestCase
             'name' => 'Sofa Bed 3 Seater',
             'status' => InventoryStatus::RECEIVED,
         ]);
+        $this->location = StorageLocation::create([
+            'code' => 'WH1-RACK-09',
+            'warehouse' => 'WH1',
+            'zone' => 'RACK',
+            'rack' => '09',
+            'level' => '01',
+            'capacity' => 10,
+        ]);
     }
 
     #[Test]
     public function public_scan_url_renders_custody_seal_for_visitors(): void
     {
-        $this->item->update(['storage_location' => 'WH1-RACK-09']);
+        $this->item->update(['storage_location_id' => $this->location->id]);
 
         $response = $this->get($this->item->scan_url);
 
@@ -95,7 +106,7 @@ class QrInventorySystemTest extends TestCase
     #[Test]
     public function authenticated_staff_can_lookup_via_both_qr_token_and_inventory_code(): void
     {
-        $this->item->update(['storage_location' => 'WH1-RACK-09']);
+        $this->item->update(['storage_location_id' => $this->location->id]);
         $this->actingAs($this->operation);
 
         // Lookup via QR opaque token
@@ -155,7 +166,7 @@ class QrInventorySystemTest extends TestCase
     #[Test]
     public function authenticated_non_staff_user_is_restricted_like_public_visitor_on_qr_scan(): void
     {
-        $this->item->update(['storage_location' => 'WH1-RACK-09']);
+        $this->item->update(['storage_location_id' => $this->location->id]);
 
         $customerUser = User::factory()->create([
             'email' => 'customer@example.com',

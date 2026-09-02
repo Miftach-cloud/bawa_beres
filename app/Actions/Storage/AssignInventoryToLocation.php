@@ -28,13 +28,13 @@ class AssignInventoryToLocation
     {
         return DB::transaction(function () use ($item, $location, $actor) {
             $fromLocation = $item->storageLocation;
-            $fromCode = $fromLocation ? $fromLocation->code : ($item->storage_location ?: 'Area Penerimaan / Receiving');
+            $fromCode = $fromLocation?->code ?? 'Area Penerimaan / Receiving';
 
             $item->update([
                 'storage_location_id' => $location->id,
-                'storage_location' => $location->code,
                 'status' => InventoryStatus::STORED,
             ]);
+            $item->unsetRelation('storageLocation');
 
             // Update location status to OCCUPIED if reached full capacity
             if ($location->fresh()->isFull()) {

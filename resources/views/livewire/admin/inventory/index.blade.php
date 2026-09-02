@@ -139,7 +139,7 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 font-mono text-xs text-slate-600">
-                                {{ $item->storage_location ?: '-' }}
+                                {{ $item->storageLocation?->code ?? '-' }}
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <div class="inline-flex items-center gap-1.5">
@@ -330,12 +330,9 @@
                                 @endforeach
                             </select>
                         </div>
+                    @else
+                        <p class="text-xs text-amber-700">Tidak ada slot rak master yang tersedia.</p>
                     @endif
-
-                    <div>
-                        <label class="block font-semibold text-slate-700 mb-1">Label Lokasi Manual (Opsional / Custom)</label>
-                        <input type="text" wire:model="storageLocation" placeholder="Contoh: MLG01-A-R02-L03" class="w-full rounded-xl border border-slate-300 px-3.5 py-2 text-xs text-slate-900 font-mono">
-                    </div>
                 </div>
 
                 <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
@@ -405,5 +402,3 @@
     <!-- Embedded QR Label Modal -->
     <livewire:admin.inventory.qr-label-modal />
 </div>
-
-

@@ -46,7 +46,6 @@ class OrderAttachment extends Model
      */
     public function fileExists(): bool
     {
-        return Storage::disk('local')->exists($this->file_path)
-            || Storage::disk('public')->exists($this->file_path);
+        return Storage::disk('local')->exists($this->file_path);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Actions\Inventory\StoreInventoryItem;
 use App\Enums\InventoryStatus;
 use App\Enums\MovementType;
 use App\Enums\OrderStatus;
@@ -11,12 +10,12 @@ use App\Livewire\Admin\Inventory\Index as InventoryIndex;
 use App\Livewire\Admin\Inventory\Manager as InventoryManager;
 use App\Models\Customer;
 use App\Models\InventoryItem;
-use App\Models\InventoryMovement;
 use App\Models\Order;
 use App\Models\Service;
 use App\Models\StorageLocation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -88,6 +87,13 @@ class StorageAssignmentUnifiedFlowTest extends TestCase
     }
 
     #[Test]
+    public function inventory_schema_uses_only_the_authoritative_storage_location_foreign_key(): void
+    {
+        $this->assertTrue(Schema::hasColumn('inventory_items', 'storage_location_id'));
+        $this->assertFalse(Schema::hasColumn('inventory_items', 'storage_location'));
+    }
+
+    #[Test]
     public function assigning_inventory_to_location_synchronizes_fk_and_records_movement_history(): void
     {
         $this->actingAs($this->operation);
@@ -100,9 +106,9 @@ class StorageAssignmentUnifiedFlowTest extends TestCase
 
         $this->item->refresh();
 
-        // Authoritative FK and snapshot code
+        // Authoritative location relationship
         $this->assertSame($this->locationA->id, $this->item->storage_location_id);
-        $this->assertSame('MLG01-RAK-A01', $this->item->storage_location);
+        $this->assertSame('MLG01-RAK-A01', $this->item->storageLocation->code);
         $this->assertSame(InventoryStatus::STORED, $this->item->status);
 
         // Occupancy updated
@@ -130,31 +136,12 @@ class StorageAssignmentUnifiedFlowTest extends TestCase
 
         $this->item->refresh();
         $this->assertSame($this->locationB->id, $this->item->storage_location_id);
-        $this->assertSame('MLG01-RAK-B02', $this->item->storage_location);
+        $this->assertSame('MLG01-RAK-B02', $this->item->storageLocation->code);
 
         $this->assertDatabaseHas('inventory_movements', [
             'inventory_item_id' => $this->item->id,
             'to_location_id' => $this->locationB->id,
             'movement_type' => MovementType::INBOUND->value,
         ]);
-    }
-
-    #[Test]
-    public function legacy_store_inventory_item_action_routes_through_unified_assign_action_and_records_movement(): void
-    {
-        $storeAction = app(StoreInventoryItem::class);
-
-        // Call legacy StoreInventoryItem with location string
-        $storedItem = $storeAction->execute($this->item, 'MLG01-RAK-A01', $this->operation);
-
-        $this->assertSame($this->locationA->id, $storedItem->storage_location_id);
-        $this->assertSame('MLG01-RAK-A01', $storedItem->storage_location);
-        $this->assertSame(InventoryStatus::STORED, $storedItem->status);
-
-        // Ensures movement record was created even through legacy action
-        $movement = InventoryMovement::where('inventory_item_id', $this->item->id)->first();
-        $this->assertNotNull($movement);
-        $this->assertSame(MovementType::INBOUND, $movement->movement_type);
-        $this->assertSame('MLG01-RAK-A01', $movement->to_location_code);
     }
 }

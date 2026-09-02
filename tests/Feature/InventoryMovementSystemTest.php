@@ -94,7 +94,7 @@ class InventoryMovementSystemTest extends TestCase
         $this->locationB->refresh();
 
         $this->assertEquals(StorageLocationStatus::AVAILABLE, $this->locationA->status); // Freed up!
-        $this->assertEquals('MLG01-B-R02-L03', $this->item->storage_location);
+        $this->assertEquals('MLG01-B-R02-L03', $this->item->storageLocation->code);
         $this->assertEquals(2, $this->item->movements()->count());
         $this->assertEquals(MovementType::RELOCATION, $this->item->latestMovement->movement_type);
         $this->assertEquals('MLG01-A-R01-L01', $this->item->latestMovement->from_location_code);
@@ -146,7 +146,7 @@ class InventoryMovementSystemTest extends TestCase
 
         $this->item->refresh();
         $this->assertEquals($this->locationB->id, $this->item->storage_location_id);
-        $this->assertEquals('MLG01-B-R02-L03', $this->item->storage_location);
+        $this->assertEquals('MLG01-B-R02-L03', $this->item->storageLocation->code);
     }
 
     #[Test]

@@ -11,7 +11,6 @@ use App\Actions\Storage\AssignInventoryToLocation;
 use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
-use App\Enums\StorageLocationType;
 use App\Models\InventoryItem;
 use App\Models\Order;
 use App\Models\StorageLocation;
@@ -37,8 +36,6 @@ class Manager extends Component
 
     public ?int $selectedLocationId = null;
 
-    public string $storageLocation = '';
-
     // Relocate Modal
     public bool $showRelocateModal = false;
 
@@ -60,7 +57,6 @@ class Manager extends Component
     public function mount(Order $order): void
     {
         $this->order = $order;
-        $this->storageLocation = (string) config('business.operations.default_storage_location', 'Rak A-01');
     }
 
     public function generateExpected(GenerateExpectedInventory $action): void
@@ -120,7 +116,6 @@ class Manager extends Component
         $item = InventoryItem::findOrFail($itemId);
         $this->selectedItemId = $item->id;
         $this->selectedLocationId = $item->storage_location_id;
-        $this->storageLocation = $item->storage_location ?: (string) config('business.operations.default_storage_location', 'Rak A-01');
         $this->showStoreModal = true;
     }
 
@@ -135,30 +130,12 @@ class Manager extends Component
     {
         Gate::authorize('manage-inventory');
 
+        $this->validate([
+            'selectedLocationId' => 'required|exists:storage_locations,id',
+        ]);
+
         $item = InventoryItem::findOrFail($this->selectedItemId);
-
-        if ($this->selectedLocationId) {
-            $location = StorageLocation::findOrFail($this->selectedLocationId);
-        } elseif (! empty($this->storageLocation)) {
-            $location = StorageLocation::where('code', $this->storageLocation)->first()
-                ?? StorageLocation::firstOrCreate(
-                    ['code' => $this->storageLocation],
-                    [
-                        'warehouse' => 'Gudang Utama Malang',
-                        'zone' => 'Zone A',
-                        'rack' => 'R01',
-                        'level' => 'L01',
-                        'type' => StorageLocationType::STANDARD_RACK,
-                        'capacity' => 10,
-                    ]
-                );
-        } else {
-            $this->validate([
-                'selectedLocationId' => 'required|exists:storage_locations,id',
-            ]);
-
-            return;
-        }
+        $location = StorageLocation::findOrFail($this->selectedLocationId);
 
         $assignAction->execute($item, $location, Auth::user());
 

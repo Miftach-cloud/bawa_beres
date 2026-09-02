@@ -142,7 +142,6 @@ class AuditAndSecurityTest extends TestCase
             'name' => 'Kardus Barang Elektronik',
             'qr_code' => 'BB-ELC-2026-0001',
             'status' => InventoryStatus::RECEIVED,
-            'storage_location' => 'Receiving Area',
         ]);
 
         $loc1 = StorageLocation::create([

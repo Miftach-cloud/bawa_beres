@@ -26,12 +26,12 @@ class RelocateInventoryItem
     ): InventoryItem {
         return DB::transaction(function () use ($item, $toLocation, $performer, $notes) {
             $fromLocation = $item->storageLocation;
-            $fromCode = $fromLocation ? $fromLocation->code : ($item->storage_location ?: 'Area Transit Gudang');
+            $fromCode = $fromLocation?->code ?? 'Area Transit Gudang';
 
             $item->update([
                 'storage_location_id' => $toLocation->id,
-                'storage_location' => $toLocation->code,
             ]);
+            $item->unsetRelation('storageLocation');
 
             // Update status on former location if it now has free capacity
             if ($fromLocation && $fromLocation->status === StorageLocationStatus::OCCUPIED && ! $fromLocation->fresh()->isFull()) {

@@ -45,7 +45,7 @@
                                 <span class="text-[10px] text-slate-400 block font-bold uppercase">Lokasi Rak</span>
                                 <span class="font-mono font-bold text-amber-600 inline-flex items-center gap-1">
                                     <x-icon name="map-pin" class="w-3 h-3 text-amber-600" />
-                                    <span>{{ $item->storage_location ?: 'Belum di rak' }}</span>
+                                    <span>{{ $item->storageLocation?->code ?? 'Belum di rak' }}</span>
                                 </span>
                             </div>
                             <div>

@@ -34,7 +34,7 @@
                             <span class="text-[10px] uppercase font-bold text-slate-400 block">Posisi Saat Ini:</span>
                             <span class="font-mono font-bold text-slate-900 mt-0.5 inline-flex items-center gap-1">
                                 <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
-                                <span>{{ $item->storage_location ?: 'Belum di rak / Transit' }}</span>
+                                <span>{{ $item->storageLocation?->code ?? 'Belum di rak / Transit' }}</span>
                             </span>
                         </div>
                         <div class="text-right">

@@ -301,7 +301,7 @@ class CompleteOrderLifecycleEndToEndTest extends TestCase
         $relocateAction = app(RelocateInventoryItem::class);
         $relocateAction->execute($item1, $newRackSlot, $this->operation, 'Penyesuaian tinggi rak penyimpanan');
 
-        $this->assertEquals('WH1-A-R01-L02', $item1->fresh()->storage_location);
+        $this->assertEquals('WH1-A-R01-L02', $item1->fresh('storageLocation')->storageLocation->code);
         $this->assertDatabaseHas('inventory_movements', [
             'inventory_item_id' => $item1->id,
             'movement_type' => MovementType::RELOCATION->value,

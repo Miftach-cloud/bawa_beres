@@ -10,6 +10,7 @@ use App\Livewire\Admin\Inventory\Manager as InventoryManager;
 use App\Models\InventoryItem;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\StorageLocation;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
@@ -104,14 +105,23 @@ class InventorySystemTest extends TestCase
         $this->assertEquals('Ada lecet di bagian engsel pintu', $item->notes);
 
         // Store to rack
+        $location = StorageLocation::create([
+            'code' => 'MLG01-B-R04-L01',
+            'warehouse' => 'Gudang Dinoyo',
+            'zone' => 'B',
+            'rack' => 'R04',
+            'level' => 'L01',
+            'capacity' => 10,
+        ]);
+
         Livewire::test(InventoryManager::class, ['order' => $this->order])
             ->call('openStoreModal', $item->id)
-            ->set('storageLocation', 'Rak B-04 Gudang Dinoyo')
+            ->set('selectedLocationId', $location->id)
             ->call('confirmStore');
 
         $item->refresh();
         $this->assertEquals(InventoryStatus::STORED, $item->status);
-        $this->assertEquals('Rak B-04 Gudang Dinoyo', $item->storage_location);
+        $this->assertEquals($location->code, $item->storageLocation->code);
     }
 
     #[Test]

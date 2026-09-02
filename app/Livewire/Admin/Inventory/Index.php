@@ -13,7 +13,6 @@ use App\Actions\Storage\VacateInventoryFromLocation;
 use App\Enums\InventoryStatus;
 use App\Enums\ItemCondition;
 use App\Enums\OrderStatus;
-use App\Enums\StorageLocationType;
 use App\Models\InventoryItem;
 use App\Models\Order;
 use App\Models\StorageLocation;
@@ -45,8 +44,6 @@ class Index extends Component
 
     public ?int $selectedLocationId = null;
 
-    public string $storageLocation = '';
-
     // Quick Relocate Modal
     public bool $showRelocateModal = false;
 
@@ -64,7 +61,6 @@ class Index extends Component
     public function mount(): void
     {
         Gate::authorize('manage-inventory');
-        $this->storageLocation = (string) config('business.operations.default_storage_location', 'Rak A-01');
     }
 
     public function updatingSearch(): void
@@ -142,7 +138,6 @@ class Index extends Component
         $item = InventoryItem::findOrFail($itemId);
         $this->selectedItemId = $item->id;
         $this->selectedLocationId = $item->storage_location_id;
-        $this->storageLocation = $item->storage_location ?: (string) config('business.operations.default_storage_location', 'Rak A-01');
         $this->showStoreModal = true;
     }
 
@@ -157,30 +152,12 @@ class Index extends Component
     {
         Gate::authorize('manage-inventory');
 
+        $this->validate([
+            'selectedLocationId' => 'required|exists:storage_locations,id',
+        ]);
+
         $item = InventoryItem::findOrFail($this->selectedItemId);
-
-        if ($this->selectedLocationId) {
-            $location = StorageLocation::findOrFail($this->selectedLocationId);
-        } elseif (! empty($this->storageLocation)) {
-            $location = StorageLocation::where('code', $this->storageLocation)->first()
-                ?? StorageLocation::firstOrCreate(
-                    ['code' => $this->storageLocation],
-                    [
-                        'warehouse' => 'Gudang Utama Malang',
-                        'zone' => 'Zone A',
-                        'rack' => 'R01',
-                        'level' => 'L01',
-                        'type' => StorageLocationType::STANDARD_RACK,
-                        'capacity' => 10,
-                    ]
-                );
-        } else {
-            $this->validate([
-                'selectedLocationId' => 'required|exists:storage_locations,id',
-            ]);
-
-            return;
-        }
+        $location = StorageLocation::findOrFail($this->selectedLocationId);
 
         $assignAction->execute($item, $location, Auth::user());
 
@@ -255,14 +232,14 @@ class Index extends Component
     public function render()
     {
         $query = InventoryItem::query()
-            ->with(['order.customer', 'receiver'])
+            ->with(['order.customer', 'receiver', 'storageLocation'])
             ->withCount(['photos', 'movements']);
 
         if ($this->search) {
             $query->where(function ($q) {
                 $q->where('inventory_code', 'LIKE', "%{$this->search}%")
                     ->orWhere('name', 'LIKE', "%{$this->search}%")
-                    ->orWhere('storage_location', 'LIKE', "%{$this->search}%")
+                    ->orWhereHas('storageLocation', fn ($locationQuery) => $locationQuery->where('code', 'LIKE', "%{$this->search}%"))
                     ->orWhereHas('order', function ($oq) {
                         $oq->where('order_code', 'LIKE', "%{$this->search}%")
                             ->orWhereHas('customer', function ($cq) {

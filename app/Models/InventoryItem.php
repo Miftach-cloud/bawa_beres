@@ -28,7 +28,6 @@ class InventoryItem extends Model
         'category',
         'condition',
         'status',
-        'storage_location',
         'qr_code_payload',
         'received_at',
         'checked_at',
