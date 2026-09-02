@@ -37,7 +37,7 @@ class Manager extends Component
 
     public ?int $selectedLocationId = null;
 
-    public string $storageLocation = 'Rak A-01 (Gudang Dinoyo)';
+    public string $storageLocation = '';
 
     // Relocate Modal
     public bool $showRelocateModal = false;
@@ -60,6 +60,7 @@ class Manager extends Component
     public function mount(Order $order): void
     {
         $this->order = $order;
+        $this->storageLocation = (string) config('business.operations.default_storage_location', 'Rak A-01');
     }
 
     public function generateExpected(GenerateExpectedInventory $action): void
@@ -119,7 +120,7 @@ class Manager extends Component
         $item = InventoryItem::findOrFail($itemId);
         $this->selectedItemId = $item->id;
         $this->selectedLocationId = $item->storage_location_id;
-        $this->storageLocation = $item->storage_location ?: 'Rak A-01 (Gudang Dinoyo)';
+        $this->storageLocation = $item->storage_location ?: (string) config('business.operations.default_storage_location', 'Rak A-01');
         $this->showStoreModal = true;
     }
 

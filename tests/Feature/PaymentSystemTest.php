@@ -12,6 +12,7 @@ use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
@@ -189,5 +190,16 @@ class PaymentSystemTest extends TestCase
             ->assertHasErrors(['payment']);
 
         $this->assertSame(PaymentStatus::WAITING_VERIFICATION, $pendingPayment->fresh()->status);
+    }
+
+    #[Test]
+    public function payment_form_uses_the_configured_default_bank(): void
+    {
+        Config::set('business.payments.default_bank', 'Bank Operasional');
+        $this->actingAs($this->admin);
+
+        Livewire::test(PaymentManager::class, ['order' => $this->order])
+            ->call('openRecordModal')
+            ->assertSet('bankName', 'Bank Operasional');
     }
 }

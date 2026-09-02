@@ -12,6 +12,7 @@ use App\Models\Schedule;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -128,5 +129,22 @@ class SchedulingSystemTest extends TestCase
             ->set('activeTab', 'tomorrow')
             ->assertSee('Tim Besok Pagi')
             ->assertDontSee('Tim Hari Ini');
+    }
+
+    #[Test]
+    public function schedule_form_uses_configured_operational_defaults(): void
+    {
+        Config::set('business.operations.default_team', 'Tim Konfigurasi');
+        Config::set('business.operations.default_vehicle', 'N 1000 CFG');
+        Config::set('business.operations.schedule_start', '07:30');
+        Config::set('business.operations.schedule_end', '10:30');
+        $this->actingAs($this->operation);
+
+        Livewire::test(ScheduleIndex::class)
+            ->call('openCreateModal')
+            ->assertSet('assignedTeam', 'Tim Konfigurasi')
+            ->assertSet('vehicle', 'N 1000 CFG')
+            ->assertSet('startTime', '07:30')
+            ->assertSet('endTime', '10:30');
     }
 }

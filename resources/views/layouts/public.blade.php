@@ -14,7 +14,7 @@
     <meta name="robots" content="index, follow">
 
     <!-- OpenGraph Metadata -->
-    <meta property="og:site_name" content="Bawa Beres">
+    <meta property="og:site_name" content="{{ config('business.name', 'Bawa Beres') }}">
     <meta property="og:type" content="{{ $ogType ?? 'website' }}">
     <meta property="og:title" content="{{ isset($title) ? $title . ' — ' . config('app.name', 'Bawa Beres') : 'Bawa Beres | Jasa Pindahan & Storage Kota Malang' }}">
     <meta property="og:description" content="{{ $metaDescription ?? 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code, dan pengiriman barang se-Malang Raya.' }}">
@@ -147,7 +147,7 @@
             </div>
 
             <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-                <p>© {{ date('Y') }} {{ config('business.name', 'Bawa Beres') }} — Moving, Storage & Delivery Kota Malang. All rights reserved.</p>
+                <p>© {{ date('Y') }} {{ config('business.name', 'Bawa Beres') }} — Moving, Storage & Delivery {{ config('business.address.city', 'Kota Malang') }}. All rights reserved.</p>
                 <div class="flex items-center gap-4">
                     <a href="{{ route('public.faq') }}" class="hover:text-slate-600">Syarat & Ketentuan</a>
                     <span>•</span>

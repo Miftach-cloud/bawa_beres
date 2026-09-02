@@ -42,10 +42,19 @@ class BusinessInformationConfigTest extends TestCase
         Config::set('business.whatsapp', '081299998888');
 
         $url = BusinessProfile::whatsappUrl('Halo CS BawaBeres');
-        $this->assertSame('https://wa.me/081299998888?text=Halo%20CS%20BawaBeres', $url);
+        $this->assertSame('https://wa.me/6281299998888?text=Halo%20CS%20BawaBeres', $url);
 
         $plainUrl = BusinessProfile::whatsappUrl();
-        $this->assertSame('https://wa.me/081299998888', $plainUrl);
+        $this->assertSame('https://wa.me/6281299998888', $plainUrl);
+    }
+
+    #[Test]
+    public function whatsapp_helper_uses_contact_page_when_no_number_is_configured(): void
+    {
+        Config::set('business.whatsapp', null);
+        Config::set('business.phone', null);
+
+        $this->assertSame(route('public.contact'), BusinessProfile::whatsappUrl());
     }
 
     #[Test]

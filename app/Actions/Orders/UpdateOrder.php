@@ -28,7 +28,7 @@ class UpdateOrder
                     ['type' => AddressType::PICKUP],
                     [
                         'address' => $pickupData['address'] ?? '-',
-                        'city' => $pickupData['city'] ?? 'Kota Malang',
+                        'city' => $pickupData['city'] ?? config('business.address.city', 'Kota Malang'),
                         'district' => $pickupData['district'] ?? null,
                         'notes' => $pickupData['notes'] ?? null,
                     ]
@@ -42,7 +42,7 @@ class UpdateOrder
                     ['type' => AddressType::DESTINATION],
                     [
                         'address' => $destData['address'] ?? '-',
-                        'city' => $destData['city'] ?? 'Kota Malang',
+                        'city' => $destData['city'] ?? config('business.address.city', 'Kota Malang'),
                         'district' => $destData['district'] ?? null,
                         'notes' => $destData['notes'] ?? null,
                     ]

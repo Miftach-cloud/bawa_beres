@@ -27,14 +27,14 @@ class BookingForm extends Component
     // Pickup address
     public string $pickupAddress = '';
 
-    public string $pickupCity = 'Kota Malang';
+    public string $pickupCity = '';
 
     public string $pickupNotes = '';
 
     // Destination address
     public string $destinationAddress = '';
 
-    public string $destinationCity = 'Kota Malang';
+    public string $destinationCity = '';
 
     public string $destinationNotes = '';
 
@@ -58,6 +58,10 @@ class BookingForm extends Component
 
     public function mount(): void
     {
+        $defaultCity = (string) config('business.address.city', 'Kota Malang');
+        $this->pickupCity = $defaultCity;
+        $this->destinationCity = $defaultCity;
+
         $defaultService = Service::where('is_active', true)->first();
         if ($defaultService) {
             $this->serviceId = $defaultService->id;

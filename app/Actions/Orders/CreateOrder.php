@@ -77,7 +77,7 @@ class CreateOrder
                 $order->addresses()->create([
                     'type' => AddressType::PICKUP,
                     'address' => $pickup['address'] ?? '-',
-                    'city' => $pickup['city'] ?? 'Kota Malang',
+                    'city' => $pickup['city'] ?? config('business.address.city', 'Kota Malang'),
                     'district' => $pickup['district'] ?? null,
                     'latitude' => $pickup['latitude'] ?? null,
                     'longitude' => $pickup['longitude'] ?? null,
@@ -91,7 +91,7 @@ class CreateOrder
                 $order->addresses()->create([
                     'type' => AddressType::DESTINATION,
                     'address' => $dest['address'] ?? '-',
-                    'city' => $dest['city'] ?? 'Kota Malang',
+                    'city' => $dest['city'] ?? config('business.address.city', 'Kota Malang'),
                     'district' => $dest['district'] ?? null,
                     'latitude' => $dest['latitude'] ?? null,
                     'longitude' => $dest['longitude'] ?? null,

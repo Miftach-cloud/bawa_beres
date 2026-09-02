@@ -40,13 +40,13 @@ class Index extends Component
 
     public string $scheduledDate = '';
 
-    public string $startTime = '09:00';
+    public string $startTime = '';
 
-    public string $endTime = '12:00';
+    public string $endTime = '';
 
-    public string $assignedTeam = 'Tim Lapangan 1 (Budi & Eko)';
+    public string $assignedTeam = '';
 
-    public string $vehicle = 'Daihatsu GranMax Pick-up N 1234 AB';
+    public string $vehicle = '';
 
     public string $notes = '';
 
@@ -68,6 +68,7 @@ class Index extends Component
     {
         Gate::authorize('manage-schedule');
         $this->scheduledDate = now()->format('Y-m-d');
+        $this->resetOperationalDefaults();
     }
 
     public function setTab(string $tab): void
@@ -98,13 +99,18 @@ class Index extends Component
         $this->selectedOrderId = null;
         $this->type = 'PICKUP';
         $this->scheduledDate = now()->format('Y-m-d');
-        $this->startTime = '09:00';
-        $this->endTime = '12:00';
-        $this->assignedTeam = 'Tim Lapangan 1 (Budi & Eko)';
-        $this->vehicle = 'Daihatsu GranMax Pick-up N 1234 AB';
+        $this->resetOperationalDefaults();
         $this->notes = '';
         $this->resetValidation();
         $this->showCreateModal = true;
+    }
+
+    private function resetOperationalDefaults(): void
+    {
+        $this->startTime = (string) config('business.operations.schedule_start', '09:00');
+        $this->endTime = (string) config('business.operations.schedule_end', '12:00');
+        $this->assignedTeam = (string) config('business.operations.default_team', '');
+        $this->vehicle = (string) config('business.operations.default_vehicle', '');
     }
 
     public function closeCreateModal(): void

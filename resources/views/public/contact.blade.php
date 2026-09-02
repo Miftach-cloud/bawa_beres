@@ -16,7 +16,7 @@
                 Siap Membantu Kebutuhan Logistik Anda
             </h1>
             <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl mx-auto">
-                Hubungi tim Customer Service kami atau kunjungi hub operasional kami di Kota Malang.
+                Hubungi tim Customer Service kami atau kunjungi hub operasional kami di {{ config('business.address.city', 'Kota Malang') }}.
             </p>
         </div>
 

@@ -61,6 +61,8 @@ class Index extends Component
     public function mount(): void
     {
         Gate::authorize('manage-orders');
+        $this->pickupDistrict = (string) config('business.operations.default_district', 'Lowokwaru');
+        $this->destinationDistrict = (string) config('business.operations.default_district', 'Lowokwaru');
         $this->addItemRow();
     }
 
@@ -146,12 +148,12 @@ class Index extends Component
             'status' => OrderStatus::PENDING_REVIEW,
             'pickup_address' => [
                 'address' => $this->pickupAddress,
-                'city' => 'Kota Malang',
+                'city' => config('business.address.city', 'Kota Malang'),
                 'district' => $this->pickupDistrict,
             ],
             'destination_address' => $this->destinationAddress ? [
                 'address' => $this->destinationAddress,
-                'city' => 'Kota Malang',
+                'city' => config('business.address.city', 'Kota Malang'),
                 'district' => $this->destinationDistrict,
             ] : null,
             'items' => array_filter($this->items, fn ($i) => ! empty($i['name'])),

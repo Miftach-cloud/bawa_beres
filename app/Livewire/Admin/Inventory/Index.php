@@ -45,7 +45,7 @@ class Index extends Component
 
     public ?int $selectedLocationId = null;
 
-    public string $storageLocation = 'Rak A-01 (Gudang Dinoyo)';
+    public string $storageLocation = '';
 
     // Quick Relocate Modal
     public bool $showRelocateModal = false;
@@ -64,6 +64,7 @@ class Index extends Component
     public function mount(): void
     {
         Gate::authorize('manage-inventory');
+        $this->storageLocation = (string) config('business.operations.default_storage_location', 'Rak A-01');
     }
 
     public function updatingSearch(): void
@@ -141,7 +142,7 @@ class Index extends Component
         $item = InventoryItem::findOrFail($itemId);
         $this->selectedItemId = $item->id;
         $this->selectedLocationId = $item->storage_location_id;
-        $this->storageLocation = $item->storage_location ?: 'Rak A-01 (Gudang Dinoyo)';
+        $this->storageLocation = $item->storage_location ?: (string) config('business.operations.default_storage_location', 'Rak A-01');
         $this->showStoreModal = true;
     }
 

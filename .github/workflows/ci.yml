@@ -12,7 +12,7 @@ concurrency:
 
 jobs:
   laravel-tests:
-    name: Build & Test (PHP 8.3 & Node 20)
+    name: Build & Test (PHP 8.4 & Node 20)
     runs-on: ubuntu-latest
 
     steps:
@@ -22,7 +22,7 @@ jobs:
       - name: Setup PHP environment
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: '8.4'
           extensions: mbstring, xml, ctype, iconv, intl, pdo_sqlite, sqlite3, gd, zip
           coverage: none
 

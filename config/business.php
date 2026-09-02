@@ -61,4 +61,17 @@ return [
         'Kota Batu',
         'Kabupaten Malang',
     ],
+
+    'operations' => [
+        'default_district' => env('BUSINESS_DEFAULT_DISTRICT', 'Lowokwaru'),
+        'default_storage_location' => env('BUSINESS_DEFAULT_STORAGE_LOCATION', 'Rak A-01'),
+        'default_team' => env('BUSINESS_DEFAULT_TEAM', null),
+        'default_vehicle' => env('BUSINESS_DEFAULT_VEHICLE', null),
+        'schedule_start' => env('BUSINESS_SCHEDULE_START', '09:00'),
+        'schedule_end' => env('BUSINESS_SCHEDULE_END', '12:00'),
+    ],
+
+    'payments' => [
+        'default_bank' => env('BUSINESS_DEFAULT_BANK', null),
+    ],
 ];

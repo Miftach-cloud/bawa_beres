@@ -27,7 +27,7 @@ class Manager extends Component
 
     public float|string $amount = 0;
 
-    public string $bankName = 'BCA';
+    public string $bankName = '';
 
     public string $accountName = '';
 
@@ -64,6 +64,7 @@ class Manager extends Component
     public function mount(Order $order): void
     {
         $this->order = $order;
+        $this->bankName = (string) config('business.payments.default_bank', '');
         $this->amount = $this->order->remainingBalance() ?: (float) $this->order->total_amount;
     }
 
@@ -73,7 +74,7 @@ class Manager extends Component
 
         $this->method = 'BANK_TRANSFER';
         $this->amount = $this->order->remainingBalance() ?: (float) $this->order->total_amount;
-        $this->bankName = 'Bank Central Asia (BCA)';
+        $this->bankName = (string) config('business.payments.default_bank', '');
         $this->accountName = $this->order->customer->name;
         $this->notes = '';
         $this->proofFile = null;

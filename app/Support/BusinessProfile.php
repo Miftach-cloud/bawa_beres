@@ -9,8 +9,15 @@ class BusinessProfile
      */
     public static function whatsappUrl(?string $message = null): string
     {
-        $number = config('business.whatsapp') ?: config('business.phone') ?: '6281234567890';
+        $number = config('business.whatsapp') ?: config('business.phone');
+        if (! $number) {
+            return route('public.contact');
+        }
+
         $cleanNumber = preg_replace('/[^0-9]/', '', (string) $number);
+        if (str_starts_with($cleanNumber, '0')) {
+            $cleanNumber = '62'.substr($cleanNumber, 1);
+        }
 
         $url = "https://wa.me/{$cleanNumber}";
         if ($message) {
