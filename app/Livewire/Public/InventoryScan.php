@@ -54,7 +54,9 @@ class InventoryScan extends Component
             'movements.performer',
         ]);
 
-        if (Auth::check()) {
+        $isInternalStaff = Auth::check() && Gate::allows('access-admin');
+
+        if ($isInternalStaff) {
             $this->item = $query->where('qr_code', $code)
                 ->orWhere('inventory_code', $code)
                 ->first();
@@ -62,7 +64,7 @@ class InventoryScan extends Component
             $this->item = $query->where('qr_code', $code)->first();
         }
 
-        if ($this->item && Auth::check()) {
+        if ($this->item && $isInternalStaff) {
             $this->condition = $this->item->condition->value;
             $this->checkNotes = $this->item->notes ?? '';
             $this->storageLocation = $this->item->storage_location ?? '';
@@ -192,8 +194,10 @@ class InventoryScan extends Component
 
     public function render()
     {
+        $isInternalStaff = Auth::check() && Gate::allows('access-admin');
+
         $availableLocations = collect();
-        if (Auth::check()) {
+        if ($isInternalStaff) {
             $availableLocations = StorageLocation::available()->get();
         }
 
@@ -201,7 +205,7 @@ class InventoryScan extends Component
             'item' => $this->item,
             'availableLocations' => $availableLocations,
             'conditions' => ItemCondition::cases(),
-            'isInternalStaff' => Auth::check(),
+            'isInternalStaff' => $isInternalStaff,
         ])->layout('layouts.public', ['title' => $this->item ? "Scan #{$this->item->inventory_code} - BawaBeres" : 'Scan QR Barang']);
     }
 }

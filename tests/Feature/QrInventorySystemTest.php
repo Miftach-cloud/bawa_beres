@@ -151,4 +151,32 @@ class QrInventorySystemTest extends TestCase
             ->assertSee($this->item->qr_code)
             ->assertSee('Sofa Bed 3 Seater');
     }
+
+    #[Test]
+    public function authenticated_non_staff_user_is_restricted_like_public_visitor_on_qr_scan(): void
+    {
+        $this->item->update(['storage_location' => 'WH1-RACK-09']);
+
+        $customerUser = User::factory()->create([
+            'email' => 'customer@example.com',
+            'role' => null,
+        ]);
+
+        $this->actingAs($customerUser);
+
+        // 1. Scanning via sequential inventory code is rejected
+        $response1 = $this->get("/i/{$this->item->inventory_code}");
+        $response1->assertStatus(200);
+        $response1->assertSee('Barang Fisik Tidak Ditemukan');
+        $response1->assertDontSee('Sofa Bed 3 Seater');
+
+        // 2. Scanning via opaque QR token conceals internal details
+        $response2 = $this->get($this->item->scan_url);
+        $response2->assertStatus(200);
+        $response2->assertSee('Sofa Bed 3 Seater');
+        $response2->assertDontSee('WH1-RACK-09'); // No internal rack
+        $response2->assertDontSee('081234567890'); // No customer phone
+        $response2->assertDontSee('Budi Santoso'); // No customer name
+        $response2->assertDontSee('Petugas Aktif');
+    }
 }
