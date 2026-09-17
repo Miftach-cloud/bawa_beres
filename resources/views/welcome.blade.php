@@ -43,11 +43,6 @@
 
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto space-y-6">
-                <div class="inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-4 py-1.5 text-xs font-bold text-amber-900 border border-amber-300/60 shadow-xs">
-                    <x-icon name="sparkles" class="w-4 h-4 text-amber-600" />
-                    <span>Layanan Pindahan, Storage & Logistik #1 Kota Malang</span>
-                </div>
-                
                 <h1 class="text-4xl font-black tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
                     Pindahan & Titip Barang Jadi <span class="text-amber-600">Beres & Praktis</span>
                 </h1>
@@ -116,10 +111,6 @@
     <section id="services" class="py-20 bg-slate-50">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center max-w-2xl mx-auto space-y-3">
-                <div class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
-                    <x-icon name="sparkles" class="w-4 h-4 text-amber-600" />
-                    <span>Layanan Utama BawaBeres</span>
-                </div>
                 <h2 class="text-3xl font-black text-slate-900 sm:text-4xl">Solusi Lengkap untuk Malang Raya</h2>
                 <p class="text-xs sm:text-sm text-slate-600">Semua proses tercatat digital dengan standar penanganan barang terbaik.</p>
             </div>
@@ -164,7 +155,7 @@
                 <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md hover:shadow-xl transition-all duration-200 flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="h-14 w-14 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
-                            <x-icon name="truck" class="w-7 h-7 text-emerald-600" />
+                            <x-icon name="motorcycle" class="w-7 h-7 text-emerald-600" />
                         </div>
                         <h3 class="text-xl font-black text-slate-900">Delivery & Logistik Instan</h3>
                         <p class="text-xs text-slate-600 leading-relaxed">
@@ -186,10 +177,6 @@
     <section class="py-20 bg-white border-y border-slate-200/80">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center max-w-2xl mx-auto space-y-3">
-                <div class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
-                    <x-icon name="refresh" class="w-4 h-4 text-amber-600" />
-                    <span>Alur Pemesanan</span>
-                </div>
                 <h2 class="text-3xl font-black text-slate-900 sm:text-4xl">Cara Kerja yang Super Simpel</h2>
             </div>
 
@@ -222,10 +209,6 @@
     <section class="py-20 bg-slate-50">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-12">
             <div class="text-center max-w-2xl mx-auto space-y-3">
-                <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-800">
-                    <x-icon name="shield-check" class="w-4 h-4 text-emerald-600" />
-                    <span>Mengapa BawaBeres?</span>
-                </div>
                 <h2 class="text-3xl font-black text-slate-900 sm:text-4xl">Keunggulan Standar Layanan Kami</h2>
             </div>
 

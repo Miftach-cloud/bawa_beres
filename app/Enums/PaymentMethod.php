@@ -20,9 +20,9 @@ enum PaymentMethod: string
     public function icon(): string
     {
         return match ($this) {
-            self::BANK_TRANSFER => '🏦',
-            self::QRIS => '📱',
-            self::CASH => '💵',
+            self::BANK_TRANSFER => 'credit-card',
+            self::QRIS => 'qr',
+            self::CASH => 'banknote',
         };
     }
 }

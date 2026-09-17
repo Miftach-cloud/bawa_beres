@@ -69,10 +69,6 @@
         <!-- Public Booking Form Container -->
         <div class="rounded-3xl bg-white p-6 sm:p-10 border border-slate-200 shadow-xl max-w-3xl mx-auto space-y-8 text-slate-900">
             <div>
-                <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800 mb-2">
-                    <x-icon name="sparkles" class="w-4 h-4 text-amber-600" />
-                    <span>Form Pemesanan Instan (Tanpa Ribet Daftar)</span>
-                </div>
                 <h2 class="text-2xl font-black tracking-tight text-slate-900 sm:text-3xl">
                     Pesan Jasa Pindahan & Penyimpanan
                 </h2>

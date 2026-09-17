@@ -3,7 +3,7 @@
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-3">
         <div>
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <x-icon name="tag" class="w-4 h-4 text-amber-600" />
+                <x-icon name="box" class="w-4 h-4 text-amber-600" />
                 <span>Manajemen Fisik Barang (Physical Inventory)</span>
             </h3>
             <p class="text-xs text-slate-500">Barang fisik nyata dalam penguasaan perusahaan (Kode unik INV-XXXXXX)</p>
@@ -153,7 +153,7 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
+                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @elseif ($item->status->value === 'OUTBOUND')
@@ -162,7 +162,7 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[11px] font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
+                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @else

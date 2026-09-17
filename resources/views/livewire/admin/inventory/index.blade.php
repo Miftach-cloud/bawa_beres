@@ -179,7 +179,7 @@
                                             wire:click="receive({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-cyan-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-cyan-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="box" class="w-3 h-3 text-white" />
+                                            <x-icon name="download" class="w-3 h-3 text-white" />
                                             <span>Terima</span>
                                         </button>
                                     @elseif ($item->status->value === 'RECEIVED')
@@ -224,7 +224,7 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
+                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @elseif ($item->status->value === 'OUTBOUND')
@@ -233,7 +233,7 @@
                                             wire:click="release({{ $item->id }})"
                                             class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-500 cursor-pointer shadow-2xs"
                                         >
-                                            <x-icon name="handshake" class="w-3 h-3 text-white" />
+                                            <x-icon name="check-circle" class="w-3 h-3 text-white" />
                                             <span>Release</span>
                                         </button>
                                     @endif
@@ -247,8 +247,8 @@
                     @empty
                         <tr>
                             <td colspan="7" class="px-6 py-12 text-center text-slate-400">
-                                <x-icon name="tag" class="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                                <p class="text-sm">Tidak ada barang inventaris fisik yang sesuai filter.</p>
+                                <x-icon name="box" class="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                                <p class="text-sm">Tidak ada barang inventaris fisik yang sesuai dengan filter yang dipilih.</p>
                             </td>
                         </tr>
                     @endforelse

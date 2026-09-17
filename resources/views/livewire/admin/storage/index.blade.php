@@ -43,7 +43,7 @@
 
         <div class="rounded-2xl bg-white p-4 border border-slate-200 shadow-xs">
             <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 flex items-center gap-1">
-                <x-icon name="warehouse" class="w-3.5 h-3.5 text-blue-600" />
+                <x-icon name="layers" class="w-3.5 h-3.5 text-blue-600" />
                 <span>Slot Terpakai / Penuh</span>
             </span>
             <div class="text-2xl font-bold text-blue-700 mt-1">{{ $stats['occupied_slots'] }}</div>
@@ -144,7 +144,7 @@
                     <!-- Top Bar: Type Icon & Status Dot -->
                     <div class="flex items-center justify-between">
                         <span class="inline-flex items-center gap-1 text-xs font-semibold text-slate-700">
-                            <x-icon name="warehouse" class="w-3.5 h-3.5 text-slate-600" />
+                            <x-icon :name="$loc->type->icon()" class="w-3.5 h-3.5 text-slate-600" />
                             <span class="text-[11px] truncate max-w-[140px]">{{ $loc->type->label() }}</span>
                         </span>
 

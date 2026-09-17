@@ -8,15 +8,11 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
-            <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
-                <x-icon name="box" class="w-4 h-4 text-amber-700" />
-                <span>Katalog Layanan Resmi</span>
-            </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
-                Solusi Praktis untuk Setiap Kebutuhan Logistik Anda
+                Katalog Layanan Resmi BawaBeres
             </h1>
             <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Pilih layanan yang sesuai kebutuhan Anda. Didukung oleh armada terawat, tenaga angkut berpengalaman, dan sistem pelacakan digital terintegrasi.
+                Solusi praktis untuk setiap kebutuhan logistik Anda. Didukung oleh armada terawat, tenaga angkut berpengalaman, dan sistem pelacakan digital terintegrasi.
             </p>
         </div>
 

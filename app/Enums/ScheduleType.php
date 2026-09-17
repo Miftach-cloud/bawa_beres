@@ -20,9 +20,9 @@ enum ScheduleType: string
     public function icon(): string
     {
         return match ($this) {
-            self::PICKUP => '📦 ➔',
-            self::DELIVERY => '➔ 🏠',
-            self::REDELIVERY => '🏢 ➔',
+            self::PICKUP => 'box',
+            self::DELIVERY => 'truck',
+            self::REDELIVERY => 'refresh',
         };
     }
 

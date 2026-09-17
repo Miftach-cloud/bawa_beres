@@ -8,10 +8,6 @@
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-16">
         <!-- Header -->
         <div class="text-center space-y-4">
-            <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
-                <x-icon name="warehouse" class="w-4 h-4 text-amber-600" />
-                <span>Tentang Platform Kami</span>
-            </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
                 Mitra Terpercaya Logistik & Storage di Kota Malang
             </h1>
@@ -34,7 +30,7 @@
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-md space-y-3">
                 <div class="h-12 w-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
-                    <x-icon name="truck" class="w-6 h-6 text-emerald-600" />
+                    <x-icon name="shield-check" class="w-6 h-6 text-emerald-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Misi Kami</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">

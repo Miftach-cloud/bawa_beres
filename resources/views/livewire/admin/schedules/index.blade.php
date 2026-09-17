@@ -125,7 +125,7 @@
                     <!-- Top Card Bar -->
                     <div class="flex items-center justify-between gap-2">
                         <span class="inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-bold border {{ $sch->type->badgeColor() }}">
-                            <x-icon name="truck" class="w-3.5 h-3.5" />
+                            <x-icon :name="$sch->type->icon()" class="w-3.5 h-3.5" />
                             <span>{{ $sch->type->label() }}</span>
                         </span>
                         <span class="inline-flex items-center rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider border {{ $sch->status->badgeColor() }}">

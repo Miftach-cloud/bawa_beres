@@ -8,15 +8,11 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
-            <div class="inline-flex items-center gap-2 rounded-full bg-emerald-100/80 px-3 py-1 text-xs font-bold text-emerald-800">
-                <x-icon name="shield" class="w-4 h-4 text-emerald-600" />
-                <span>Standar Keamanan Tingkat Tinggi</span>
-            </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
                 Barang Anda Aman, Terjaga & Teralokasi Rapi
             </h1>
             <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Kami memahami betapa berharganya barang pribadi Anda. Fasilitas penyimpanan BawaBeres dilengkapi sistem keamanan fisik dan digital berstandar industri.
+                Kami memahami betapa berharganya barang pribadi Anda. Fasilitas penyimpanan BawaBeres menerapkan Standar Keamanan Tingkat Tinggi dengan proteksi fisik dan digital berstandar industri.
             </p>
         </div>
 
@@ -44,7 +40,7 @@
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
                 <div class="h-14 w-14 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center">
-                    <x-icon name="lock" class="w-7 h-7 text-blue-600" />
+                    <x-icon name="sparkles" class="w-7 h-7 text-blue-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Gudang Bersih, Kering & Bebas Hama</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -66,11 +62,11 @@
                     <span>Rak Khusus Kardus & Box</span>
                 </div>
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-3">
-                    <x-icon name="warehouse" class="w-5 h-5 text-blue-600" />
+                    <x-icon name="bed" class="w-5 h-5 text-blue-600" />
                     <span>Pallet Kasur & Springbed Bersih</span>
                 </div>
                 <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-3">
-                    <x-icon name="truck" class="w-5 h-5 text-emerald-600" />
+                    <x-icon name="motorcycle" class="w-5 h-5 text-emerald-600" />
                     <span>Area Parkir Titip Motor Tertutup</span>
                 </div>
             </div>

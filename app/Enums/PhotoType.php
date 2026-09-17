@@ -35,11 +35,11 @@ enum PhotoType: string
     public function icon(): string
     {
         return match ($this) {
-            self::RECEIVING => '📥',
-            self::CONDITION => '📷',
-            self::STORAGE => '🏢',
-            self::OUTBOUND => '🚚',
-            self::DAMAGE => '⚠️',
+            self::RECEIVING => 'download',
+            self::CONDITION => 'camera',
+            self::STORAGE => 'warehouse',
+            self::OUTBOUND => 'truck',
+            self::DAMAGE => 'alert-triangle',
         };
     }
 }

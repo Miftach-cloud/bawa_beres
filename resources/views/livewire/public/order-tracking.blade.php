@@ -1,10 +1,6 @@
 <div class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto space-y-8 font-sans">
     <!-- Header Section -->
     <div class="text-center space-y-2 max-w-xl mx-auto">
-        <div class="inline-flex items-center gap-2 rounded-full bg-amber-50 px-3 py-1 text-xs font-bold text-amber-800 border border-amber-200">
-            <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-600" />
-            <span>Realtime Order Tracking</span>
-        </div>
         <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
             Lacak Status Pesanan Anda
         </h1>

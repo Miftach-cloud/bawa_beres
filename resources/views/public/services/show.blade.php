@@ -73,10 +73,6 @@
         <div class="rounded-3xl bg-white p-8 sm:p-12 border border-slate-200 shadow-xl space-y-8">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 pb-8 border-b border-slate-100">
                 <div class="space-y-2">
-                    <div class="inline-flex items-center gap-2 rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-800">
-                        <x-icon name="shield-check" class="w-3.5 h-3.5 text-amber-700" />
-                        <span>Layanan Terverifikasi BawaBeres</span>
-                    </div>
                     <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-4xl">
                         {{ $service->name }}
                     </h1>

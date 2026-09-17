@@ -8,10 +8,6 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-16">
         <!-- Header -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
-            <div class="inline-flex items-center gap-2 rounded-full bg-blue-100/80 px-3 py-1 text-xs font-bold text-blue-800">
-                <x-icon name="map-pin" class="w-4 h-4 text-blue-600" />
-                <span>Cakupan Wilayah Operasional</span>
-            </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
                 Melayani Seluruh Wilayah Malang Raya
             </h1>
@@ -24,7 +20,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
                 <div class="h-12 w-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
-                    <x-icon name="warehouse" class="w-6 h-6 text-amber-600" />
+                    <x-icon name="building" class="w-6 h-6 text-amber-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Kota Malang (Zona Utama)</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
@@ -41,7 +37,7 @@
 
             <div class="rounded-3xl bg-white p-8 border border-slate-200 shadow-lg space-y-4">
                 <div class="h-12 w-12 rounded-2xl bg-blue-500/10 text-blue-600 flex items-center justify-center">
-                    <x-icon name="truck" class="w-6 h-6 text-blue-600" />
+                    <x-icon name="compass" class="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Kota Batu</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">

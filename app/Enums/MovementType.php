@@ -29,9 +29,9 @@ enum MovementType: string
     public function icon(): string
     {
         return match ($this) {
-            self::INBOUND => '📥 ➔ 🏢',
-            self::RELOCATION => '🏢 ➔ 🏢',
-            self::OUTBOUND => '🏢 ➔ 🚚',
+            self::INBOUND => 'download',
+            self::RELOCATION => 'refresh',
+            self::OUTBOUND => 'upload',
         };
     }
 }

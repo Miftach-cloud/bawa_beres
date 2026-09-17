@@ -68,10 +68,6 @@
 <div class="py-16 sm:py-24 bg-slate-50">
     <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 space-y-12">
         <div class="text-center space-y-4">
-            <div class="inline-flex items-center gap-2 rounded-full bg-amber-100/80 px-3 py-1 text-xs font-bold text-amber-800">
-                <x-icon name="chat" class="w-4 h-4 text-amber-600" />
-                <span>Pusat Bantuan & Tanya Jawab</span>
-            </div>
             <h1 class="text-3xl font-black text-slate-900 tracking-tight sm:text-5xl">
                 Pertanyaan yang Sering Diajukan
             </h1>

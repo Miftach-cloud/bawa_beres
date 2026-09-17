@@ -24,11 +24,11 @@ enum StorageLocationType: string
     public function icon(): string
     {
         return match ($this) {
-            self::STANDARD_RACK => '📦',
-            self::HEAVY_DUTY => '🛋️',
-            self::PALLET_FLOOR => '🪵',
-            self::FRAGILE_CAGE => '⚠️',
-            self::SECURE_LOCKER => '🔒',
+            self::STANDARD_RACK => 'layers',
+            self::HEAVY_DUTY => 'archive',
+            self::PALLET_FLOOR => 'box',
+            self::FRAGILE_CAGE => 'shield',
+            self::SECURE_LOCKER => 'lock',
         };
     }
 }

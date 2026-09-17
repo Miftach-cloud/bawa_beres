@@ -3,7 +3,7 @@
     <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div>
             <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                <x-icon name="credit-card" class="w-4 h-4 text-amber-600" />
+                <x-icon name="document" class="w-4 h-4 text-amber-600" />
                 <span>Sistem Penawaran Harga (Quotations)</span>
             </h3>
             <p class="text-xs text-slate-500">Rincian biaya resmi dan riwayat revisi penawaran</p>

@@ -62,7 +62,7 @@
                                         <div class="flex-auto rounded-xl bg-slate-50 p-3.5 text-xs border border-slate-200 space-y-2">
                                             <div class="flex items-center justify-between">
                                                 <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-[10px] font-bold border {{ $m->movement_type->badgeColor() }}">
-                                                    <x-icon name="refresh" class="w-3 h-3" />
+                                                    <x-icon :name="$m->movement_type->icon()" class="w-3 h-3" />
                                                     <span>{{ $m->movement_type->label() }}</span>
                                                 </span>
                                                 <span class="font-mono text-[10px] text-slate-400">
