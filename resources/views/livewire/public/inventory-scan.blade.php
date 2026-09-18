@@ -222,11 +222,11 @@
                     </div>
                     <h3 class="font-bold text-white text-sm">Segel Keaslian Fisik BawaBeres</h3>
                     <p class="text-slate-400 max-w-sm mx-auto text-[11px] leading-relaxed">
-                        Barang fisik ini terdaftar dan tersimpan di jaringan pergudangan resmi BawaBeres. Untuk melihat informasi lengkap dan melakukan pergerakan barang, silakan login dengan akun staf operasional.
+                        Barang fisik ini terdaftar dan tersimpan di jaringan pergudangan resmi BawaBeres. Untuk melihat informasi lengkap dan melakukan pergerakan barang, silakan login dengan akun admin.
                     </p>
                     <div class="pt-2">
                         <a href="{{ route('admin.login') }}" class="inline-flex rounded-xl bg-amber-500 px-5 py-2.5 text-xs font-bold text-slate-950 hover:bg-amber-400 shadow-md">
-                            Login Petugas Lapangan
+                            Login Admin
                         </a>
                     </div>
                 </div>

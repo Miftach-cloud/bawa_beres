@@ -102,13 +102,20 @@ class SecureFileStorageTest extends TestCase
         ]);
         Storage::disk('local')->put($photo->file_path, 'fake-data');
 
-        // Operation cannot access financial payment proof
+        // Operation cannot access financial payment proof or inventory photo
         $this->actingAs($this->operation)
             ->get(route('admin.media.payment-proof', $payment))
             ->assertStatus(403);
+        $this->actingAs($this->operation)
+            ->get(route('admin.media.inventory-photo', $photo))
+            ->assertStatus(403);
 
-        // Admin cannot access inventory photos
-        $this->actingAs($this->admin)
+        // Non-staff user cannot access media
+        $customerUser = User::factory()->create();
+        $this->actingAs($customerUser)
+            ->get(route('admin.media.payment-proof', $payment))
+            ->assertStatus(403);
+        $this->actingAs($customerUser)
             ->get(route('admin.media.inventory-photo', $photo))
             ->assertStatus(403);
     }
@@ -141,9 +148,12 @@ class SecureFileStorageTest extends TestCase
         $response = $this->actingAs($this->admin)->get(route('admin.media.payment-proof', $payment));
         $response->assertStatus(200);
 
-        // Operation can access inventory photo
-        $response = $this->actingAs($this->operation)->get(route('admin.media.inventory-photo', $photo));
+        // Admin can access inventory photo
+        $response = $this->actingAs($this->admin)->get(route('admin.media.inventory-photo', $photo));
         $response->assertStatus(200);
+
+        // Operation cannot access media
+        $this->actingAs($this->operation)->get(route('admin.media.inventory-photo', $photo))->assertStatus(403);
 
         // Owner can access both
         $this->actingAs($this->owner)->get(route('admin.media.payment-proof', $payment))->assertStatus(200);
@@ -165,7 +175,7 @@ class SecureFileStorageTest extends TestCase
             ->call('savePayment')
             ->assertHasErrors(['proofFile']);
 
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
         $fakeExe = UploadedFile::fake()->create('script.exe', 100, 'application/x-msdownload');
 
         Livewire::test(PhotosModal::class)

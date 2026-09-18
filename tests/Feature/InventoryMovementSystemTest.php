@@ -39,7 +39,7 @@ class InventoryMovementSystemTest extends TestCase
     {
         parent::setUp();
 
-        $this->operation = User::factory()->operation()->create();
+        $this->operation = User::factory()->admin()->create();
         $this->order = Order::factory()->create();
         $this->item = InventoryItem::create([
             'order_id' => $this->order->id,

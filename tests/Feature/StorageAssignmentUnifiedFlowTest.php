@@ -42,7 +42,7 @@ class StorageAssignmentUnifiedFlowTest extends TestCase
     {
         parent::setUp();
 
-        $this->operation = User::factory()->operation()->create();
+        $this->operation = User::factory()->admin()->create();
 
         $this->customer = Customer::factory()->create([
             'name' => 'Rudi Hartono',

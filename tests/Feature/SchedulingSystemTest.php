@@ -39,13 +39,13 @@ class SchedulingSystemTest extends TestCase
     }
 
     #[Test]
-    public function both_admin_and_operation_can_access_schedule_board(): void
+    public function admin_can_access_schedule_board_while_operation_is_denied(): void
     {
         $this->actingAs($this->admin);
         $this->get('/admin/schedule')->assertStatus(200);
 
         $this->actingAs($this->operation);
-        $this->get('/admin/schedule')->assertStatus(200);
+        $this->get('/admin/schedule')->assertStatus(403);
     }
 
     #[Test]
@@ -77,7 +77,7 @@ class SchedulingSystemTest extends TestCase
     #[Test]
     public function completing_pickup_schedule_transitions_order_to_picked_up(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         $schedule = Schedule::create([
             'order_id' => $this->order->id,
@@ -120,7 +120,7 @@ class SchedulingSystemTest extends TestCase
             'assigned_team' => 'Tim Besok Pagi',
         ]);
 
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         Livewire::test(ScheduleIndex::class)
             ->set('activeTab', 'today')
@@ -138,7 +138,7 @@ class SchedulingSystemTest extends TestCase
         Config::set('business.operations.default_vehicle', 'N 1000 CFG');
         Config::set('business.operations.schedule_start', '07:30');
         Config::set('business.operations.schedule_end', '10:30');
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         Livewire::test(ScheduleIndex::class)
             ->call('openCreateModal')

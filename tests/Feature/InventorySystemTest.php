@@ -46,19 +46,19 @@ class InventorySystemTest extends TestCase
     }
 
     #[Test]
-    public function operation_can_access_inventory_register_while_admin_is_denied(): void
+    public function admin_can_access_inventory_register_while_operation_is_denied(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
         $this->get('/admin/inventory')->assertStatus(200);
 
-        $this->actingAs($this->admin);
+        $this->actingAs($this->operation);
         $this->get('/admin/inventory')->assertStatus(403);
     }
 
     #[Test]
     public function field_team_can_generate_and_receive_inventory_items(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         Livewire::test(InventoryManager::class, ['order' => $this->order])
             ->call('generateExpected')
@@ -77,14 +77,14 @@ class InventorySystemTest extends TestCase
 
         $item->refresh();
         $this->assertEquals(InventoryStatus::RECEIVED, $item->status);
-        $this->assertEquals($this->operation->id, $item->received_by);
+        $this->assertEquals($this->admin->id, $item->received_by);
         $this->assertNotNull($item->received_at);
     }
 
     #[Test]
     public function team_can_perform_qc_check_and_store_to_rack(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         $item = InventoryItem::create([
             'order_id' => $this->order->id,
@@ -141,7 +141,7 @@ class InventorySystemTest extends TestCase
             'status' => InventoryStatus::CHECKED,
         ]);
 
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         Livewire::test(InventoryIndex::class)
             ->set('statusFilter', InventoryStatus::STORED->value)
@@ -154,9 +154,9 @@ class InventorySystemTest extends TestCase
     }
 
     #[Test]
-    public function operation_can_generate_inventory_from_the_inventory_register(): void
+    public function admin_can_generate_inventory_from_the_inventory_register(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         Livewire::test(InventoryIndex::class)
             ->set('selectedOrderId', $this->order->id)

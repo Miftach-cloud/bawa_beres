@@ -23,14 +23,13 @@ use Illuminate\Support\Facades\Notification;
 class SendOrderNotifications
 {
     /**
-     * Notify internal staff users (Admin, Operation, Owner)
+     * Notify internal staff users (Owner, Admin)
      */
     protected function getInternalStaff()
     {
         return User::whereIn('role', [
             UserRole::OWNER,
             UserRole::ADMIN,
-            UserRole::OPERATION,
         ])->get();
     }
 

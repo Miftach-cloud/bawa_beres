@@ -83,11 +83,11 @@ class AdminAccessSecurityTest extends TestCase
     }
 
     #[Test]
-    public function operation_role_is_authorized_to_access_admin_dashboard(): void
+    public function operation_role_is_forbidden_from_admin_dashboard(): void
     {
         $response = $this->actingAs($this->operation)->get('/admin');
 
-        $response->assertStatus(200);
+        $response->assertStatus(403);
     }
 
     #[Test]
@@ -126,6 +126,18 @@ class AdminAccessSecurityTest extends TestCase
     }
 
     #[Test]
+    public function login_component_rejects_operation_role(): void
+    {
+        Livewire::test(Login::class)
+            ->set('email', 'operation@bawaberes.id')
+            ->set('password', 'password123')
+            ->call('login')
+            ->assertHasErrors(['email']);
+
+        $this->assertGuest();
+    }
+
+    #[Test]
     public function login_component_allows_internal_roles(): void
     {
         Livewire::test(Login::class)
@@ -141,8 +153,7 @@ class AdminAccessSecurityTest extends TestCase
     #[Test]
     public function module_level_authorization_remains_enforced(): void
     {
-        // Admin cannot access inventory or settings
-        $this->actingAs($this->admin)->get('/admin/inventory')->assertStatus(403);
+        // Admin cannot access settings
         $this->actingAs($this->admin)->get('/admin/settings')->assertStatus(403);
 
         // Operation cannot access orders or commercial payments

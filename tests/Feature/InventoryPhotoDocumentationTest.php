@@ -20,7 +20,7 @@ class InventoryPhotoDocumentationTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $operation;
+    protected User $admin;
 
     protected User $customerUser;
 
@@ -32,7 +32,7 @@ class InventoryPhotoDocumentationTest extends TestCase
     {
         parent::setUp();
 
-        $this->operation = User::factory()->operation()->create();
+        $this->admin = User::factory()->admin()->create();
         $this->order = Order::factory()->create();
         $this->item = InventoryItem::create([
             'order_id' => $this->order->id,
@@ -53,7 +53,7 @@ class InventoryPhotoDocumentationTest extends TestCase
             $file,
             PhotoType::RECEIVING,
             'Foto saat dijemput dari rumah klien',
-            $this->operation
+            $this->admin
         );
 
         $this->assertDatabaseHas('inventory_photos', [
@@ -62,7 +62,7 @@ class InventoryPhotoDocumentationTest extends TestCase
             'type' => PhotoType::RECEIVING->value,
             'file_name' => 'sofa_pickup.jpg',
             'caption' => 'Foto saat dijemput dari rumah klien',
-            'uploaded_by' => $this->operation->id,
+            'uploaded_by' => $this->admin->id,
         ]);
 
         Storage::disk('local')->assertExists($photo->file_path);
@@ -90,7 +90,7 @@ class InventoryPhotoDocumentationTest extends TestCase
     public function livewire_photos_modal_uploads_multiple_photos_and_filters(): void
     {
         Storage::fake('local');
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         $file1 = UploadedFile::fake()->image('damage1.jpg');
         $file2 = UploadedFile::fake()->image('damage2.jpg');

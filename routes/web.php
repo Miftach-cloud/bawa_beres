@@ -6,6 +6,7 @@ use App\Livewire\Admin\Auth\Login;
 use App\Livewire\Admin\Customers\Index as CustomerIndex;
 use App\Livewire\Admin\Customers\Show as CustomerShow;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\DashboardAnalisa;
 use App\Livewire\Admin\Inventory\Index as InventoryIndex;
 use App\Livewire\Admin\Orders\Index as OrderIndex;
 use App\Livewire\Admin\Orders\Show as OrderShow;
@@ -127,6 +128,7 @@ Route::middleware(['guest', 'throttle:login'])->prefix('admin')->group(function 
 // Admin Protected Routes
 Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
+    Route::get('/analisa', DashboardAnalisa::class)->middleware('can:view-analytics')->name('admin.analisa');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
 
     // Phase 5: Order Management

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Auth;
 
+use App\Enums\UserRole;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
@@ -57,7 +58,7 @@ class Login extends Component
         }
 
         $user = Auth::user();
-        if (! $user || Gate::forUser($user)->denies('access-admin')) {
+        if (! $user || ! in_array($user->role, [UserRole::OWNER, UserRole::ADMIN], true) || Gate::forUser($user)->denies('access-admin')) {
             Auth::logout();
             session()->invalidate();
             session()->regenerateToken();
@@ -65,7 +66,7 @@ class Login extends Component
             RateLimiter::hit($throttleKey);
 
             throw ValidationException::withMessages([
-                'email' => 'Akun tidak memiliki izin akses ke sistem internal.',
+                'email' => 'Hanya akun Owner dan Admin yang diizinkan masuk ke sistem.',
             ]);
         }
 

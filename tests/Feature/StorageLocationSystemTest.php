@@ -53,10 +53,13 @@ class StorageLocationSystemTest extends TestCase
     }
 
     #[Test]
-    public function operation_role_can_access_storage_management_board(): void
+    public function admin_role_can_access_storage_management_board(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
         $this->get('/admin/storage')->assertStatus(200);
+
+        $this->actingAs($this->operation);
+        $this->get('/admin/storage')->assertStatus(403);
     }
 
     #[Test]
@@ -111,7 +114,7 @@ class StorageLocationSystemTest extends TestCase
     #[Test]
     public function livewire_storage_index_renders_and_filters_locations(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         Livewire::test(StorageIndex::class)
             ->assertSee($this->location->code)

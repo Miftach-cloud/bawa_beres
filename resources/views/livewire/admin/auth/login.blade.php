@@ -10,7 +10,7 @@
             Bawa Beres Internal
         </h2>
         <p class="mt-1 text-center text-xs text-slate-400">
-            Akses Panel Khusus Owner, Admin, dan Tim Operasional
+            Akses Panel Khusus Owner &amp; Admin
         </p>
     </div>
 
@@ -29,7 +29,7 @@
                             type="text" 
                             autocomplete="username" 
                             required 
-                            placeholder="adminbawaberes atau admin@bawaberes.id"
+                            placeholder="ownerbawaberes atau adminbawaberes"
                             class="block w-full rounded-xl border border-slate-600 bg-slate-900/80 px-4 py-2.5 text-sm text-white placeholder-slate-500 shadow-sm focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
                         >
                     </div>

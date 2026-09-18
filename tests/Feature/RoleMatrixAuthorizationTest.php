@@ -55,10 +55,11 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/admin/services')->assertStatus(200);
         $this->get('/admin/customers')->assertStatus(200);
         $this->get('/admin/settings')->assertStatus(200);
+        $this->get('/admin/analisa')->assertStatus(200);
     }
 
     #[Test]
-    public function admin_role_can_access_business_modules_but_not_inventory_storage_or_settings(): void
+    public function admin_role_can_access_operational_modules_but_not_settings_or_analisa(): void
     {
         $this->actingAs($this->admin);
 
@@ -69,30 +70,30 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/admin/schedule')->assertStatus(200);
         $this->get('/admin/services')->assertStatus(200);
         $this->get('/admin/customers')->assertStatus(200);
-
-        // Forbidden modules (403)
-        $this->get('/admin/inventory')->assertStatus(403);
-        $this->get('/admin/storage')->assertStatus(403);
-        $this->get('/admin/settings')->assertStatus(403);
-    }
-
-    #[Test]
-    public function operation_role_can_access_operational_modules_but_not_commercial_modules(): void
-    {
-        $this->actingAs($this->operation);
-
-        // Allowed modules
-        $this->get('/admin')->assertStatus(200);
-        $this->get('/admin/schedule')->assertStatus(200);
         $this->get('/admin/inventory')->assertStatus(200);
         $this->get('/admin/storage')->assertStatus(200);
 
-        // Forbidden commercial & settings modules (403)
+        // Forbidden modules (403)
+        $this->get('/admin/settings')->assertStatus(403);
+        $this->get('/admin/analisa')->assertStatus(403);
+    }
+
+    #[Test]
+    public function operation_role_is_completely_forbidden_from_admin_panel(): void
+    {
+        $this->actingAs($this->operation);
+
+        // All admin modules return 403
+        $this->get('/admin')->assertStatus(403);
+        $this->get('/admin/schedule')->assertStatus(403);
+        $this->get('/admin/inventory')->assertStatus(403);
+        $this->get('/admin/storage')->assertStatus(403);
         $this->get('/admin/orders')->assertStatus(403);
         $this->get('/admin/payments')->assertStatus(403);
         $this->get('/admin/services')->assertStatus(403);
         $this->get('/admin/customers')->assertStatus(403);
         $this->get('/admin/settings')->assertStatus(403);
+        $this->get('/admin/analisa')->assertStatus(403);
     }
 
     #[Test]
@@ -113,6 +114,7 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/admin')->assertRedirect('/admin/login');
         $this->get('/admin/orders')->assertRedirect('/admin/login');
         $this->get('/admin/inventory')->assertRedirect('/admin/login');
+        $this->get('/admin/analisa')->assertRedirect('/admin/login');
     }
 
     #[Test]

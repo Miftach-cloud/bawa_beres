@@ -18,7 +18,7 @@ class QrInventorySystemTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected User $operation;
+    protected User $admin;
 
     protected Customer $customer;
 
@@ -32,7 +32,7 @@ class QrInventorySystemTest extends TestCase
     {
         parent::setUp();
 
-        $this->operation = User::factory()->operation()->create();
+        $this->admin = User::factory()->admin()->create();
         $this->customer = Customer::factory()->create([
             'name' => 'Budi Santoso',
             'phone' => '081234567890',
@@ -107,7 +107,7 @@ class QrInventorySystemTest extends TestCase
     public function authenticated_staff_can_lookup_via_both_qr_token_and_inventory_code(): void
     {
         $this->item->update(['storage_location_id' => $this->location->id]);
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         // Lookup via QR opaque token
         $response1 = $this->get("/i/{$this->item->qr_code}");
@@ -127,7 +127,7 @@ class QrInventorySystemTest extends TestCase
     #[Test]
     public function authenticated_staff_sees_full_operational_details_and_customer_info_on_scan(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         $response = $this->get($this->item->scan_url);
 
@@ -141,7 +141,7 @@ class QrInventorySystemTest extends TestCase
     #[Test]
     public function printable_label_route_renders_correctly(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         $response = $this->get(route('admin.inventory.label', $this->item));
 
@@ -154,7 +154,7 @@ class QrInventorySystemTest extends TestCase
     #[Test]
     public function livewire_qr_label_modal_opens_and_previews(): void
     {
-        $this->actingAs($this->operation);
+        $this->actingAs($this->admin);
 
         Livewire::test(QrLabelModal::class)
             ->call('open', $this->item->id)

@@ -6,6 +6,7 @@ use App\Enums\OrderStatus;
 use App\Enums\UserRole;
 use App\Livewire\Admin\Auth\Login;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\DashboardAnalisa;
 use App\Models\Order;
 use App\Models\User;
 use Database\Seeders\DatabaseSeeder;
@@ -79,7 +80,7 @@ class AdminAuthAndDashboardTest extends TestCase
         $this->assertTrue(auth()->user()->isOwner());
     }
 
-    public function test_operation_can_login_with_username_handle(): void
+    public function test_operation_cannot_login_with_username_handle(): void
     {
         $this->seed(DatabaseSeeder::class);
 
@@ -87,10 +88,9 @@ class AdminAuthAndDashboardTest extends TestCase
             ->set('email', 'operationbawaberes')
             ->set('password', 'bawaberes123')
             ->call('login')
-            ->assertRedirect(route('admin.dashboard'));
+            ->assertHasErrors(['email']);
 
-        $this->assertAuthenticated();
-        $this->assertTrue(auth()->user()->isOperation());
+        $this->assertGuest();
     }
 
     public function test_user_cannot_login_with_invalid_credentials(): void
@@ -129,7 +129,7 @@ class AdminAuthAndDashboardTest extends TestCase
         $this->actingAs($owner)->get('/admin/settings')->assertStatus(200);
     }
 
-    public function test_admin_has_access_to_orders_but_denied_settings_and_inventory(): void
+    public function test_admin_has_access_to_operational_modules_but_denied_settings(): void
     {
         $admin = User::factory()->admin()->create();
 
@@ -137,20 +137,21 @@ class AdminAuthAndDashboardTest extends TestCase
         $this->actingAs($admin)->get('/admin/orders')->assertStatus(200);
         $this->actingAs($admin)->get('/admin/customers')->assertStatus(200);
         $this->actingAs($admin)->get('/admin/payments')->assertStatus(200);
+        $this->actingAs($admin)->get('/admin/inventory')->assertStatus(200);
+        $this->actingAs($admin)->get('/admin/storage')->assertStatus(200);
+        $this->actingAs($admin)->get('/admin/schedule')->assertStatus(200);
 
         $this->actingAs($admin)->get('/admin/settings')->assertStatus(403);
-        $this->actingAs($admin)->get('/admin/inventory')->assertStatus(403);
     }
 
-    public function test_operation_has_access_to_inventory_and_storage_but_denied_orders_and_settings(): void
+    public function test_operation_cannot_access_any_admin_modules(): void
     {
         $operation = User::factory()->operation()->create();
 
-        $this->actingAs($operation)->get('/admin')->assertStatus(200);
-        $this->actingAs($operation)->get('/admin/schedule')->assertStatus(200);
-        $this->actingAs($operation)->get('/admin/inventory')->assertStatus(200);
-        $this->actingAs($operation)->get('/admin/storage')->assertStatus(200);
-
+        $this->actingAs($operation)->get('/admin')->assertStatus(403);
+        $this->actingAs($operation)->get('/admin/schedule')->assertStatus(403);
+        $this->actingAs($operation)->get('/admin/inventory')->assertStatus(403);
+        $this->actingAs($operation)->get('/admin/storage')->assertStatus(403);
         $this->actingAs($operation)->get('/admin/orders')->assertStatus(403);
         $this->actingAs($operation)->get('/admin/settings')->assertStatus(403);
     }
@@ -173,13 +174,13 @@ class AdminAuthAndDashboardTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_operation_can_access_admin_dashboard(): void
+    public function test_operation_cannot_access_admin_dashboard(): void
     {
         $operation = User::factory()->operation()->create();
 
         $response = $this->actingAs($operation)->get('/admin');
 
-        $response->assertStatus(200);
+        $response->assertStatus(403);
     }
 
     public function test_non_internal_user_cannot_access_admin_dashboard(): void
@@ -231,5 +232,44 @@ class AdminAuthAndDashboardTest extends TestCase
             })
             ->assertSee('Pesanan Terbaru')
             ->assertSee('Operasional Kota Malang');
+    }
+
+    public function test_owner_can_access_analisa_dashboard(): void
+    {
+        $owner = User::factory()->owner()->create();
+
+        $response = $this->actingAs($owner)->get('/admin/analisa');
+
+        $response->assertStatus(200);
+    }
+
+    public function test_admin_cannot_access_analisa_dashboard(): void
+    {
+        $admin = User::factory()->admin()->create();
+
+        $response = $this->actingAs($admin)->get('/admin/analisa');
+
+        $response->assertStatus(403);
+    }
+
+    public function test_operation_cannot_access_analisa_dashboard(): void
+    {
+        $operation = User::factory()->operation()->create();
+
+        $response = $this->actingAs($operation)->get('/admin/analisa');
+
+        $response->assertStatus(403);
+    }
+
+    public function test_analisa_dashboard_renders_analytics_content(): void
+    {
+        $owner = User::factory()->owner()->create();
+
+        $this->actingAs($owner);
+
+        Livewire::test(DashboardAnalisa::class)
+            ->assertSee('Laporan Bisnis')
+            ->assertSee('Revenue Bulan Ini')
+            ->assertSee('Top 5 Pelanggan');
     }
 }

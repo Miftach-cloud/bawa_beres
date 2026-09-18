@@ -41,14 +41,25 @@
 
         <!-- Navigation Links -->
         <nav class="flex-1 px-3 py-4 space-y-1.5 overflow-y-auto text-sm">
-            <!-- Dashboard -->
-            <a 
-                href="{{ route('admin.dashboard') }}" 
+            {{-- Dashboard Operasional --}}
+            <a
+                href="{{ route('admin.dashboard') }}"
                 class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-all {{ request()->routeIs('admin.dashboard') ? 'bg-amber-500 text-slate-950 font-semibold shadow-sm shadow-amber-500/20' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}"
             >
                 <x-icon name="chart-bar" class="w-5 h-5 {{ request()->routeIs('admin.dashboard') ? 'text-slate-950' : 'text-amber-400' }}" />
-                <span>Dashboard</span>
+                <span>Dashboard Operasional</span>
             </a>
+
+            {{-- Dashboard Analisa (Owner only) --}}
+            @can('view-analytics')
+            <a
+                href="{{ route('admin.analisa') }}"
+                class="flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium transition-all {{ request()->routeIs('admin.analisa') ? 'bg-violet-500 text-white font-semibold shadow-sm shadow-violet-500/20' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}"
+            >
+                <x-icon name="chart-bar" class="w-5 h-5 {{ request()->routeIs('admin.analisa') ? 'text-white' : 'text-violet-400' }}" />
+                <span>Dashboard Analisa</span>
+            </a>
+            @endcan
 
             <!-- Orders -->
             @can('manage-orders')

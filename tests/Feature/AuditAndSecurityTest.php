@@ -192,27 +192,29 @@ class AuditAndSecurityTest extends TestCase
     #[Test]
     public function role_based_authorization_strictly_protects_modules(): void
     {
-        // 1. Operation cannot access Orders Management
-        $response = $this->actingAs($this->operation)->get('/admin/orders');
-        $response->assertStatus(403);
+        // 1. Operation cannot access any admin modules
+        $this->actingAs($this->operation)->get('/admin/orders')->assertStatus(403);
+        $this->actingAs($this->operation)->get('/admin/payments')->assertStatus(403);
+        $this->actingAs($this->operation)->get('/admin/inventory')->assertStatus(403);
+        $this->actingAs($this->operation)->get('/admin/storage')->assertStatus(403);
 
-        // 2. Operation cannot access Payments Management
-        $response = $this->actingAs($this->operation)->get('/admin/payments');
-        $response->assertStatus(403);
+        // 2. Admin cannot access Owner-only Settings or Analisa
+        $this->actingAs($this->admin)->get('/admin/settings')->assertStatus(403);
+        $this->actingAs($this->admin)->get('/admin/analisa')->assertStatus(403);
 
-        // 3. Admin cannot access Inventory Management
-        $response = $this->actingAs($this->admin)->get('/admin/inventory');
-        $response->assertStatus(403);
+        // 3. Admin has access to operational modules
+        $this->actingAs($this->admin)->get('/admin/orders')->assertStatus(200);
+        $this->actingAs($this->admin)->get('/admin/payments')->assertStatus(200);
+        $this->actingAs($this->admin)->get('/admin/inventory')->assertStatus(200);
+        $this->actingAs($this->admin)->get('/admin/storage')->assertStatus(200);
 
-        // 4. Admin cannot access Storage Locations
-        $response = $this->actingAs($this->admin)->get('/admin/storage');
-        $response->assertStatus(403);
-
-        // 5. Owner has full superadmin access
+        // 4. Owner has full superadmin access
         $this->actingAs($this->owner)->get('/admin/orders')->assertStatus(200);
         $this->actingAs($this->owner)->get('/admin/payments')->assertStatus(200);
         $this->actingAs($this->owner)->get('/admin/inventory')->assertStatus(200);
         $this->actingAs($this->owner)->get('/admin/storage')->assertStatus(200);
+        $this->actingAs($this->owner)->get('/admin/settings')->assertStatus(200);
+        $this->actingAs($this->owner)->get('/admin/analisa')->assertStatus(200);
     }
 
     #[Test]

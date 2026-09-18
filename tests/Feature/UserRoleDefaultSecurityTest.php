@@ -72,10 +72,10 @@ class UserRoleDefaultSecurityTest extends TestCase
 
         $owner = User::where('email', 'owner@bawaberes.id')->firstOrFail();
         $admin = User::where('email', 'admin@bawaberes.id')->firstOrFail();
-        $operation = User::where('email', 'operation@bawaberes.id')->firstOrFail();
 
         $this->assertEquals(UserRole::OWNER, $owner->role);
         $this->assertEquals(UserRole::ADMIN, $admin->role);
-        $this->assertEquals(UserRole::OPERATION, $operation->role);
+        $this->assertNull(User::where('email', 'operation@bawaberes.id')->first());
+        $this->assertNull(User::where('email', 'operationbawaberes@bawaberes.id')->first());
     }
 }

@@ -53,10 +53,14 @@ class AppServiceProvider extends ServiceProvider
 
         // Gates definition
         Gate::define('access-admin', function (User $user) {
-            return in_array($user->role, [UserRole::OWNER, UserRole::ADMIN, UserRole::OPERATION], true);
+            return in_array($user->role, [UserRole::OWNER, UserRole::ADMIN], true);
         });
 
         Gate::define('manage-settings', function (User $user) {
+            return $user->isOwner();
+        });
+
+        Gate::define('view-analytics', function (User $user) {
             return $user->isOwner();
         });
 
@@ -81,19 +85,19 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('manage-schedule', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
 
         Gate::define('manage-inventory', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
 
         Gate::define('manage-storage', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
 
         Gate::define('manage-documentation', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
     }
 }
