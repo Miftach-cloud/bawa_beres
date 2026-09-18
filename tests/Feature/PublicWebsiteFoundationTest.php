@@ -60,7 +60,7 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Jasa Pindahan Kost Premium');
         $response->assertSee('200.000');
-        $response->assertSee('Label QR Inventaris');
+        $response->assertSee('Label Identitas Barang');
         $response->assertSee('Pesan Layanan Ini Sekarang');
     }
 
@@ -76,14 +76,11 @@ class PublicWebsiteFoundationTest extends TestCase
     }
 
     #[Test]
-    public function storage_security_page_loads_with_facility_details(): void
+    public function storage_security_page_is_hidden_and_redirects_to_home(): void
     {
         $response = $this->get('/storage-security');
 
-        $response->assertStatus(200);
-        $response->assertSee('Standar Keamanan Tingkat Tinggi');
-        $response->assertSee('CCTV 24/7');
-        $response->assertSee('Struktur Penempatan Bertingkat');
+        $response->assertRedirect('/');
     }
 
     #[Test]
@@ -128,5 +125,20 @@ class PublicWebsiteFoundationTest extends TestCase
         $response->assertSee('Siap Membantu Kebutuhan Logistik');
         $response->assertSee('WhatsApp Resmi');
         $response->assertSee('Hub Storage Malang');
+    }
+
+    #[Test]
+    public function public_pages_render_modern_floating_whatsapp_widget(): void
+    {
+        $response = $this->get('/');
+
+        $response->assertStatus(200);
+        $response->assertSee('Chat WhatsApp');
+        $response->assertSee('Admin Bawa Beres');
+        $response->assertSee('Topik Konsultasi Cepat:');
+        $response->assertSee('Pindahan Kost / Rumah');
+        $response->assertSee('Penitipan Barang (Storage)');
+        $response->assertSee('Sewa Pick Up & Driver');
+        $response->assertSee('Mulai Chat di WhatsApp');
     }
 }

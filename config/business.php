@@ -10,8 +10,8 @@ return [
     'legal_name' => env('BUSINESS_LEGAL_NAME', 'Bawa Beres Indonesia'),
     'tagline' => env('BUSINESS_TAGLINE', 'Layanan Pindahan, Storage & Logistik Kota Malang'),
     'email' => env('BUSINESS_EMAIL', 'info@bawaberes.id'),
-    'phone' => env('BUSINESS_PHONE', null),
-    'whatsapp' => env('BUSINESS_WHATSAPP', null),
+    'phone' => env('BUSINESS_PHONE', '+62 877-1615-7372'),
+    'whatsapp' => env('BUSINESS_WHATSAPP', '+62 877-1615-7372'),
 
     /*
     |--------------------------------------------------------------------------

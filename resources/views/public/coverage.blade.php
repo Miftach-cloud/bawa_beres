@@ -66,22 +66,6 @@
                 </ul>
             </div>
         </div>
-
-        <!-- CTA Section -->
-        <div class="rounded-3xl bg-amber-50 border border-amber-200 p-8 text-center space-y-4">
-            <h3 class="text-xl font-extrabold text-slate-900">Lokasi Anda di Luar Malang Raya?</h3>
-            <p class="text-xs sm:text-sm text-slate-600 max-w-xl mx-auto">
-                Kami juga melayani pengiriman pindahan jarak jauh (antar kota Jawa Timur & Jawa-Bali) via rute khusus.
-            </p>
-            <a 
-                href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin tanya layanan luar kota') }}" 
-                target="_blank"
-                class="inline-flex items-center gap-2 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs px-6 py-3.5 transition"
-            >
-                <x-icon name="chat" class="w-4 h-4 text-emerald-400" />
-                <span>Konsultasi Pindahan Antar Kota</span>
-            </a>
-        </div>
     </div>
 </div>
 @endsection

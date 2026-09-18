@@ -28,7 +28,7 @@ class ServiceSeeder extends Seeder
             [
                 'name' => 'Penitipan & Storage Barang',
                 'slug' => 'penitipan-storage',
-                'description' => 'Penitipan barang aman bulanan/semesteran dengan sistem pelabelan QR Code, foto verifikasi kondisi, dan alokasi rak gudang.',
+                'description' => 'Penitipan barang aman bulanan/semesteran dengan pencatatan rapi, foto verifikasi kondisi, dan alokasi tempat gudang.',
                 'pricing_type' => PricingType::PACKAGE,
                 'base_price' => 50000,
                 'is_active' => true,

@@ -53,23 +53,6 @@
                 <p class="text-xs font-semibold text-slate-800">{{ config('business.operating_hours.display', 'Senin – Minggu: 07.00 – 21.00 WIB') }}</p>
             </div>
         </div>
-
-        <!-- Direct CTA -->
-        <div class="rounded-3xl bg-white p-8 sm:p-12 border border-slate-200 shadow-xl text-center space-y-4">
-            <h3 class="text-2xl font-black text-slate-900">Ingin Langsung Melakukan Pemesanan?</h3>
-            <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
-                Gunakan form pemesanan online instan kami untuk penawaran harga cepat.
-            </p>
-            <div class="pt-2">
-                <a 
-                    href="{{ url('/#booking') }}" 
-                    class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-xs font-extrabold text-slate-950 shadow-lg shadow-amber-500/20 transition cursor-pointer"
-                >
-                    <x-icon name="sparkles" class="w-4 h-4 text-slate-950" />
-                    <span>Buka Form Booking Online</span>
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 @endsection

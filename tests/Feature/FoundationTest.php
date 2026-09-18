@@ -44,7 +44,6 @@ class FoundationTest extends TestCase
             '/',
             '/services',
             '/how-it-works',
-            '/storage-security',
             '/coverage',
             '/faq',
             '/about',
@@ -58,5 +57,7 @@ class FoundationTest extends TestCase
             $response->assertDontSee('System Foundation Check');
             $response->assertDontSee('Uji Reaktivitas Livewire');
         }
+
+        $this->get('/storage-security')->assertRedirect('/');
     }
 }

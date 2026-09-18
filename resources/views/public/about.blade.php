@@ -34,7 +34,7 @@
                 </div>
                 <h3 class="text-xl font-extrabold text-slate-900">Misi Kami</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                    Memberikan pengalaman pindahan tanpa cemas dengan armada terawat, tenaga angkut terpercaya, sistem inventaris ber-QR Code, dan harga yang transparan tanpa biaya siluman.
+                    Memberikan pengalaman pindahan tanpa cemas dengan armada terawat, tenaga angkut terpercaya, pencatatan barang rapi, dan harga yang transparan tanpa biaya siluman.
                 </p>
             </div>
         </div>
@@ -62,7 +62,7 @@
                         <x-icon name="shield" class="w-5 h-5 text-blue-600" />
                     </div>
                     <h4 class="font-bold text-slate-900 text-sm">Keamanan Terjamin</h4>
-                    <p class="text-xs text-slate-500 leading-relaxed">Pengawasan CCTV, foto dokumentasi serah terima, dan pelacakan QR Code.</p>
+                    <p class="text-xs text-slate-500 leading-relaxed">Pengecekan teliti, dokumentasi serah terima, dan barang dijaga hati-hati sampai tujuan.</p>
                 </div>
             </div>
         </div>

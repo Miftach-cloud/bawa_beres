@@ -40,7 +40,7 @@ Route::get('/how-it-works', function () {
 })->name('public.how-it-works');
 
 Route::get('/storage-security', function () {
-    return view('public.storage-security');
+    return redirect('/');
 })->name('public.storage-security');
 
 Route::get('/coverage', function () {
@@ -75,7 +75,6 @@ Route::get('/sitemap.xml', function () {
         ['loc' => url('/'), 'priority' => '1.0', 'changefreq' => 'weekly'],
         ['loc' => route('public.services'), 'priority' => '0.9', 'changefreq' => 'weekly'],
         ['loc' => route('public.how-it-works'), 'priority' => '0.8', 'changefreq' => 'monthly'],
-        ['loc' => route('public.storage-security'), 'priority' => '0.8', 'changefreq' => 'monthly'],
         ['loc' => route('public.coverage'), 'priority' => '0.8', 'changefreq' => 'monthly'],
         ['loc' => route('public.faq'), 'priority' => '0.7', 'changefreq' => 'monthly'],
         ['loc' => route('public.about'), 'priority' => '0.7', 'changefreq' => 'monthly'],

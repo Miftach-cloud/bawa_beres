@@ -66,7 +66,7 @@ class BusinessProfile
             '@type' => 'MovingCompany',
             'name' => config('business.name', 'Bawa Beres'),
             'url' => url('/'),
-            'description' => $description ?: 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code di Kota Malang.',
+            'description' => $description ?: 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman di Kota Malang.',
             'areaServed' => config('business.area_served', ['Kota Malang', 'Kota Batu', 'Kabupaten Malang']),
             'priceRange' => 'Rp',
         ];

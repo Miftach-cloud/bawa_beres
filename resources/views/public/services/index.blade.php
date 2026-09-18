@@ -47,7 +47,7 @@
                         <ul class="space-y-2.5 pt-3 text-xs text-slate-600">
                             <li class="flex items-center gap-2">
                                 <x-icon name="check-circle" class="w-4 h-4 text-emerald-500" />
-                                <span>Label QR Code identitas unik per item</span>
+                                <span>Pencatatan dan label identitas barang</span>
                             </li>
                             <li class="flex items-center gap-2">
                                 <x-icon name="check-circle" class="w-4 h-4 text-emerald-500" />
@@ -55,7 +55,7 @@
                             </li>
                             <li class="flex items-center gap-2">
                                 <x-icon name="check-circle" class="w-4 h-4 text-emerald-500" />
-                                <span>Pelacakan status realtime</span>
+                                <span>Konfirmasi update via WhatsApp</span>
                             </li>
                         </ul>
                     </div>
@@ -75,24 +75,6 @@
                     Belum ada data layanan aktif.
                 </div>
             @endforelse
-        </div>
-
-        <!-- Consultation Banner -->
-        <div class="rounded-3xl bg-slate-900 p-8 sm:p-12 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
-            <div class="space-y-2 text-center md:text-left">
-                <h3 class="text-2xl font-black tracking-tight">Butuh Layanan Khusus atau Paket Kantor?</h3>
-                <p class="text-xs sm:text-sm text-slate-400 max-w-xl">
-                    Konsultasikan langsung volume barang, jarak pengiriman, atau durasi sewa storage dengan Customer Support kami.
-                </p>
-            </div>
-            <a 
-                href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin konsultasi layanan khusus') }}" 
-                target="_blank"
-                class="inline-flex items-center gap-2 rounded-2xl bg-emerald-500 hover:bg-emerald-400 px-6 py-4 text-xs font-bold text-slate-950 shadow-lg shadow-emerald-500/20 transition cursor-pointer whitespace-nowrap"
-            >
-                <x-icon name="chat" class="w-4 h-4 text-slate-950" />
-                <span>Hubungi WhatsApp CS</span>
-            </a>
         </div>
     </div>
 </div>

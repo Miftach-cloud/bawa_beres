@@ -8,8 +8,8 @@
     <title>{{ isset($title) ? $title . ' — ' . config('app.name', 'Bawa Beres') : config('app.name', 'Bawa Beres') . ' | Jasa Pindahan & Penitipan Barang Storage Kota Malang' }}</title>
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="{{ $metaDescription ?? 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code, dan pengiriman barang se-Malang Raya. Transparan, aman, dan tanpa biaya siluman.' }}">
-    <meta name="keywords" content="{{ $metaKeywords ?? 'jasa pindahan malang, titip barang malang, storage mahasiswa malang, sewa pick up malang, logistik kota malang' }}">
+    <meta name="description" content="{{ $metaDescription ?? 'Jasa pindahan kost & rumah terpercaya, penitipan barang praktis, dan angkut barang se-Malang Raya. Aman, terjangkau, dan tanpa biaya siluman.' }}">
+    <meta name="keywords" content="{{ $metaKeywords ?? 'jasa pindahan malang, titip barang malang, pindahan kost malang, sewa pick up malang, logistik kota malang' }}">
     <link rel="canonical" href="{{ $canonicalUrl ?? url()->current() }}">
     <meta name="robots" content="index, follow">
 
@@ -17,7 +17,7 @@
     <meta property="og:site_name" content="{{ config('business.name', 'Bawa Beres') }}">
     <meta property="og:type" content="{{ $ogType ?? 'website' }}">
     <meta property="og:title" content="{{ isset($title) ? $title . ' — ' . config('app.name', 'Bawa Beres') : 'Bawa Beres | Jasa Pindahan & Storage Kota Malang' }}">
-    <meta property="og:description" content="{{ $metaDescription ?? 'Jasa pindahan kost & rumah terpercaya, penitipan barang aman ber-QR Code, dan pengiriman barang se-Malang Raya.' }}">
+    <meta property="og:description" content="{{ $metaDescription ?? 'Jasa pindahan kost & rumah terpercaya, penitipan barang praktis, dan pengiriman barang se-Malang Raya.' }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:locale" content="id_ID">
 
@@ -43,6 +43,7 @@
     <!-- Scripts & Styles -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    <style>[x-cloak] { display: none !important; }</style>
 
 </head>
 <body class="min-h-screen bg-slate-50 font-sans text-slate-800 antialiased flex flex-col selection:bg-amber-500 selection:text-white">
@@ -58,13 +59,9 @@
                     <a href="{{ url('/') }}" class="hover:text-slate-900 transition-colors">Beranda</a>
                     <a href="{{ route('public.services') }}" class="hover:text-slate-900 transition-colors">Layanan</a>
                     <a href="{{ route('public.how-it-works') }}" class="hover:text-slate-900 transition-colors">Cara Kerja</a>
-                    <a href="{{ route('public.storage-security') }}" class="hover:text-slate-900 transition-colors">Keamanan Storage</a>
                     <a href="{{ route('public.coverage') }}" class="hover:text-slate-900 transition-colors">Area Layanan</a>
                     <a href="{{ route('public.faq') }}" class="hover:text-slate-900 transition-colors">FAQ</a>
-                    <a href="{{ route('public.track') }}" class="inline-flex items-center gap-1.5 text-amber-800 bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/80 hover:bg-amber-100 transition-colors">
-                        <x-icon name="search" class="w-3.5 h-3.5 text-amber-600" />
-                        <span>Cek Resi / Order</span>
-                    </a>
+                    <a href="{{ route('public.contact') }}" class="hover:text-slate-900 transition-colors">Kontak</a>
                 </nav>
             </div>
 
@@ -93,7 +90,7 @@
                         <x-logo size="sm" theme="light" />
                     </a>
                     <p class="text-slate-500 leading-relaxed">
-                        Platform logistik, jasa pindahan terpercaya, dan penitipan barang mahasiswa/umum ber-QR Code di Malang Raya.
+                        Layanan jasa pindahan terpercaya dan penitipan barang praktis untuk mahasiswa & umum di Malang Raya.
                     </p>
                     <div class="text-[11px] text-slate-400 font-mono">
                         Hub: {{ \App\Support\BusinessProfile::displayAddress() }}
@@ -107,7 +104,6 @@
                         <li><a href="{{ url('/') }}" class="hover:text-amber-600">Beranda</a></li>
                         <li><a href="{{ route('public.services') }}" class="hover:text-amber-600">Katalog Layanan</a></li>
                         <li><a href="{{ route('public.how-it-works') }}" class="hover:text-amber-600">Cara Kerja 4 Langkah</a></li>
-                        <li><a href="{{ route('public.storage-security') }}" class="hover:text-amber-600">Fasilitas & Keamanan Storage</a></li>
                         <li><a href="{{ route('public.coverage') }}" class="hover:text-amber-600">Cakupan Wilayah Malang Raya</a></li>
                     </ul>
                 </div>
@@ -116,12 +112,6 @@
                 <div class="space-y-3">
                     <h4 class="font-extrabold text-slate-900 uppercase tracking-wider text-[11px]">Bantuan & Fitur</h4>
                     <ul class="space-y-2 text-slate-600 font-medium">
-                        <li>
-                            <a href="{{ route('public.track') }}" class="inline-flex items-center gap-1.5 hover:text-amber-600 font-bold text-amber-700">
-                                <x-icon name="search" class="w-3.5 h-3.5 text-amber-600" />
-                                <span>Lacak Status Pesanan</span>
-                            </a>
-                        </li>
                         <li><a href="{{ route('public.faq') }}" class="hover:text-amber-600">Tanya Jawab (FAQ)</a></li>
                         <li><a href="{{ route('public.about') }}" class="hover:text-amber-600">Tentang BawaBeres</a></li>
                         <li><a href="{{ route('public.contact') }}" class="hover:text-amber-600">Kontak & Lokasi Hub</a></li>
@@ -151,13 +141,16 @@
                 <div class="flex items-center gap-4">
                     <a href="{{ route('public.faq') }}" class="hover:text-slate-600">Syarat & Ketentuan</a>
                     <span>•</span>
-                    <a href="{{ route('public.storage-security') }}" class="hover:text-slate-600">Kebijakan Privasi</a>
+                    <a href="{{ route('public.faq') }}" class="hover:text-slate-600">Kebijakan Privasi</a>
                     <span>•</span>
                     <a href="{{ \App\Support\BusinessProfile::whatsappUrl() }}" target="_blank" class="hover:text-slate-600">WhatsApp Support</a>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Modern Floating WhatsApp Corner Widget -->
+    <x-floating-whatsapp />
 
     @livewireScripts
 </body>

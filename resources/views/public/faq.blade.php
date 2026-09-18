@@ -30,7 +30,7 @@
                 'name' => 'Bagaimana keamanan barang yang dititipkan di storage?',
                 'acceptedAnswer' => [
                     '@type' => 'Answer',
-                    'text' => 'Gudang kami diawasi CCTV 24 jam nonstop, bebas banjir, bersih dan kering. Setiap kardus atau unit barang diberi label token QR Code unik.',
+                    'text' => 'Gudang penyimpanan kami berlokasi aman, bebas banjir, bersih, dan kering. Setiap barang dicatat rapi dan diberi label identitas khusus agar tidak ada barang yang tertinggal atau tertukar.',
                 ],
             ],
         ],
@@ -94,7 +94,7 @@
             <div class="rounded-3xl bg-white p-6 sm:p-8 border border-slate-200 shadow-sm space-y-2">
                 <h3 class="text-base font-extrabold text-slate-900">Bagaimana keamanan barang yang dititipkan di storage?</h3>
                 <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Gudang kami diawasi CCTV 24 jam nonstop, bebas banjir, bersih dan kering. Setiap kardus/unit barang diberi label token QR Code unik dan foto kondisi barang disimpan pada sistem kami.
+                    Gudang penyimpanan kami berlokasi aman, bebas banjir, bersih, dan kering. Setiap barang dicatat rapi dan diberi label identitas khusus agar tidak ada barang yang tertinggal atau tertukar.
                 </p>
             </div>
 
@@ -106,23 +106,11 @@
             </div>
 
             <div class="rounded-3xl bg-white p-6 sm:p-8 border border-slate-200 shadow-sm space-y-2">
-                <h3 class="text-base font-extrabold text-slate-900">Bagaimana cara melacak barang saya?</h3>
+                <h3 class="text-base font-extrabold text-slate-900">Bagaimana cara mengecek update status pesanan saya?</h3>
                 <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                    Anda dapat mengakses halaman <a href="{{ route('public.track') }}" class="text-amber-600 font-bold underline">Lacak Status Pesanan</a> dengan memasukkan Nomor Order (contoh: ORD-2026-000051) dan nomor HP Anda.
+                    Anda dapat langsung menanyakan update penjemputan atau pengantaran barang ke tim admin BawaBeres via WhatsApp resmi dengan menyebutkan nomor order atau nama pemesan Anda.
                 </p>
             </div>
-        </div>
-
-        <div class="rounded-3xl bg-amber-50 border border-amber-200 p-8 text-center space-y-4">
-            <h3 class="text-lg font-black text-slate-900">Punya Pertanyaan Lain yang Belum Terjawab?</h3>
-            <a 
-                href="{{ \App\Support\BusinessProfile::whatsappUrl('Halo Admin BawaBeres, saya ingin tanya seputar layanan') }}" 
-                target="_blank"
-                class="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-6 py-3.5 shadow-md shadow-emerald-600/10 transition"
-            >
-                <x-icon name="chat" class="w-4 h-4 text-white" />
-                <span>Chat Langsung dengan Admin</span>
-            </a>
         </div>
     </div>
 </div>

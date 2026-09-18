@@ -12,7 +12,7 @@
                 Bagaimana BawaBeres Bekerja untuk Anda
             </h1>
             <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-                Dari pemesanan online hingga pengantaran atau penyimpanan barang, semuanya tercatat secara transparan dan aman.
+                Dari pemesanan online hingga pengantaran atau penyimpanan barang, semuanya beres tanpa bikin repot.
             </p>
         </div>
 
@@ -42,9 +42,9 @@
                 <div class="h-12 w-12 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center text-xl font-black shadow-md shadow-amber-500/20">
                     3
                 </div>
-                <h3 class="text-lg font-extrabold text-slate-900">Penjemputan & Label QR</h3>
+                <h3 class="text-lg font-extrabold text-slate-900">Jemput & Angkut Barang</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                    Armada datang tepat waktu. Setiap barang ditempeli stiker QR Code unik dan difoto kondisinya sebelum dimuat.
+                    Armada dan tim helper datang tepat waktu. Barang dicek dan difoto kondisinya sebelum dimuat ke armada dengan hati-hati.
                 </p>
             </div>
 
@@ -54,20 +54,9 @@
                 </div>
                 <h3 class="text-lg font-extrabold text-slate-900">Antar Tujuan / Simpan Aman</h3>
                 <p class="text-xs text-slate-600 leading-relaxed">
-                    Barang diantar langsung ke lokasi baru atau disimpan rapi di rak bertingkat gudang BawaBeres. Lacak status kapan saja.
+                    Barang diantar langsung ke lokasi baru atau disimpan rapi di gudang BawaBeres. Terima beres tanpa ribet.
                 </p>
             </div>
-        </div>
-
-        <!-- CTA Section -->
-        <div class="text-center pt-8">
-            <a 
-                href="{{ url('/#booking') }}" 
-                class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-8 py-4 text-sm font-extrabold text-slate-950 shadow-xl shadow-amber-500/25 transition cursor-pointer"
-            >
-                <span>Mulai Booking Sekarang</span>
-                <x-icon name="arrow-right" class="w-4 h-4 text-slate-950" />
-            </a>
         </div>
     </div>
 </div>

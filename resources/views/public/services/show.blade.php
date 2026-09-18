@@ -94,11 +94,11 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
                         <div class="flex items-center gap-2 text-purple-700 text-sm font-bold">
-                            <x-icon name="qr" class="w-5 h-5 text-purple-600" />
-                            <span>Label QR Inventaris</span>
+                            <x-icon name="check-circle" class="w-5 h-5 text-purple-600" />
+                            <span>Label Identitas Barang</span>
                         </div>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            Setiap kardus dan perabot diberi label token QR anti-rusak untuk memastikan zero item loss selama proses handling.
+                            Setiap kardus dan perabot diberi label identitas yang jelas untuk memastikan tidak ada barang yang tertinggal atau tertukar.
                         </p>
                     </div>
 
@@ -124,11 +124,11 @@
 
                     <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-2">
                         <div class="flex items-center gap-2 text-emerald-700 text-sm font-bold">
-                            <x-icon name="map-pin" class="w-5 h-5 text-emerald-600" />
-                            <span>Pelacakan Realtime</span>
+                            <x-icon name="chat" class="w-5 h-5 text-emerald-600" />
+                            <span>Update Cepat via WhatsApp</span>
                         </div>
                         <p class="text-xs text-slate-600 leading-relaxed">
-                            Cek status pesanan secara mandiri via fitur pelacakan publik tanpa harus login.
+                            Kepastian jadwal dan konfirmasi status penjemputan/pengantaran diinfokan langsung via WhatsApp.
                         </p>
                     </div>
                 </div>

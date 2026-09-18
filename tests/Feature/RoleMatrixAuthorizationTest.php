@@ -102,7 +102,7 @@ class RoleMatrixAuthorizationTest extends TestCase
         $this->get('/')->assertStatus(200);
         $this->get('/services')->assertStatus(200);
         $this->get('/how-it-works')->assertStatus(200);
-        $this->get('/storage-security')->assertStatus(200);
+        $this->get('/storage-security')->assertRedirect('/');
         $this->get('/coverage')->assertStatus(200);
         $this->get('/faq')->assertStatus(200);
         $this->get('/about')->assertStatus(200);

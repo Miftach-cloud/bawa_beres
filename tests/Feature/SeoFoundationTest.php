@@ -49,7 +49,7 @@ class SeoFoundationTest extends TestCase
         $response->assertSee(url('/'));
         $response->assertSee(route('public.services'));
         $response->assertSee(route('public.how-it-works'));
-        $response->assertSee(route('public.storage-security'));
+        $response->assertDontSee(route('public.storage-security'));
         $response->assertSee(route('public.coverage'));
         $response->assertSee(route('public.faq'));
         $response->assertSee(route('public.about'));
