@@ -33,7 +33,8 @@ class SeoFoundationTest extends TestCase
         $response->assertStatus(200);
         $response->assertHeader('Content-Type', 'text/plain; charset=UTF-8');
         $response->assertSee('User-agent: *');
-        $response->assertSee('Disallow: /admin/');
+        $response->assertDontSee('Disallow: /admin/');
+        $response->assertSee('Disallow: /livewire/');
         $response->assertSee('Sitemap:');
     }
 

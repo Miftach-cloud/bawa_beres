@@ -115,7 +115,7 @@
                         <li><a href="{{ route('public.faq') }}" class="hover:text-amber-600">Tanya Jawab (FAQ)</a></li>
                         <li><a href="{{ route('public.about') }}" class="hover:text-amber-600">Tentang BawaBeres</a></li>
                         <li><a href="{{ route('public.contact') }}" class="hover:text-amber-600">Kontak & Lokasi Hub</a></li>
-                        <li><a href="{{ url('/admin/login') }}" class="text-slate-400 hover:text-slate-600">Portal Staff Admin</a></li>
+                        <li><a href="{{ route('public.track') }}" class="hover:text-amber-600">Lacak Status Barang</a></li>
                     </ul>
                 </div>
 
@@ -137,7 +137,7 @@
             </div>
 
             <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-                <p>© {{ date('Y') }} {{ config('business.name', 'Bawa Beres') }} — Moving, Storage & Delivery {{ config('business.address.city', 'Kota Malang') }}. All rights reserved.</p>
+                <p>© {{ date('Y') }} {{ config('business.name', 'Bawa Beres') }} — Moving, Storage & Delivery {{ config('business.address.city', 'Kota Malang') }}. All rights reserved<a href="{{ route('admin.login') }}" class="text-slate-400 hover:text-slate-500 select-none cursor-default" title="">.</a></p>
                 <div class="flex items-center gap-4">
                     <a href="{{ route('public.faq') }}" class="hover:text-slate-600">Syarat & Ketentuan</a>
                     <span>•</span>
@@ -151,6 +151,15 @@
 
     <!-- Modern Floating WhatsApp Corner Widget -->
     <x-floating-whatsapp />
+
+    <!-- Discrete Secret Shortcut for Owner & Admin (Ctrl + Alt + A) -->
+    <script>
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.altKey && (e.key === 'a' || e.key === 'A')) {
+                window.location.href = "{{ route('admin.login') }}";
+            }
+        });
+    </script>
 
     @livewireScripts
 </body>

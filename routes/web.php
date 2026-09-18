@@ -107,7 +107,7 @@ Route::get('/sitemap.xml', function () {
 })->name('sitemap.xml');
 
 Route::get('/robots.txt', function () {
-    $content = "User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /admin/*\nDisallow: /livewire/\n\nSitemap: ".url('/sitemap.xml')."\n";
+    $content = "User-agent: *\nAllow: /\nDisallow: /livewire/\n\nSitemap: ".url('/sitemap.xml')."\n";
 
     return response($content, 200)->header('Content-Type', 'text/plain');
 });
@@ -120,13 +120,15 @@ Route::middleware('throttle:tracking')->group(function () {
     Route::get('/qr/{code}', InventoryScan::class)->name('inventory.qr');
 });
 
+$adminPrefix = config('admin.prefix', env('ADMIN_PREFIX', 'kantor'));
+
 // Admin Guest Routes (Rate Limited)
-Route::middleware(['guest', 'throttle:login'])->prefix('admin')->group(function () {
+Route::middleware(['guest', 'throttle:login'])->prefix($adminPrefix)->group(function () {
     Route::get('/login', Login::class)->name('admin.login');
 });
 
 // Admin Protected Routes
-Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'can:access-admin'])->prefix($adminPrefix)->group(function () {
     Route::get('/', Dashboard::class)->name('admin.dashboard');
     Route::get('/analisa', DashboardAnalisa::class)->middleware('can:view-analytics')->name('admin.analisa');
     Route::post('/logout', [AuthController::class, 'logout'])->name('admin.logout');
@@ -172,7 +174,18 @@ Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->group(function
     Route::get('/media/order-attachment/{attachment}', [SecureFileController::class, 'showOrderAttachment'])->name('admin.media.order-attachment');
 });
 
-// Generic login fallback redirecting to admin login
-Route::get('/login', function () {
-    return redirect()->route('admin.login');
-})->name('login');
+if ($adminPrefix !== 'admin') {
+    // Security Honeypot: Deceive probes, bots, and automated scanners with fake 404
+    Route::any('/admin/{any?}', function () {
+        abort(404);
+    })->where('any', '.*');
+
+    Route::any('/login', function () {
+        abort(404);
+    });
+} else {
+    // Standard testing fallback
+    Route::get('/login', function () {
+        return redirect()->route('admin.login');
+    })->name('login');
+}
