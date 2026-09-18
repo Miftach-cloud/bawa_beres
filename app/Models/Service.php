@@ -20,6 +20,9 @@ class Service extends Model
         'pricing_type',
         'base_price',
         'is_active',
+        'requires_pickup',
+        'requires_destination',
+        'requires_storage',
     ];
 
     protected function casts(): array
@@ -28,6 +31,9 @@ class Service extends Model
             'pricing_type' => PricingType::class,
             'base_price' => 'decimal:2',
             'is_active' => 'boolean',
+            'requires_pickup' => 'boolean',
+            'requires_destination' => 'boolean',
+            'requires_storage' => 'boolean',
         ];
     }
 

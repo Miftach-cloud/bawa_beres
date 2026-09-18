@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Customer extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
         'customer_code',
@@ -39,7 +41,7 @@ class Customer extends Model
             $number = 1;
         }
 
-        return $prefix . str_pad((string) $number, 6, '0', STR_PAD_LEFT);
+        return $prefix.str_pad((string) $number, 6, '0', STR_PAD_LEFT);
     }
 
     protected static function booted(): void
@@ -47,6 +49,12 @@ class Customer extends Model
         static::creating(function (Customer $customer) {
             if (empty($customer->customer_code)) {
                 $customer->customer_code = static::generateCode();
+            }
+        });
+
+        static::deleting(function (Customer $customer) {
+            if ($customer->isForceDeleting() && $customer->orders()->exists()) {
+                throw new \RuntimeException('Customer with existing transaction orders cannot be permanently deleted.');
             }
         });
     }

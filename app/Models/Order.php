@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use App\Actions\Orders\ChangeOrderStatus;
 use App\Enums\AddressType;
+use App\Enums\InventoryStatus;
 use App\Enums\OrderStatus;
+use App\Enums\PaymentStatus;
+use App\Enums\QuotationStatus;
+use App\Enums\ScheduleType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -20,6 +24,7 @@ class Order extends Model
         'customer_id',
         'service_id',
         'status',
+        'preferred_date',
         'customer_notes',
         'admin_notes',
         'total_amount',
@@ -29,6 +34,7 @@ class Order extends Model
     {
         return [
             'status' => OrderStatus::class,
+            'preferred_date' => 'date',
             'total_amount' => 'decimal:2',
         ];
     }
@@ -52,7 +58,7 @@ class Order extends Model
             $number = 1;
         }
 
-        return $prefix . str_pad((string) $number, 6, '0', STR_PAD_LEFT);
+        return $prefix.str_pad((string) $number, 6, '0', STR_PAD_LEFT);
     }
 
     protected static function booted(): void
@@ -77,31 +83,18 @@ class Order extends Model
     }
 
     /**
-     * Transition order status with history audit trail
+     * Transition order status with state machine guard & history audit trail
      */
     public function transitionTo(OrderStatus $newStatus, ?string $notes = null, ?User $changedBy = null): bool
     {
-        return DB::transaction(function () use ($newStatus, $notes, $changedBy) {
-            $oldStatus = $this->status;
+        app(ChangeOrderStatus::class)->execute($this, $newStatus, $notes, $changedBy);
 
-            $this->update([
-                'status' => $newStatus,
-            ]);
-
-            $this->statusHistories()->create([
-                'from_status' => $oldStatus instanceof OrderStatus ? $oldStatus->value : $oldStatus,
-                'to_status' => $newStatus->value,
-                'changed_by' => $changedBy?->id,
-                'notes' => $notes,
-            ]);
-
-            return true;
-        });
+        return true;
     }
 
     public function customer(): BelongsTo
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class)->withTrashed();
     }
 
     public function service(): BelongsTo
@@ -132,5 +125,88 @@ class Order extends Model
     public function statusHistories(): HasMany
     {
         return $this->hasMany(OrderStatusHistory::class);
+    }
+
+    public function quotations(): HasMany
+    {
+        return $this->hasMany(Quotation::class)->orderByDesc('version');
+    }
+
+    public function acceptedQuotation(): HasOne
+    {
+        return $this->hasOne(Quotation::class)->where('status', QuotationStatus::ACCEPTED->value);
+    }
+
+    public function latestQuotation(): HasOne
+    {
+        return $this->hasOne(Quotation::class)->latestOfMany('version');
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class)->latest('id');
+    }
+
+    public function paidPayments(): HasMany
+    {
+        return $this->hasMany(Payment::class)->where('status', PaymentStatus::PAID->value);
+    }
+
+    public function totalPaid(): float
+    {
+        return (float) $this->paidPayments()->sum('amount');
+    }
+
+    public function remainingBalance(): float
+    {
+        return max(0, (float) $this->total_amount - $this->totalPaid());
+    }
+
+    public function isFullyPaid(): bool
+    {
+        return (float) $this->total_amount > 0 && $this->totalPaid() >= (float) $this->total_amount;
+    }
+
+    public function schedules(): HasMany
+    {
+        return $this->hasMany(Schedule::class)->orderBy('scheduled_date')->orderBy('start_time');
+    }
+
+    public function latestSchedule(): HasOne
+    {
+        return $this->hasOne(Schedule::class)->latestOfMany();
+    }
+
+    public function pickupSchedule(): HasOne
+    {
+        return $this->hasOne(Schedule::class)->where('type', ScheduleType::PICKUP->value);
+    }
+
+    public function deliverySchedule(): HasOne
+    {
+        return $this->hasOne(Schedule::class)->whereIn('type', [
+            ScheduleType::DELIVERY->value,
+            ScheduleType::REDELIVERY->value,
+        ]);
+    }
+
+    public function inventoryItems(): HasMany
+    {
+        return $this->hasMany(InventoryItem::class);
+    }
+
+    public function storedInventoryItems(): HasMany
+    {
+        return $this->hasMany(InventoryItem::class)->where('status', InventoryStatus::STORED->value);
+    }
+
+    public function attachments(): HasMany
+    {
+        return $this->hasMany(OrderAttachment::class)->latest('id');
+    }
+
+    public function estimationPhotos(): HasMany
+    {
+        return $this->hasMany(OrderAttachment::class)->where('type', 'ESTIMATION_PHOTO')->latest('id');
     }
 }

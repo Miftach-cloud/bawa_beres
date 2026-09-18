@@ -3,8 +3,13 @@
 namespace App\Providers;
 
 use App\Enums\UserRole;
+use App\Listeners\SendOrderNotifications;
 use App\Models\User;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,7 +27,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Rate Limiters
+        RateLimiter::for('booking', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip() ?: 'global');
+        });
+
+        RateLimiter::for('tracking', function (Request $request) {
+            return Limit::perMinute(15)->by($request->ip() ?: 'global');
+        });
+
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(5)->by($request->ip() ?: 'global');
+        });
+
+        // Register Event Subscribers
+        Event::subscribe(SendOrderNotifications::class);
+
         // Superadmin bypass for Owner
+
         Gate::before(function (User $user, string $ability) {
             if ($user->isOwner()) {
                 return true;
@@ -31,10 +53,14 @@ class AppServiceProvider extends ServiceProvider
 
         // Gates definition
         Gate::define('access-admin', function (User $user) {
-            return in_array($user->role, [UserRole::OWNER, UserRole::ADMIN, UserRole::OPERATION], true);
+            return in_array($user->role, [UserRole::OWNER, UserRole::ADMIN], true);
         });
 
         Gate::define('manage-settings', function (User $user) {
+            return $user->isOwner();
+        });
+
+        Gate::define('view-analytics', function (User $user) {
             return $user->isOwner();
         });
 
@@ -59,19 +85,19 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('manage-schedule', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
 
         Gate::define('manage-inventory', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
 
         Gate::define('manage-storage', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
 
         Gate::define('manage-documentation', function (User $user) {
-            return $user->hasRole([UserRole::OWNER, UserRole::OPERATION]);
+            return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
         });
     }
 }
