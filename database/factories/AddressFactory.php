@@ -8,7 +8,7 @@ use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Address>
+ * @extends Factory<Address>
  */
 class AddressFactory extends Factory
 {
@@ -22,7 +22,7 @@ class AddressFactory extends Factory
         return [
             'order_id' => Order::factory(),
             'type' => AddressType::PICKUP,
-            'address' => fake()->streetAddress() . ', ' . $district,
+            'address' => fake()->streetAddress().', '.$district,
             'city' => 'Kota Malang',
             'district' => $district,
             'latitude' => fake()->latitude(-7.98, -7.92),

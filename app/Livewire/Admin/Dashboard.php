@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Enums\OrderStatus;
 use App\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -13,6 +14,11 @@ use Livewire\Component;
 #[Title('Dashboard Operasional — Bawa Beres')]
 class Dashboard extends Component
 {
+    public function mount(): void
+    {
+        Gate::authorize('access-admin');
+    }
+
     public function render()
     {
         $today = Carbon::today();

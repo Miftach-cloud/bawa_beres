@@ -21,14 +21,20 @@ class ServiceSeeder extends Seeder
                 'pricing_type' => PricingType::QUOTATION,
                 'base_price' => 150000,
                 'is_active' => true,
+                'requires_pickup' => true,
+                'requires_destination' => true,
+                'requires_storage' => false,
             ],
             [
                 'name' => 'Penitipan & Storage Barang',
                 'slug' => 'penitipan-storage',
-                'description' => 'Penitipan barang aman bulanan/semesteran dengan sistem pelabelan QR Code, foto verifikasi kondisi, dan alokasi rak gudang.',
+                'description' => 'Penitipan barang aman bulanan/semesteran dengan pencatatan rapi, foto verifikasi kondisi, dan alokasi tempat gudang.',
                 'pricing_type' => PricingType::PACKAGE,
                 'base_price' => 50000,
                 'is_active' => true,
+                'requires_pickup' => true,
+                'requires_destination' => false,
+                'requires_storage' => true,
             ],
             [
                 'name' => 'Delivery & Kurir Instan',
@@ -37,6 +43,9 @@ class ServiceSeeder extends Seeder
                 'pricing_type' => PricingType::FIXED,
                 'base_price' => 25000,
                 'is_active' => true,
+                'requires_pickup' => true,
+                'requires_destination' => true,
+                'requires_storage' => false,
             ],
         ];
 

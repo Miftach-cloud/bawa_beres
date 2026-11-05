@@ -5,8 +5,6 @@ namespace Tests\Unit;
 use App\Enums\AddressType;
 use App\Enums\OrderStatus;
 use App\Enums\PricingType;
-use App\Models\Customer;
-use App\Models\Order;
 use PHPUnit\Framework\TestCase;
 
 class DomainModelTest extends TestCase

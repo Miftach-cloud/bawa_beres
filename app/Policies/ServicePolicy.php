@@ -10,12 +10,12 @@ class ServicePolicy
 {
     public function viewAny(User $user): bool
     {
-        return $user->hasRole([UserRole::OWNER, UserRole::ADMIN, UserRole::OPERATION]);
+        return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
     }
 
     public function view(User $user, Service $service): bool
     {
-        return $user->hasRole([UserRole::OWNER, UserRole::ADMIN, UserRole::OPERATION]);
+        return $user->hasRole([UserRole::OWNER, UserRole::ADMIN]);
     }
 
     public function create(User $user): bool

@@ -3,11 +3,12 @@
     <div class="rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 p-6 sm:p-8 text-white shadow-sm border border-slate-700/50">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-                <span class="inline-flex items-center gap-2 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-400 border border-amber-500/30 mb-2">
-                    <span>📍</span> Operasional Kota Malang
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-amber-500/20 px-3 py-1 text-xs font-semibold text-amber-400 border border-amber-500/30 mb-2">
+                    <x-icon name="map-pin" class="w-3.5 h-3.5 text-amber-400" />
+                    <span>Operasional Kota Malang</span>
                 </span>
                 <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">
-                    Halo, {{ auth()->user()->name }}! 👋
+                    Halo, {{ auth()->user()->name }}!
                 </h2>
                 <p class="text-sm text-slate-300 mt-1">
                     Ringkasan aktivitas operasional moving, storage & delivery hari ini.
@@ -29,7 +30,7 @@
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">New Orders</span>
                 <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-amber-100 text-amber-700 text-sm">
-                    🆕
+                    <x-icon name="box" class="w-4 h-4 text-amber-600" />
                 </span>
             </div>
             <div class="mt-3">
@@ -43,7 +44,7 @@
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Orders Today</span>
                 <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-blue-100 text-blue-700 text-sm">
-                    📅
+                    <x-icon name="calendar" class="w-4 h-4 text-blue-600" />
                 </span>
             </div>
             <div class="mt-3">
@@ -56,8 +57,8 @@
         <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Scheduled</span>
-                <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-100 text-cyan-700 text-sm">
-                    🚚
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 text-sm">
+                    <x-icon name="truck" class="w-4 h-4 text-emerald-600" />
                 </span>
             </div>
             <div class="mt-3">
@@ -71,7 +72,7 @@
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Active Storage</span>
                 <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-purple-100 text-purple-700 text-sm">
-                    🏢
+                    <x-icon name="warehouse" class="w-4 h-4 text-purple-600" />
                 </span>
             </div>
             <div class="mt-3">
@@ -84,8 +85,8 @@
         <div class="rounded-2xl bg-white p-5 border border-slate-200 shadow-xs hover:shadow-md transition-shadow">
             <div class="flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Pending Pay</span>
-                <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-100 text-emerald-700 text-sm">
-                    💳
+                <span class="inline-flex h-8 w-8 items-center justify-center rounded-xl bg-rose-100 text-rose-700 text-sm">
+                    <x-icon name="credit-card" class="w-4 h-4 text-rose-600" />
                 </span>
             </div>
             <div class="mt-3">
@@ -144,7 +145,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-6 py-12 text-center text-slate-400">
-                                <div class="text-3xl mb-2">📭</div>
+                                <x-icon name="box" class="w-8 h-8 text-slate-300 mx-auto mb-2" />
                                 <p class="text-sm">Belum ada pesanan masuk dalam sistem.</p>
                             </td>
                         </tr>
